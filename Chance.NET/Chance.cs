@@ -293,6 +293,30 @@ namespace ChanceNET
 			return min + rand.NextDouble() * (max - min);
 		}
 
+		public int Age(AgeRange range = AgeRange.Any)
+		{
+			switch (range)
+			{
+				case AgeRange.Any:
+					return Natural(100);
+
+				case AgeRange.Child:
+					return Integer(0, 13);
+
+				case AgeRange.Teen:
+					return Integer(13, 20);
+
+				case AgeRange.Adult:
+					return Integer(18, 65);
+
+				case AgeRange.Senior:
+					return Integer(60, 100);
+
+				default:
+					goto case AgeRange.Any;
+			}
+		}
+
 		/// <summary>
 		/// Get a random element with equal probability
 		/// </summary>
@@ -303,6 +327,22 @@ namespace ChanceNET
 		{
 			int index = rand.Next(0, list.Count());
 			return list.ElementAt(index);
+		}
+
+		public IEnumerable<T> PickSet<T>(IEnumerable<T> list, int count = 1)
+		{
+			return Shuffle(list).Take(count);
+		}
+
+		/// <summary>
+		/// Shuffle the specified list.
+		/// </summary>
+		/// <returns>The shuffle.</returns>
+		/// <param name="list">List.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public IEnumerable<T> Shuffle<T>(IEnumerable<T> list)
+		{
+			return list.OrderBy(e => Integer());
 		}
 	}
 }

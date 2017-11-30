@@ -19,7 +19,7 @@ Chance.js port into native C# targetting portable .NET Standard.
 	- [x] sentence
 	- [x] paragraph
 - [ ] Person
-	- [ ] age
+	- [x] age
 	- [ ] birthday
 	- [ ] cf
 	- [ ] cpf
@@ -98,9 +98,8 @@ Chance.js port into native C# targetting portable .NET Standard.
 	- [ ] pad
 	- [ ] pick
 	- [x] pickone
-	- [ ] pickset
-	- [ ] set
-	- [ ] shuffle
+	- [x] pickset
+	- [x] shuffle
 - [ ] Miscellaneous
 	- [ ] coin
 	- [ ] dice
