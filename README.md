@@ -2,6 +2,10 @@
 
 Chance.js port into native C# targetting portable .NET Standard.
 
+This project aims to mimic the original chance.js api as closely as possible while adapting it to C# types and practices. For example using enums for options and returning regular objects instead of json or strings.
+
+[Docs](chancejs.com)
+[Source](https://github.com/chancejs/chancejs)
 
 ## Progress
 
@@ -96,7 +100,6 @@ Chance.js port into native C# targetting portable .NET Standard.
 	- [ ] capitalize
 	- [ ] mixin
 	- [ ] pad
-	- [ ] pick
 	- [x] pickone
 	- [x] pickset
 	- [x] shuffle
