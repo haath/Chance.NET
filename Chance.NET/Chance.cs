@@ -79,6 +79,12 @@ namespace ChanceNET
 				);
 		}
 
+		public string Hex(int length)
+		{
+			const string pool = "0123456789abcdef";
+			return String(length, pool);
+		}
+
 		/// <summary>
 		/// Generate a random syllable.
 		/// </summary>
@@ -417,6 +423,66 @@ namespace ChanceNET
 			return ssn.ToString();
 		}
 
+		public string AndroidId()
+		{
+			return "APA91" + String(178, "0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_");
+		}
+
+		public string AppleToken()
+		{
+			return String(64, "abcdef1234567890");
+		}
+
+		/// <summary>
+		/// Windows Phone 8 ANID2
+		/// </summary>
+		/// <returns></returns>
+		public string Wp8ANID2()
+		{
+			return Hex(32);
+		}
+
+		/// <summary>
+		/// Windows Phone 7 ANID
+		/// </summary>
+		/// <returns></returns>
+		public string Wp7ANID()
+		{
+			return "A=" + Guid().Replace("-", "").ToUpper()
+				+ "&E=" + Hex(3)
+				+ "&W=" + Integer(0, 10);
+		}
+
+		public string BbPin()
+		{
+			return Hex(8);
+		}
+
+		public string Guid(GuidVersion version = GuidVersion.V4)
+		{
+			const string pool = "abcdef1234567890";
+			const string variantPool = "ab89";
+
+			StringBuilder guid = new StringBuilder();
+
+			guid.Append(String(8, pool));
+			guid.Append('-');
+			guid.Append(String(4, pool));
+			guid.Append('-');
+
+			guid.Append((int)version);
+			guid.Append(String(3, pool));
+			guid.Append('-');
+
+			guid.Append(String(1, variantPool));
+			guid.Append(String(3, pool));
+			guid.Append('-');
+
+			guid.Append(String(12, pool));
+
+			return guid.ToString();
+		}
+
 		public DateTime Date(int? year = null, Month? month = null, int? day = null, int? minYear = null, int? maxYear = null)
 		{
 			DateTime randomDate = new DateTime(minYear ?? 1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
@@ -434,6 +500,11 @@ namespace ChanceNET
 			int randDay = day ?? randomDate.Day;
 
 			return new DateTime(randYear, randMonth, randDay, randomDate.Hour, randomDate.Minute, randomDate.Second, randomDate.Millisecond);
+		}
+
+		public CoinSide Coin()
+		{
+			return Bool() ? CoinSide.Heads : CoinSide.Tails;
 		}
 
 		/// <summary>

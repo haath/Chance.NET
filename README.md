@@ -22,7 +22,7 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] word
 	- [x] sentence
 	- [x] paragraph
-- [ ] Person
+- [x] Person
 	- [x] age
 	- [x] birthday
 	- [x] first
@@ -30,14 +30,14 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] last
 	- [x] name
 	- [x] prefix
-	- [ ] ssn
+	- [x] ssn
 	- [x] suffix
-- [ ] Mobile
-	- [ ] android_id
-	- [ ] apple_token
-	- [ ] bb_pin
-	- [ ] wp7_anid
-	- [ ] wp8_anid2
+- [x] Mobile
+	- [x] android_id
+	- [x] apple_token
+	- [x] bb_pin
+	- [x] wp7_anid
+	- [x] wp8_anid2
 - [ ] Web
 	- [ ] avatar
 	- [ ] color
@@ -102,9 +102,9 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] pickset
 	- [x] shuffle
 - [ ] Miscellaneous
-	- [ ] coin
+	- [x] coin
 	- [ ] dice
-	- [ ] guid
+	- [x] guid
 	- [ ] hash
 	- [ ] hidden
 	- [ ] n
