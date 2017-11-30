@@ -156,7 +156,8 @@ namespace ChanceNET
 		/// <param name="punctuation">Whether to put punctuation at the end of the sentence.</param>
 		/// <param name="punctuationMark">The character to use as punctuation</param>
 		/// <returns></returns>
-		public string Sentence(int? words = null, bool capitalize = false, bool punctuation = false ,char punctuationMark = '.')
+		public string Sentence(int? words = null, int? length = null,
+		                       bool capitalize = false, bool punctuation = false ,char punctuationMark = '.')
 		{
 			StringBuilder sentence = new StringBuilder();
 
@@ -174,31 +175,74 @@ namespace ChanceNET
 				sentence[0] = char.ToUpper(sentence[0]);
 			}
 
+			int sentenceLength = length ?? sentence.Length;
+
+			string result = sentence.ToString().Substring(0, sentenceLength);
+
 			if (punctuation)
 			{
-				sentence.Append(punctuationMark);
+				result += punctuationMark;
 			}
 
-			return sentence.ToString();
+			return result;
 		}
+
+		public string Paragraph(int? sentences = null, int? words = null, int? length = null)
+		{
+			StringBuilder paragraph = new StringBuilder();
+
+			int sentenceCount = sentences ?? Integer(3, 8);
+			int wordCount = 0;
+
+			for (int i = 0; i < sentenceCount; i++)
+			{
+				if (i != 0)
+				{
+					paragraph.Append(' ');
+				}
+
+				char punctuation = (i != sentenceCount - 1 && Bool(0.4)) ? ',' : '.';
+
+				string sentence = Sentence(punctuation: true, punctuationMark: punctuation);
+				int sentenceWords = sentence.Split(' ').Length;
+
+				if (words != null && (wordCount + sentenceWords) > words)
+				{
+					sentence = Sentence(punctuation: true, punctuationMark: punctuation,
+					                    words: words - wordCount);
+				}
+
+				if (length != null && (paragraph.Length + sentence.Length) > length)
+				{
+					sentence = Sentence(punctuation: true, punctuationMark: punctuation,
+					                    length : length - paragraph.Length);
+				}
+
+
+				paragraph.Append(sentence);
+			}
+
+
+			return paragraph.ToString();
+         }
 		
 		/// <summary>
-		/// Generate a random non-negative integer
+		/// Generate a random integer
 		/// </summary>
 		/// <returns></returns>
 		public int Integer()
 		{
-			return rand.Next();
+			return rand.Next(int.MinValue, int.MaxValue);
 		}
 
 		/// <summary>
-		/// Generate a random non-negative integer that is less than the given value
+		/// Generate a random integer that is less than the given value
 		/// </summary>
 		/// <param name="max"></param>
 		/// <returns></returns>
 		public int Integer(int max)
 		{
-			return rand.Next(max);
+			return rand.Next(int.MinValue, max);
 		}
 
 		/// <summary>
@@ -210,6 +254,25 @@ namespace ChanceNET
 		public int Integer(int min, int max)
 		{
 			return rand.Next(min, max);
+		}
+
+		/// <summary>
+		/// Generate a random non-negative integer
+		/// </summary>
+		/// <returns>The natural.</returns>
+		public int Natural()
+		{
+			return rand.Next();
+		}
+
+		/// <summary>
+		/// Generate a random non-negative integer that is less than the given value.
+		/// </summary>
+		/// <returns>The natural.</returns>
+		/// <param name="max">Max.</param>
+		public int Natural(int max)
+		{
+			return rand.Next(max);
 		}
 
 		/// <summary>
