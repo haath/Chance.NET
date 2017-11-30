@@ -225,25 +225,6 @@ namespace ChanceNET
 
 			return paragraph.ToString();
          }
-		
-		/// <summary>
-		/// Generate a random integer
-		/// </summary>
-		/// <returns></returns>
-		public int Integer()
-		{
-			return rand.Next(int.MinValue, int.MaxValue);
-		}
-
-		/// <summary>
-		/// Generate a random integer that is less than the given value
-		/// </summary>
-		/// <param name="max"></param>
-		/// <returns></returns>
-		public int Integer(int max)
-		{
-			return rand.Next(int.MinValue, max);
-		}
 
 		/// <summary>
 		/// Generate a random non-negative integer between min (inclusive) and max (exlusive)
@@ -251,18 +232,23 @@ namespace ChanceNET
 		/// <param name="min">Inclusive lower bound</param>
 		/// <param name="max">Exclusive upper bound</param>
 		/// <returns></returns>
-		public int Integer(int min, int max)
+		public int Integer(int min = int.MinValue, int max = int.MaxValue)
 		{
 			return rand.Next(min, max);
 		}
 
 		/// <summary>
-		/// Generate a random non-negative integer
+		/// Generate a random long number
 		/// </summary>
-		/// <returns>The natural.</returns>
-		public int Natural()
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
+		public long Long(long min = long.MinValue, long max = long.MaxValue)
 		{
-			return rand.Next();
+			byte[] buf = new byte[8];
+			rand.NextBytes(buf);
+			long longRand = BitConverter.ToInt64(buf, 0);
+			return (Math.Abs(longRand % (max - min)) + min);
 		}
 
 		/// <summary>
@@ -270,7 +256,7 @@ namespace ChanceNET
 		/// </summary>
 		/// <returns>The natural.</returns>
 		/// <param name="max">Max.</param>
-		public int Natural(int max)
+		public int Natural(int max = int.MaxValue)
 		{
 			return rand.Next(max);
 		}
@@ -315,6 +301,139 @@ namespace ChanceNET
 				default:
 					goto case AgeRange.Any;
 			}
+		}
+
+		public DateTime Birthday(AgeRange range = AgeRange.Any)
+		{
+			return Date(year: DateTime.Now.Year - Age());
+		}
+
+		public string FirstName(Gender? gender = null)
+		{
+			switch (gender)
+			{
+				case ChanceNET.Gender.Male:
+					return PickOne(Data.FirstNames.Male);
+
+				case ChanceNET.Gender.Female:
+					return PickOne(Data.FirstNames.Female);
+
+				default:
+					return PickOne(Data.FirstNames.Any);
+			}
+		}
+
+		public Gender Gender()
+		{
+			return Bool() ? ChanceNET.Gender.Male : ChanceNET.Gender.Female;
+		}
+
+		public string LastName()
+		{
+			return PickOne(Data.LastNames);
+		}
+
+		public string NamePrefix(Gender? gender = null)
+		{
+			switch (gender)
+			{
+				case ChanceNET.Gender.Male:
+					return PickOne(Data.Prefixes.Male);
+
+				case ChanceNET.Gender.Female:
+					return PickOne(Data.Prefixes.Female);
+
+				default:
+					return PickOne(Data.Prefixes.Any);
+			}
+		}
+
+		public string NameSuffix()
+		{
+			return PickOne(Data.Suffixes);
+		}
+
+		public string FullName(Gender? gender = null, bool prefix = false,
+			bool middle = false, bool middleInitial = false, bool suffix = false)
+		{
+			StringBuilder name = new StringBuilder();
+
+			if (prefix)
+			{
+				name.Append(NamePrefix(gender));
+				name.Append(' ');
+			}
+
+			name.Append(FirstName(gender));
+			name.Append(' ');
+
+			if (middle && middleInitial)
+			{
+				name.Append(char.ToUpper(Letter()));
+				name.Append(". ");
+			}
+			else if (middle)
+			{
+				name.Append(FirstName(gender));
+				name.Append(' ');
+			}
+
+			name.Append(LastName());
+
+			if (suffix)
+			{
+				name.Append(' ');
+				name.Append(NameSuffix());
+			}
+
+			return name.ToString();
+		}
+
+		/// <summary>
+		/// Generate a random Social Security Number
+		/// </summary>
+		/// <param name="dashes"></param>
+		/// <param name="ssnFour"></param>
+		/// <returns></returns>
+		public string SSN(bool dashes = true, bool ssnFour = false)
+		{
+			const string pool = "1234567890";
+
+			if (ssnFour)
+			{
+				return String(4, pool);
+			}
+
+			string dash = dashes ? "-" : "";
+
+			StringBuilder ssn = new StringBuilder();
+
+			ssn.Append(String(3, pool));
+			ssn.Append(dash);
+			ssn.Append(String(2, pool));
+			ssn.Append(dash);
+			ssn.Append(String(4, pool));
+
+			return ssn.ToString();
+		}
+
+		public DateTime Date(int? year = null, Month? month = null, int? day = null, int? minYear = null, int? maxYear = null)
+		{
+			DateTime randomDate = new DateTime(minYear ?? 1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+			DateTime maxDate = new DateTime(maxYear ?? 9999, 0, 0);
+
+			long ticksToAdd = Long(
+				min: 0,
+				max: maxDate.Ticks - randomDate.Ticks
+				);
+
+			randomDate = randomDate.AddTicks(ticksToAdd);
+
+			int randYear = year ?? randomDate.Year;
+			int randMonth = (int?)month ?? randomDate.Month;
+			int randDay = day ?? randomDate.Day;
+
+			return new DateTime(randYear, randMonth, randDay, randomDate.Hour, randomDate.Minute, randomDate.Second, randomDate.Millisecond);
 		}
 
 		/// <summary>

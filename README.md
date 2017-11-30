@@ -24,16 +24,14 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] paragraph
 - [ ] Person
 	- [x] age
-	- [ ] birthday
-	- [ ] cf
-	- [ ] cpf
-	- [ ] first
-	- [ ] gender
-	- [ ] last
-	- [ ] name
-	- [ ] prefix
+	- [x] birthday
+	- [x] first
+	- [x] gender
+	- [x] last
+	- [x] name
+	- [x] prefix
 	- [ ] ssn
-	- [ ] suffix
+	- [x] suffix
 - [ ] Mobile
 	- [ ] android_id
 	- [ ] apple_token
@@ -75,7 +73,7 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [ ] address
 - [ ] Time
 	- [ ] ampm
-	- [ ] date
+	- [x] date
 	- [ ] hammertime
 	- [ ] hour
 	- [ ] millisecond

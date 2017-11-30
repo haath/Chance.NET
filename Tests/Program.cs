@@ -15,9 +15,9 @@ namespace Tests
 			Chance c = new Chance();
 			
 
-			for (int i = 0; i < 1; i++)
+			for (int i = 0; i < 100; i++)
 			{
-				Console.WriteLine(c.Sentence(capitalize: true, punctuation: true));
+				Console.WriteLine(c.SSN());
 			}
 		}
 	}
