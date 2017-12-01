@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ChanceNET
 {
@@ -558,6 +559,52 @@ namespace ChanceNET
 			return "UA-" + account + "-" + property;
 		}
 
+		public string Hashtag()
+		{
+			return "#" + Word();
+		}
+
+		public string IP(string subnet = null)
+		{
+			StringBuilder ip = new StringBuilder();
+
+			byte[] p = new byte[4];
+			p[0] = (byte)Integer(min: 1, max: 255);
+			p[1] = (byte)Natural(max: 256);
+			p[2] = (byte)Natural(max: 256);
+			p[3] = (byte)Integer(min: 1, max: 255);
+
+			if (subnet != null)
+			{
+				Match m = Regex.Match(subnet, @"^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})$");
+
+				byte[] sp = new byte[4];
+				sp[0] = byte.Parse(m.Groups[1].Value);
+				sp[1] = byte.Parse(m.Groups[2].Value);
+				sp[2] = byte.Parse(m.Groups[3].Value);
+				sp[3] = byte.Parse(m.Groups[4].Value);
+				int bits = int.Parse(m.Groups[5].Value);
+
+				int bit = 0;
+				while (bits-- > 0)
+				{
+					
+
+					bit++;
+				}
+			}
+
+			ip.Append(p1);
+			ip.Append('.');
+			ip.Append(p2);
+			ip.Append('.');
+			ip.Append(p3);
+			ip.Append('.');
+			ip.Append(p4);
+
+			return ip.ToString();
+		}
+
 		public DateTime Date(int? year = null, Month? month = null, int? day = null, int? minYear = null, int? maxYear = null)
 		{
 			DateTime randomDate = new DateTime(minYear ?? 1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
@@ -577,6 +624,10 @@ namespace ChanceNET
 			return new DateTime(randYear, randMonth, randDay, randomDate.Hour, randomDate.Minute, randomDate.Second, randomDate.Millisecond);
 		}
 
+		/// <summary>
+		/// Flips a coin
+		/// </summary>
+		/// <returns>The coin.</returns>
 		public CoinSide Coin()
 		{
 			return Bool() ? CoinSide.Heads : CoinSide.Tails;

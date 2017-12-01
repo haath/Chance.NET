@@ -46,8 +46,8 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] email
 	- [x] fbid
 	- [x] google_analytics
-	- [ ] hashtag
-	- [ ] ip
+	- [x] hashtag
+	- [x] ip (pending subnet option)
 	- [ ] ipv6
 	- [ ] klout
 	- [ ] profession
