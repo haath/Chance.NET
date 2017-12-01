@@ -474,6 +474,10 @@ namespace ChanceNET
 				+ "&W=" + Integer(0, 10);
 		}
 
+		/// <summary>
+		/// BlackBerry pin.
+		/// </summary>
+		/// <returns>The pin.</returns>
 		public string BbPin()
 		{
 			return Hex(8);
@@ -504,6 +508,13 @@ namespace ChanceNET
 			return guid.ToString();
 		}
 
+		/// <summary>
+		/// Generate a random e-mail
+		/// </summary>
+		/// <returns>The email.</returns>
+		/// <param name="length">Length.</param>
+		/// <param name="domain">Domain.</param>
+		/// <param name="tld">Tld.</param>
 		public string Email(int? length = null, string domain = null, string tld = null)
 		{
 			return Word(length: length) + "@" + (domain ?? Domain(tld));
@@ -649,6 +660,31 @@ namespace ChanceNET
 		}
 
 		/// <summary>
+		/// Provide any function that generates random stuff (usually another Chance function) and a number
+		/// and Unique() will generate a random array of unique (not repeating) items with a length matching the one you specified.
+		/// </summary>
+		/// <returns>The unique.</returns>
+		/// <param name="length">Length.</param>
+		/// <param name="func">Func.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public List<T> Unique<T>(int length, Func<T> func)
+		{
+			List<T> list = new List<T>();
+			for (int i = 0; i < length; i++)
+			{
+				T val;
+				do
+				{
+					val = func();
+				} 
+				while (!list.Contains(val));
+					
+				list.Add(val);
+			}
+			return list;
+		}
+
+		/// <summary>
 		/// Get a random element with equal probability
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
@@ -663,6 +699,35 @@ namespace ChanceNET
 		public IEnumerable<T> PickSet<T>(IEnumerable<T> list, int count = 1)
 		{
 			return Shuffle(list).Take(count);
+		}
+
+
+		public T Weighted<T>(IEnumerable<T> list, Func<T, double> weight)
+		{
+			Dictionary<T, double> weights = new Dictionary<T, double>();
+			double sum = list.Sum(t =>
+			{
+				double w = weight(t);
+
+				if (w < 0)
+					throw new ArgumentOutOfRangeException("Weights cannot be negative.");
+				weights.Add(t, w);
+				return w;
+			});
+
+			double selected = sum * Double();
+
+			double partSum = 0;
+			foreach (T item in list)
+			{
+				partSum += weights[item];
+
+				if (partSum > selected)
+				{
+					return item;
+				}
+			}
+			throw new ArgumentException("List was empty");
 		}
 
 		/// <summary>

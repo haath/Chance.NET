@@ -106,11 +106,10 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] dice
 	- [x] guid
 	- [x] hash
-	- [ ] hidden
-	- [x] n (missing args)
+	- [x] n
 	- [ ] normal
 	- [ ] radio
 	- [ ] rpg
 	- [ ] tv
-	- [ ] unique
-	- [ ] weighted
+	- [x] unique
+	- [x] weighted

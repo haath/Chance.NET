@@ -13,11 +13,22 @@ namespace Tests
 		static void Main(string[] args)
 		{
 			Chance c = new Chance();
-			
 
-			for (int i = 0; i < 100; i++)
+			int[] count = new int[11];
+
+			for (int i = 0; i < 1000; i++)
 			{
-				Console.WriteLine(c.D12());
+				int[] test = new int[11] {
+					0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+				};
+
+				int p = c.Weighted(test, t => t);
+				count[p]++;
+			}
+
+			for (int i = 0; i < 11; i++)
+			{
+				Console.WriteLine(i + " " + count[i]);
 			}
 		}
 	}
