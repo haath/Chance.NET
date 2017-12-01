@@ -79,10 +79,22 @@ namespace ChanceNET
 				);
 		}
 
+		/// <summary>
+		/// Generate a random hexadecimal string
+		/// </summary>
+		/// <param name="length"></param>
+		/// <returns></returns>
 		public string Hex(int length)
 		{
 			const string pool = "0123456789abcdef";
 			return String(length, pool);
+		}
+
+		public byte[] Hash(int length)
+		{
+			byte[] hash = new byte[length];
+			rand.NextBytes(hash);
+			return hash;
 		}
 
 		/// <summary>
@@ -200,6 +212,7 @@ namespace ChanceNET
 			int sentenceCount = sentences ?? Integer(3, 8);
 			int wordCount = 0;
 
+			char lastPunctuation = '.';
 			for (int i = 0; i < sentenceCount; i++)
 			{
 				if (i != 0)
@@ -207,21 +220,22 @@ namespace ChanceNET
 					paragraph.Append(' ');
 				}
 
-				char punctuation = (i != sentenceCount - 1 && Bool(0.4)) ? ',' : '.';
+				bool capitalize = lastPunctuation == '.';
+				lastPunctuation = (i != sentenceCount - 1 && Bool(0.4)) ? ',' : '.';
 
-				string sentence = Sentence(punctuation: true, punctuationMark: punctuation);
+				string sentence = Sentence(punctuation: true, punctuationMark: lastPunctuation, capitalize: capitalize);
 				int sentenceWords = sentence.Split(' ').Length;
 
 				if (words != null && (wordCount + sentenceWords) > words)
 				{
-					sentence = Sentence(punctuation: true, punctuationMark: punctuation,
+					sentence = Sentence(punctuation: true, punctuationMark: lastPunctuation,
 					                    words: words - wordCount);
 				}
 
 				if (length != null && (paragraph.Length + sentence.Length) > length)
 				{
-					sentence = Sentence(punctuation: true, punctuationMark: punctuation,
-					                    length : length - paragraph.Length);
+					sentence = Sentence(punctuation: true, punctuationMark: lastPunctuation,
+					                    length : length - paragraph.Length, capitalize: capitalize);
 				}
 
 
@@ -283,6 +297,13 @@ namespace ChanceNET
 		public double Double(double min, double max)
 		{
 			return min + rand.NextDouble() * (max - min);
+		}
+
+		public byte Byte()
+		{
+			byte[] buf = new byte[1];
+			rand.NextBytes(buf);
+			return buf[0];
 		}
 
 		public int Age(AgeRange range = AgeRange.Any)
@@ -483,6 +504,49 @@ namespace ChanceNET
 			return guid.ToString();
 		}
 
+		public string Email(int? length = null, string domain = null, string tld = null)
+		{
+			return Word(length: length) + "@" + (domain ?? Domain(tld));
+		}
+
+		/// <summary>
+		/// Generate a random domain name
+		/// </summary>
+		/// <param name="tld"></param>
+		/// <returns></returns>
+		public string Domain(string tld = null)
+		{
+			return Word() + "." + (tld ?? Tld());
+		}
+
+		/// <summary>
+		/// Generate a random Top-Level Domain. (com, net, org etc.)
+		/// </summary>
+		/// <returns></returns>
+		public string Tld()
+		{
+			return PickOne(Data.TLDs);
+		}
+
+		/// <summary>
+		/// Generate a random Facebook id, aka fbid.
+		/// <para>NOTE: At the moment (Sep 2017), Facebook ids are "numeric strings" of length 16. 
+		/// However, Facebook Graph API documentation states that it is extremely likely to change over time.</para>
+		/// </summary>
+		/// <returns></returns>
+		public string FbId()
+		{
+			return "10000" + String(11, "1234567890");
+		}
+
+
+		public string GoogleAnalytics()
+		{
+			string account = Pad(Natural(max: 999999), 6);
+			string property = Pad(Natural(max: 99), 2);
+			return "UA-" + account + "-" + property;
+		}
+
 		public DateTime Date(int? year = null, Month? month = null, int? day = null, int? minYear = null, int? maxYear = null)
 		{
 			DateTime randomDate = new DateTime(minYear ?? 1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
@@ -505,6 +569,83 @@ namespace ChanceNET
 		public CoinSide Coin()
 		{
 			return Bool() ? CoinSide.Heads : CoinSide.Tails;
+		}
+
+		/// <summary>
+		/// Pad a number with some string until it reaches a desired width.
+		/// </summary>
+		/// <param name="number"></param>
+		/// <param name="length">Length of the final string</param>
+		/// <param name="padder"></param>
+		/// <returns></returns>
+		public static string Pad(int number, int length, char padder = '0')
+		{
+			StringBuilder num = new StringBuilder(number);
+
+			while (num.Length < length)
+			{
+				num.Insert(0, padder);
+			}
+
+			return num.ToString();
+		}
+
+		public int D4()
+		{
+			return Integer(1, 5);
+		}
+
+		public int D6()
+		{
+			return Integer(1, 7);
+		}
+
+		public int D8()
+		{
+			return Integer(1, 9);
+		}
+
+		public int D10()
+		{
+			return Integer(1, 11);
+		}
+
+		public int D12()
+		{
+			return Integer(1, 13);
+		}
+
+		public int D20()
+		{
+			return Integer(1, 21);
+		}
+
+		public int D30()
+		{
+			return Integer(1, 31);
+		}
+
+		public int D100()
+		{
+			return Integer(1, 101);
+		}
+
+		/// <summary>
+		/// Provide any function that generates random stuff (usually another Chance function) 
+		/// and a number and N() will generate a list of items with a length matching the length you specified.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="length"></param>
+		/// <param name="func"></param>
+		/// <returns></returns>
+		public List<T> N<T>(int length, Func<T> func)
+		{
+			List<T> list = new List<T>();
+			for (int i = 0; i < length; i++)
+			{
+				list.Add(func());
+			}
+			return list;
 		}
 
 		/// <summary>

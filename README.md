@@ -4,7 +4,7 @@ Chance.js port into native C# targetting portable .NET Standard.
 
 This project aims to mimic the original chance.js api as closely as possible while adapting it to C# types and practices. For example using enums for options and returning regular objects instead of json or strings.
 
-- [Docs](chancejs.com)
+- [Docs](http://chancejs.com)
 - [Source](https://github.com/chancejs/chancejs)
 
 ## Progress
@@ -42,16 +42,16 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [ ] avatar
 	- [ ] color
 	- [ ] company
-	- [ ] domain
-	- [ ] email
-	- [ ] fbid
-	- [ ] google_analytics
+	- [x] domain
+	- [x] email
+	- [x] fbid
+	- [x] google_analytics
 	- [ ] hashtag
 	- [ ] ip
 	- [ ] ipv6
 	- [ ] klout
 	- [ ] profession
-	- [ ] tld
+	- [x] tld
 	- [ ] twitter
 	- [ ] url
 - [ ] Location
@@ -97,19 +97,19 @@ This project aims to mimic the original chance.js api as closely as possible whi
 - [ ] Helpers
 	- [ ] capitalize
 	- [ ] mixin
-	- [ ] pad
+	- [s] pad
 	- [x] pickone
 	- [x] pickset
 	- [x] shuffle
 - [ ] Miscellaneous
 	- [x] coin
-	- [ ] dice
+	- [x] dice
 	- [x] guid
-	- [ ] hash
+	- [x] hash
 	- [ ] hidden
-	- [ ] n
+	- [x] n (missing args)
 	- [ ] normal
-	- [ ] radip
+	- [ ] radio
 	- [ ] rpg
 	- [ ] tv
 	- [ ] unique

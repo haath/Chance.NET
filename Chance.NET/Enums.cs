@@ -66,4 +66,12 @@ namespace ChanceNET
 		Heads,
 		Tails
 	}
+
+	public enum GravatarDefaults
+	{
+		Pattern,
+		Monster,
+		Face,
+		Retro
+	}
 }
