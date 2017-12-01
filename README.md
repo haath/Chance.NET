@@ -41,21 +41,23 @@ This project aims to mimic the original chance.js api as closely as possible whi
 - [ ] Web
 	- [ ] avatar
 	- [ ] color
-	- [ ] company
+	- [x] company
 	- [x] domain
 	- [x] email
 	- [x] fbid
 	- [x] google_analytics
 	- [x] hashtag
+	- [x] mac
 	- [x] ip (pending subnet option)
 	- [ ] ipv6
+	- [x] port
 	- [ ] klout
-	- [ ] profession
+	- [x] profession
 	- [x] tld
-	- [ ] twitter
+	- [x] twitter
 	- [ ] url
 - [ ] Location
-	- [ ] altitude
+	- [x] altitude
 	- [ ] areacode
 	- [ ] city
 	- [ ] latitude

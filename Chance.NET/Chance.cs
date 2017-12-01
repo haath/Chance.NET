@@ -594,15 +594,75 @@ namespace ChanceNET
 				}
 			}
 
-			ip.Append(p1);
+			ip.Append(p[0]);
 			ip.Append('.');
-			ip.Append(p2);
+			ip.Append(p[1]);
 			ip.Append('.');
-			ip.Append(p3);
+			ip.Append(p[2]);
 			ip.Append('.');
-			ip.Append(p4);
+			ip.Append(p[3]);
 
 			return ip.ToString();
+		}
+
+		public string MAC()
+		{
+			StringBuilder mac = new StringBuilder();
+
+			mac.Append(Hex(2).ToUpper());
+			mac.Append(':');
+			mac.Append(Hex(2).ToUpper());
+			mac.Append(':');
+			mac.Append(Hex(2).ToUpper());
+			mac.Append(':');
+			mac.Append(Hex(2).ToUpper());
+			mac.Append(':');
+			mac.Append(Hex(2).ToUpper());
+			mac.Append(':');
+			mac.Append(Hex(2).ToUpper());
+
+			return mac.ToString();
+		}
+
+		public string Profession(bool rank = false)
+		{
+			if (rank)
+			{
+				return PickOne(Data.Professions.Ranks) + " " + PickOne(Data.Professions.Names);
+			}
+			else
+			{
+				return PickOne(Data.Professions.Names);
+			}
+		}
+
+		public string Company()
+		{
+			return PickOne(Data.Companies);
+		}
+
+		public string Twitter()
+		{
+			return "@" + Word();
+		}
+
+		public string Url(string protocol = null, string domain = null, 
+		                  string path = null, string extension = null)
+		{
+			protocol = protocol ?? "http://";
+			domain = domain ?? Domain();
+			path = path ?? Word();
+			extension
+		}
+
+		public int Port()
+		{
+			return Natural(65536);
+		}
+
+		public double Altitude()
+		{
+			return Double(0, 8849);
 		}
 
 		public DateTime Date(int? year = null, Month? month = null, int? day = null, int? minYear = null, int? maxYear = null)

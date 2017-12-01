@@ -18,7 +18,7 @@ namespace Tests
 
 			for (int i = 0; i < 1000; i++)
 			{
-				Console.WriteLine(c.IP("123.234.456.678/24"));
+				Console.WriteLine(c.Profession(true));
 			}
 		}
 	}
