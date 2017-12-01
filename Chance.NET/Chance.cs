@@ -300,11 +300,45 @@ namespace ChanceNET
 			return min + rand.NextDouble() * (max - min);
 		}
 
+		public double Normal()
+		{
+			double u = Double();
+			double s2 = 1.0 / 9;
+			double m = 0.5;
+
+			double root = Math.Sqrt(2 * Math.PI * s2);
+			double st = Math.Sqrt(-2 * s2 * Math.Log(u * root));
+
+			if (u >= m)
+			{
+				return m + st;
+			}
+			else
+			{
+				return m - st;
+			}
+		}
+
+		double f(double x, double s)
+		{
+			double s2 = s*s;
+			double m = 0.5;
+			return Math.Exp(-((x - m) * (x - m) / (2 * s2)));
+		}
+
+		/// <summary>
+		/// Return a random Klout score. Range 1-99.
+		/// <para>https://klout.com/home</para>
+		/// </summary>
+		/// <returns>The klout.</returns>
+		public int Klout()
+		{
+			return Integer(1, 100);
+		}
+
 		public byte Byte()
 		{
-			byte[] buf = new byte[1];
-			rand.NextBytes(buf);
-			return buf[0];
+			return Hash(1)[0];
 		}
 
 		public int Age(AgeRange range = AgeRange.Any)
@@ -605,6 +639,20 @@ namespace ChanceNET
 			return ip.ToString();
 		}
 
+		public string IPv6()
+		{
+			StringBuilder ipv6 = new StringBuilder();
+
+			for (int i = 0; i < 8; i++)
+			{
+				if (i != 0)
+					ipv6.Append(':');
+				ipv6.Append(Hex(4));
+			}
+
+			return ipv6.ToString();
+		}
+
 		public string MAC()
 		{
 			StringBuilder mac = new StringBuilder();
@@ -649,10 +697,12 @@ namespace ChanceNET
 		public string Url(string protocol = null, string domain = null, 
 		                  string path = null, string extension = null)
 		{
-			protocol = protocol ?? "http://";
+			protocol = protocol ?? "http";
 			domain = domain ?? Domain();
 			path = path ?? Word();
-			extension
+			extension = extension ?? FileExtension();
+
+			return protocol + "://" + domain + "/" + path + "." + extension;
 		}
 
 		public int Port()
@@ -663,6 +713,25 @@ namespace ChanceNET
 		public double Altitude()
 		{
 			return Double(0, 8849);
+		}
+
+		/// <summary>
+		/// Generate a random US area code.
+		/// </summary>
+		/// <returns>The code.</returns>
+		public string AreaCode(bool parentheses = true)
+		{
+			StringBuilder code = new StringBuilder();
+
+			if (parentheses)
+				code.Append('(');
+			code.Append(Integer(2, 10));
+			code.Append(Integer(0, 9));
+			code.Append(Integer(0, 10));
+			if (parentheses)
+				code.Append(')');
+
+			return code.ToString();
 		}
 
 		public DateTime Date(int? year = null, Month? month = null, int? day = null, int? minYear = null, int? maxYear = null)
@@ -710,6 +779,13 @@ namespace ChanceNET
 			}
 
 			return num.ToString();
+		}
+
+		public static string Capitalize(string text)
+		{
+			char[] chars = text.ToCharArray();
+			chars[0] = char.ToUpper(chars[0]);
+			return new string(chars);
 		}
 
 		public int D4()
@@ -768,6 +844,27 @@ namespace ChanceNET
 				list.Add(func());
 			}
 			return list;
+		}
+
+		public string FileExtension(FileExtensionTypes? type = null)
+		{
+			switch (type)
+			{
+				case FileExtensionTypes.Raster:
+					return PickOne(Data.FileExtensions.Raster);
+
+				case FileExtensionTypes.Vector:
+					return PickOne(Data.FileExtensions.Vector);
+
+				case FileExtensionTypes._3D:
+					return PickOne(Data.FileExtensions._3D);
+
+				case FileExtensionTypes.Document:
+					return PickOne(Data.FileExtensions.Document);
+
+				default:
+					return PickOne(Data.FileExtensions.Any);
+			}
 		}
 
 		/// <summary>

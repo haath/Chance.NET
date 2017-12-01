@@ -14,12 +14,16 @@ namespace Tests
 		{
 			Chance c = new Chance();
 
-			int[] count = new int[11];
+			int count = 100000;
+			double sum = 0;
 
-			for (int i = 0; i < 1000; i++)
+			for (int i = 0; i < count; i++)
 			{
-				Console.WriteLine(c.Profession(true));
+				double s = c.Normal();
+				sum += s;
+				Console.WriteLine(s);
 			}
+			Console.WriteLine(sum / count);
 		}
 	}
 }

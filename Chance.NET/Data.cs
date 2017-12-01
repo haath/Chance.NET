@@ -110,6 +110,19 @@ namespace ChanceNET
 			{
 				"doc", "docx", "dot", "html", "xml", "odt", "odm", "ott", "csv", "rtf", "tex", "xhtml", "xps"
 			};
+
+			public static string[] Any
+			{
+				get
+				{
+					string[] combined = new string[Raster.Length + Vector.Length + _3D.Length + Document.Length];
+					Raster.CopyTo(combined, 0);
+					Vector.CopyTo(combined, Raster.Length);
+					_3D.CopyTo(combined, Raster.Length + Vector.Length);
+					Document.CopyTo(combined, Raster.Length + Vector.Length + _3D.Length);
+					return combined;
+				}
+			}
 		}
 	}
 }

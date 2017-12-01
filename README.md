@@ -49,16 +49,16 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] hashtag
 	- [x] mac
 	- [x] ip (pending subnet option)
-	- [ ] ipv6
+	- [x] ipv6
 	- [x] port
-	- [ ] klout
+	- [x] klout
 	- [x] profession
 	- [x] tld
 	- [x] twitter
-	- [ ] url
+	- [x] url
 - [ ] Location
 	- [x] altitude
-	- [ ] areacode
+	- [x] areacode
 	- [ ] city
 	- [ ] latitude
 	- [ ] longitude
@@ -97,9 +97,9 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [ ] exp_month
 	- [ ] exp_year
 - [ ] Helpers
-	- [ ] capitalize
+	- [x] capitalize
 	- [ ] mixin
-	- [s] pad
+	- [x] pad
 	- [x] pickone
 	- [x] pickset
 	- [x] shuffle

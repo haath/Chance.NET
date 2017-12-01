@@ -74,4 +74,12 @@ namespace ChanceNET
 		Face,
 		Retro
 	}
+
+	public enum FileExtensionTypes 
+	{
+		Raster,
+		Vector,
+		_3D,
+		Document
+	}
 }
