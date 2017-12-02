@@ -80,10 +80,35 @@ namespace ChanceNET
 
 	public enum GravatarDefaults
 	{
-		Pattern,
-		Monster,
-		Face,
-		Retro
+		/// <summary>
+		/// Mystery man
+		/// </summary>
+		MM,
+
+		/// <summary>
+		/// Geometric pattern based on hash
+		/// </summary>
+		Identicon,
+
+		/// <summary>
+		/// A generated monster icon
+		/// </summary>
+		MonsterId,
+
+		/// <summary>
+		/// A generated face
+		/// </summary>
+		Wavatar,
+
+		/// <summary>
+		/// 8-bit icon
+		/// </summary>
+		Retro,
+
+		/// <summary>
+		/// A transparent png
+		/// </summary>
+		Blank
 	}
 
 	public enum FileExtensionTypes 

@@ -38,9 +38,9 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] bb_pin
 	- [x] wp7_anid
 	- [x] wp8_anid2
-- [ ] Web
-	- [ ] avatar
-	- [ ] color
+- [x] Web
+	- [x] avatar
+	- [x] color
 	- [x] company
 	- [x] domain
 	- [x] email

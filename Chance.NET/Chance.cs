@@ -720,6 +720,39 @@ namespace ChanceNET
 			}
 		}
 
+		/// <summary>
+		/// Return a URL to a random avatar from Gravatar.
+		/// </summary>
+		/// <param name="defaultType"></param>
+		/// <returns></returns>
+		public string Avatar(GravatarDefaults? defaultType = null)
+		{
+			StringBuilder avatar = new StringBuilder("https://www.gravatar.com/avatar/");
+
+			avatar.Append(BitConverter.ToString(MD5()).Replace("-", string.Empty).ToLower());
+
+			if (defaultType != null)
+			{
+				avatar.Append("?d=");
+				avatar.Append(defaultType.ToString().ToLower());
+			}
+
+			return avatar.ToString();
+		}
+
+		/// <summary>
+		/// Generate a random color in Hex format.
+		/// </summary>
+		/// <returns></returns>
+		public string Color(byte? red = null, byte? green = null, byte? blue = null)
+		{
+			byte[] color = new byte[3];
+			color[0] = red ?? Byte();
+			color[1] = green ?? Byte();
+			color[2] = blue ?? Byte();
+			return "#" + BitConverter.ToString(color).Replace("-", string.Empty);
+		}
+
 		public string Company()
 		{
 			return PickOne(Data.Companies);

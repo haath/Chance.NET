@@ -18,7 +18,7 @@ namespace Tests
 
 			for (int i = 0; i < COUNT; i++)
 			{
-				Console.WriteLine(c.TimeZone().DisplayName);
+				Console.WriteLine(c.Avatar(GravatarDefaults.Identicon));
 			}
 		}
 	}
