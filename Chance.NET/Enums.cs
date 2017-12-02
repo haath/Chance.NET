@@ -82,4 +82,10 @@ namespace ChanceNET
 		_3D,
 		Document
 	}
+
+	public enum RadioSide
+	{
+		East,
+		West
+	}
 }

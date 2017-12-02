@@ -14,16 +14,12 @@ namespace Tests
 		{
 			Chance c = new Chance();
 
-			int count = 100000;
-			double sum = 0;
+			int count = 1000;
 
-			for (int i = 0; i < count; i++)
+			foreach (string postal in c.N(count, () => c.Address()))
 			{
-				double s = c.Normal();
-				sum += s;
-				Console.WriteLine(s);
+				Console.WriteLine(postal);
 			}
-			Console.WriteLine(sum / count);
 		}
 	}
 }

@@ -56,23 +56,24 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] tld
 	- [x] twitter
 	- [x] url
-- [ ] Location
+- [x] Location
 	- [x] altitude
 	- [x] areacode
 	- [x] city
 	- [x] latitude
 	- [x] longitude
 	- [x] coordinates
-	- [ ] country
-	- [ ] depth
-	- [ ] geohash
-	- [ ] phone
-	- [ ] postal
-	- [ ] province
-	- [ ] state
-	- [ ] street
-	- [ ] zip
-	- [ ] address
+	- [x] country
+	- [x] depth
+	- [x] geohash
+	- [ ] geojson (?)
+	- [x] phone (only US)
+	- [x] postal
+	- [ ] province (?)
+	- [x] state
+	- [x] street
+	- [x] zip
+	- [x] address
 - [ ] Time
 	- [ ] ampm
 	- [x] date
@@ -110,8 +111,8 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] hash
 	- [x] n
 	- [ ] normal
-	- [ ] radio
+	- [x] radio
 	- [ ] rpg
-	- [ ] tv
+	- [x] tv
 	- [x] unique
 	- [x] weighted

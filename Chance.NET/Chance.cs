@@ -28,6 +28,59 @@ namespace ChanceNET
 		}
 
 		/// <summary>
+		/// Generate a random non-negative integer between min (inclusive) and max (exlusive)
+		/// </summary>
+		/// <param name="min">Inclusive lower bound</param>
+		/// <param name="max">Exclusive upper bound</param>
+		/// <returns></returns>
+		public int Integer(int min = int.MinValue, int max = int.MaxValue)
+		{
+			return rand.Next(min, max);
+		}
+
+		/// <summary>
+		/// Generate a random long number
+		/// </summary>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
+		public long Long(long min = long.MinValue, long max = long.MaxValue)
+		{
+			byte[] buf = new byte[8];
+			rand.NextBytes(buf);
+			long longRand = BitConverter.ToInt64(buf, 0);
+			return (Math.Abs(longRand % (max - min)) + min);
+		}
+
+		/// <summary>
+		/// Generate a random non-negative integer that is less than the given value.
+		/// </summary>
+		/// <returns>The natural.</returns>
+		/// <param name="max">Max.</param>
+		public int Natural(int min = 0, int max = int.MaxValue)
+		{
+			return rand.Next(min, max);
+		}
+
+		/// <summary>
+		/// Generate a random double between 0.0 (inclusive) and 1.0 (exclusive)
+		/// </summary>
+		/// <returns></returns>
+		public double Double()
+		{
+			return rand.NextDouble();
+		}
+
+		/// <summary>
+		/// Generate a random double between min (inclusive) and max (exclusive)
+		/// </summary>
+		/// <returns></returns>
+		public double Double(double min, double max)
+		{
+			return min + rand.NextDouble() * (max - min);
+		}
+
+		/// <summary>
 		/// Generate a random boolean with a 50% chance of being true
 		/// </summary>
 		/// <returns></returns>
@@ -37,7 +90,7 @@ namespace ChanceNET
 		}
 
 		/// <summary>
-		/// Generate a random boolean with a given likelihood of being true.
+		/// Generate a random boolean with a given likelihood of being true, between 0.0 and 1.0
 		/// </summary>
 		/// <param name="likelihood">The chance to return true</param>
 		/// <returns></returns>
@@ -54,6 +107,11 @@ namespace ChanceNET
 		public char Char(string pool = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()")
 		{
 			return PickOne(pool.ToCharArray());
+		}
+
+		public char Alphanumeric()
+		{
+			return Char("abcdefghijklmnopqrstuvwxyz0123456789");
 		}
 		
 		/// <summary>
@@ -150,7 +208,7 @@ namespace ChanceNET
 		{
 			StringBuilder word = new StringBuilder();
 
-			syllables = syllables ?? Integer(1, 4);
+			syllables = syllables ?? Integer(1, 5);
 
 			for (int i = 0; i < syllables; i++)
 			{
@@ -246,59 +304,6 @@ namespace ChanceNET
 
 			return paragraph.ToString();
          }
-
-		/// <summary>
-		/// Generate a random non-negative integer between min (inclusive) and max (exlusive)
-		/// </summary>
-		/// <param name="min">Inclusive lower bound</param>
-		/// <param name="max">Exclusive upper bound</param>
-		/// <returns></returns>
-		public int Integer(int min = int.MinValue, int max = int.MaxValue)
-		{
-			return rand.Next(min, max);
-		}
-
-		/// <summary>
-		/// Generate a random long number
-		/// </summary>
-		/// <param name="min"></param>
-		/// <param name="max"></param>
-		/// <returns></returns>
-		public long Long(long min = long.MinValue, long max = long.MaxValue)
-		{
-			byte[] buf = new byte[8];
-			rand.NextBytes(buf);
-			long longRand = BitConverter.ToInt64(buf, 0);
-			return (Math.Abs(longRand % (max - min)) + min);
-		}
-
-		/// <summary>
-		/// Generate a random non-negative integer that is less than the given value.
-		/// </summary>
-		/// <returns>The natural.</returns>
-		/// <param name="max">Max.</param>
-		public int Natural(int max = int.MaxValue)
-		{
-			return rand.Next(max);
-		}
-
-		/// <summary>
-		/// Generate a random double between 0.0 (inclusive) and 1.0 (exclusive)
-		/// </summary>
-		/// <returns></returns>
-		public double Double()
-		{
-			return rand.NextDouble();
-		}
-
-		/// <summary>
-		/// Generate a random double between min (inclusive) and max (exclusive)
-		/// </summary>
-		/// <returns></returns>
-		public double Double(double min, double max)
-		{
-			return min + rand.NextDouble() * (max - min);
-		}
 
 		public double Normal()
 		{
@@ -791,6 +796,176 @@ namespace ChanceNET
 		}
 
 		/// <summary>
+		/// Return a random country.
+		/// </summary>
+		/// <returns></returns>
+		public WorldCountry Country()
+		{
+			return PickOne(Data.Countries);
+		}
+
+		public USState State()
+		{
+			return PickOne(Data.States);
+		}
+
+		/// <summary>
+		/// Generate a random depth, in meters. Depths are always negative
+		/// </summary>
+		/// <returns></returns>
+		public double Depth(double min = -10994, double max = 0)
+		{
+			return Double(min, max);
+		}
+
+		/// <summary>
+		/// Generate a random geohash.
+		/// <para>http://en.wikipedia.org/wiki/Geohash</para>
+		/// </summary>
+		/// <returns></returns>
+		public string Geohash(int length = 7)
+		{
+			const string pool = "0123456789bcdefghjkmnpqrstuvwxyz";
+			return String(length, pool);
+		}
+
+		/// <summary>
+		/// Generate a random phone.
+		/// <para>Conforms to NANP for a proper US phone number.</para>
+		/// </summary>
+		/// <param name="areaCode"></param>
+		/// <returns></returns>
+		public string Phone(int? areaCode = null, bool formatted = true)
+		{
+			return PhoneUS(areaCode, formatted);
+		}
+
+		string PhoneUS(int? areaCode = null, bool formatted = true)
+		{
+			StringBuilder phone = new StringBuilder();
+
+			string code = areaCode == null ? AreaCode() : "(" + areaCode + ")";
+
+			phone.Append(code);
+			if (formatted) phone.Append(' ');
+
+			// exchange
+			phone.Append(Integer(2, 10));
+			phone.Append(Natural(10));
+			phone.Append(Natural(10));
+			if (formatted) phone.Append(' ');
+
+			// subscriber
+			phone.Append(Integer(1000, 10000));
+
+			return phone.ToString();
+		}
+
+		/// <summary>
+		/// Return a Canadian Postal code. Returned postal code is valid with respect to the Postal District (first character) and format only.
+		/// </summary>
+		/// <returns></returns>
+		public string Postal()
+		{
+			StringBuilder postal = new StringBuilder();
+
+			//pd
+			postal.Append(Char("XVTSRPNKLMHJGECBA"));
+
+			//fsa
+			postal.Append(Natural(10));
+			postal.Append(char.ToUpper(Alphanumeric()));
+
+			postal.Append(' ');
+
+			// ldu
+			postal.Append(Natural(10));
+			postal.Append(char.ToUpper(Alphanumeric()));
+			postal.Append(Natural(10));
+
+			return postal.ToString();
+		}
+
+		/// <summary>
+		/// Returns a random US-valid Zip Code.
+		/// </summary>
+		/// <returns></returns>
+		public string Zip()
+		{
+			Dictionary<string, double> codeRanges = new Dictionary<string, double>();
+
+			foreach (USState state in Data.States)
+			{
+				string[] ranges = state.ZipCodes.Split(',');
+				foreach (string stateRange in ranges)
+				{
+					string[] stateminmax = stateRange.Split('-');
+
+					if (stateminmax.Length == 1)
+					{
+						codeRanges.Add(stateRange, 1);
+					}
+					else
+					{
+						int min = int.Parse(stateminmax[0]);
+						int max = int.Parse(stateminmax[1]);
+
+						codeRanges.Add(stateRange, max - min);
+					}
+				}
+			}
+
+
+			string range = Weighted(codeRanges);
+
+			string[] minmax = range.Split('-');
+			int code;
+
+			if (minmax.Length == 1)
+			{
+				code = int.Parse(range);
+			}
+			else
+			{
+				int min = int.Parse(minmax[0]);
+				int max = int.Parse(minmax[1]);
+
+				code = Integer(min, max + 1);
+			}
+
+			return Pad(code, 5);
+		}
+
+		public string Street(bool shortSuffix = true)
+		{
+			StringBuilder street = new StringBuilder();
+
+			street.Append(Capitalize(Word()));
+			street.Append(' ');
+
+			street.Append(StreetSuffix(shortSuffix));
+
+			return street.ToString();
+		}
+
+		public string StreetSuffix(bool abbreviation = false)
+		{
+			if (abbreviation)
+			{
+				return PickOne(Data.StreetSuffixes.Abbreviations) + ".";
+			}
+			else
+			{
+				return PickOne(Data.StreetSuffixes.Names);
+			}
+		}
+
+		public string Address(bool shortStreetSuffix = true)
+		{
+			return Natural(5, 2001) + " " + Street(shortStreetSuffix);
+		}
+
+		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="year"></param>
@@ -837,7 +1012,8 @@ namespace ChanceNET
 		/// <returns></returns>
 		public static string Pad(int number, int length, char padder = '0')
 		{
-			StringBuilder num = new StringBuilder(number);
+			StringBuilder num = new StringBuilder();
+			num.Append(number);
 
 			while (num.Length < length)
 			{
@@ -854,44 +1030,89 @@ namespace ChanceNET
 			return new string(chars);
 		}
 
+		public int Dice(int sides)
+		{
+			return Integer(1, sides + 1);
+		}
+
 		public int D4()
 		{
-			return Integer(1, 5);
+			return Dice(4);
 		}
 
 		public int D6()
 		{
-			return Integer(1, 7);
+			return Dice(6);
 		}
 
 		public int D8()
 		{
-			return Integer(1, 9);
+			return Dice(8);
 		}
 
 		public int D10()
 		{
-			return Integer(1, 11);
+			return Dice(10);
 		}
 
 		public int D12()
 		{
-			return Integer(1, 13);
+			return Dice(12);
 		}
 
 		public int D20()
 		{
-			return Integer(1, 21);
+			return Dice(20);
 		}
 
 		public int D30()
 		{
-			return Integer(1, 31);
+			return Dice(30);
 		}
 
 		public int D100()
 		{
-			return Integer(1, 101);
+			return Dice(100);
+		}
+
+		/// <summary>
+		/// Generate a random radio call sign.
+		/// </summary>
+		/// <param name="side"></param>
+		/// <returns></returns>
+		public string Radio(RadioSide? side = null)
+		{
+			StringBuilder radio = new StringBuilder();
+			switch (side)
+			{
+				case RadioSide.East:
+					radio.Append('W');
+					break;
+
+				case RadioSide.West:
+					radio.Append('K');
+					break;
+
+				default:
+					radio.Append(Char("KW"));
+					break;
+			}
+
+			radio.Append(char.ToUpper(Alphanumeric()));
+			radio.Append(char.ToUpper(Alphanumeric()));
+			radio.Append(char.ToUpper(Alphanumeric()));
+
+			return radio.ToString();
+		}
+
+		/// <summary>
+		/// Generate a TV station call sign. This is an alias for Radio() since they both follow the same rules.
+		/// </summary>
+		/// <param name="side"></param>
+		/// <returns></returns>
+		public string Tv(RadioSide? side = null)
+		{
+			return Radio(side);
 		}
 
 		/// <summary>
@@ -902,14 +1123,12 @@ namespace ChanceNET
 		/// <param name="length"></param>
 		/// <param name="func"></param>
 		/// <returns></returns>
-		public List<T> N<T>(int length, Func<T> func)
+		public IEnumerable<T> N<T>(int length, Func<T> func)
 		{
-			List<T> list = new List<T>();
 			for (int i = 0; i < length; i++)
 			{
-				list.Add(func());
+				yield return func();
 			}
-			return list;
 		}
 
 		public string FileExtension(FileExtensionTypes? type = null)
@@ -975,26 +1194,37 @@ namespace ChanceNET
 			return Shuffle(list).Take(count);
 		}
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="list"></param>
+		/// <param name="weight">Given an item, this function should return its weight.</param>
+		/// <returns></returns>
 		public T Weighted<T>(IEnumerable<T> list, Func<T, double> weight)
 		{
-			Dictionary<T, double> weights = new Dictionary<T, double>();
-			double sum = list.Sum(t =>
-			{
-				double w = weight(t);
+			Dictionary<T, double> weightedList = list.ToDictionary(
+				t => t,
+				t => weight(t)
+				);
 
-				if (w < 0)
-					throw new ArgumentOutOfRangeException("Weights cannot be negative.");
-				weights.Add(t, w);
-				return w;
-			});
+			return Weighted(weightedList);
+		}
 
+		public T Weighted<T>(Dictionary<T, double> weightedList)
+		{
+			double sum = weightedList.Sum(t => t.Value);
 			double selected = sum * Double();
 
 			double partSum = 0;
-			foreach (T item in list)
+			foreach (T item in weightedList.Keys)
 			{
-				partSum += weights[item];
+				if (weightedList[item] < 0)
+				{
+					throw new ArgumentOutOfRangeException("Weights cannot be null.");
+				}
+
+				partSum += weightedList[item];
 
 				if (partSum > selected)
 				{
