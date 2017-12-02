@@ -74,19 +74,19 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] street
 	- [x] zip
 	- [x] address
-- [ ] Time
-	- [ ] ampm
+- [x] Time
+	- [x] ampm
 	- [x] date
-	- [ ] hammertime
-	- [ ] hour
-	- [ ] millisecond
-	- [ ] minute
-	- [ ] month
-	- [ ] second
-	- [ ] timestamp
-	- [ ] timezone
-	- [ ] weekday
-	- [ ] year
+	- [x] hammertime
+	- [x] timestamp
+	- [x] hour
+	- [x] minute
+	- [x] second
+	- [x] millisecond
+	- [x] month
+	- [x] timezone
+	- [x] weekday (seperate weekends?)
+	- [x] year
 - [ ] Finance
 	- [ ] cc
 	- [ ] cc_type

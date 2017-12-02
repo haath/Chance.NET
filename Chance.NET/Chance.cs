@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -976,6 +977,15 @@ namespace ChanceNET
 		}
 
 		/// <summary>
+		/// Returns either 'am' or 'pm'.
+		/// </summary>
+		/// <returns></returns>
+		public string AmPm()
+		{
+			return Bool() ? "am" : "pm";
+		}
+
+		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="year"></param>
@@ -987,21 +997,122 @@ namespace ChanceNET
 
 		public DateTime Date(int? year = null, Month? month = null, int? day = null, int? minYear = null, int? maxYear = null)
 		{
+			DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 			DateTime randomDate = new DateTime(minYear ?? 1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-			DateTime maxDate = new DateTime(maxYear ?? 9999, 0, 0);
+			DateTime maxDate = new DateTime(maxYear ?? 9999, 1, 1);
 
-			long ticksToAdd = Long(
-				min: 0,
-				max: maxDate.Ticks - randomDate.Ticks
-				);
-
-			randomDate = randomDate.AddTicks(ticksToAdd);
+			TimeSpan range = maxDate - randomDate;
+			TimeSpan toAdd = new TimeSpan((long)(Double() * range.Ticks));
+			
+			randomDate += toAdd;
 
 			int randYear = year ?? randomDate.Year;
 			int randMonth = (int?)month ?? randomDate.Month;
 			int randDay = day ?? randomDate.Day;
 
-			return new DateTime(randYear, randMonth, randDay, randomDate.Hour, randomDate.Minute, randomDate.Second, randomDate.Millisecond);
+			return new DateTime(randYear, randMonth, randDay, randomDate.Hour, randomDate.Minute, randomDate.Second, randomDate.Millisecond, DateTimeKind.Utc);
+		}
+
+		/// <summary>
+		/// Hammertime is the name given to a Unix time with milliseconds. Which is the same as saying the number of milliseconds since 1970. 
+		/// It has finer granularity than a normal Unix timestamp and thus is often used in realtime applications.
+		/// </summary>
+		/// <returns></returns>
+		public long HammerTime()
+		{
+			DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+			return (long)(Date() - UnixEpoch).TotalMilliseconds;
+		}
+
+		/// <summary>
+		/// Generate a random timestamp. This is a standard Unix time, so a random number of seconds since January 1, 1970.
+		/// </summary>
+		/// <returns></returns>
+		public long Timestamp()
+		{
+			DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+			return (long)(Date() - UnixEpoch).TotalSeconds;
+		}
+
+		/// <summary>
+		/// Generate a random hour.
+		/// <para>By default, returns an hour from 1 to 12 for a standard 12-hour clock.</para>
+		/// </summary>
+		/// <param name="twentyFour"></param>
+		/// <returns></returns>
+		public int Hour(bool twentyFour = false)
+		{
+			return twentyFour ? Natural(24) : Integer(1, 13);
+		}
+
+		/// <summary>
+		/// Generate a random minute from 0 to 59. Idea is for generating a clock time.
+		/// </summary>
+		/// <returns></returns>
+		public int Minute()
+		{
+			return Natural(60);
+		}
+
+		/// <summary>
+		/// Generate a random second from 0 to 59. Idea is for generating a clock time.
+		/// </summary>
+		/// <returns></returns>
+		public int Second()
+		{
+			return Natural(60);
+		}
+
+		/// <summary>
+		/// Generate a random millisecond from 0 to 999. Idea is for generating a clock time.
+		/// </summary>
+		/// <returns></returns>
+		public int Millisecond()
+		{
+			return Natural(1000);
+		}
+
+		/// <summary>
+		/// Generate a random month.
+		/// </summary>
+		/// <returns></returns>
+		public Month Month()
+		{
+			return (Month)Integer(1, 13);
+		}
+
+		/// <summary>
+		/// Return a random timezone.
+		/// <para>Picks only from the timezones that are found on the system via TimeZoneInfo.GetSystemTimeZones()</para>
+		/// </summary>
+		/// <returns></returns>
+		public TimeZoneInfo TimeZone()
+		{
+			ReadOnlyCollection<TimeZoneInfo> timeZones = TimeZoneInfo.GetSystemTimeZones();
+			return PickOne(timeZones);
+		}
+
+		/// <summary>
+		/// Return a weekday
+		/// </summary>
+		/// <returns></returns>
+		public Weekday Weekday()
+		{
+			return (Weekday)Integer(1, 8);
+		}
+
+		/// <summary>
+		/// Generate a random year.
+		/// <para>By default, min is the current year and max is 100 years greater than min, with a ceiling on 9999, which is the maximum year for a DateTime field.</para>
+		/// </summary>
+		/// <returns></returns>
+		public int Year(int? min, int? max)
+		{
+			int mn = min ?? DateTime.Now.Year;
+			int mx = max ?? Math.Min(mn + 100, 9999);
+			return Integer(mn, mx);
 		}
 
 		/// <summary>

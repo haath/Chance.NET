@@ -16,6 +16,10 @@ namespace Tests
 		{
 			Chance c = new Chance();
 
+			for (int i = 0; i < COUNT; i++)
+			{
+				Console.WriteLine(c.TimeZone().DisplayName);
+			}
 		}
 	}
 }
