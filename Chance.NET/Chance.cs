@@ -672,6 +672,26 @@ namespace ChanceNET
 			return mac.ToString();
 		}
 
+		public byte[] MD5()
+		{
+			return Hash(12);
+		}
+
+		public byte[] SHA1()
+		{
+			return Hash(20);
+		}
+
+		public byte[] SHA256()
+		{
+			return Hash(32);
+		}
+
+		public byte[] SHA512()
+		{
+			return Hash(64);
+		}
+
 		public string Profession(bool rank = false)
 		{
 			if (rank)
@@ -733,6 +753,52 @@ namespace ChanceNET
 
 			return code.ToString();
 		}
+
+		/// <summary>
+		/// Generate a random city name
+		/// </summary>
+		/// <returns></returns>
+		public string City()
+		{
+			return Capitalize(Word(syllables: 3));
+		}
+
+		/// <summary>
+		/// Generate a random latitude.
+		/// </summary>
+		/// <returns></returns>
+		public double Latitude(double min = -90, double max = 90)
+		{
+			return Double(min, max);
+		}
+
+		/// <summary>
+		/// Generate a random longitude.
+		/// </summary>
+		/// <returns></returns>
+		public double Longitude(double min = -180, double max = 180)
+		{
+			return Double(min, max);
+		}
+
+		/// <summary>
+		/// Generate random coordinates, which are latitude and longitude, comma separated.
+		/// </summary>
+		/// <returns></returns>
+		public string Coordinates(double latMin = -90, double latMax = 90, double lngMin = -180, double lngMax = 180)
+		{
+			return Latitude(latMin, latMax) + ", " + Longitude(lngMin, lngMax);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="year"></param>
+		/// <param name="month"></param>
+		/// <param name="day"></param>
+		/// <param name="minYear"></param>
+		/// <param name="maxYear"></param>
+		/// <returns></returns>
 
 		public DateTime Date(int? year = null, Month? month = null, int? day = null, int? minYear = null, int? maxYear = null)
 		{

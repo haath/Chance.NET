@@ -59,10 +59,10 @@ This project aims to mimic the original chance.js api as closely as possible whi
 - [ ] Location
 	- [x] altitude
 	- [x] areacode
-	- [ ] city
-	- [ ] latitude
-	- [ ] longitude
-	- [ ] coordinates
+	- [x] city
+	- [x] latitude
+	- [x] longitude
+	- [x] coordinates
 	- [ ] country
 	- [ ] depth
 	- [ ] geohash
