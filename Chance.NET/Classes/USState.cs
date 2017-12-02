@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChanceNET
 {
-	public class USState
+	public struct USState
 	{
 		public readonly string Abbreviation;
 		public readonly string StateName;

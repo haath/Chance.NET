@@ -423,37 +423,8 @@ namespace ChanceNET
 		public string FullName(Gender? gender = null, bool prefix = false,
 			bool middle = false, bool middleInitial = false, bool suffix = false)
 		{
-			StringBuilder name = new StringBuilder();
-
-			if (prefix)
-			{
-				name.Append(NamePrefix(gender));
-				name.Append(' ');
-			}
-
-			name.Append(FirstName(gender));
-			name.Append(' ');
-
-			if (middle && middleInitial)
-			{
-				name.Append(char.ToUpper(Letter()));
-				name.Append(". ");
-			}
-			else if (middle)
-			{
-				name.Append(FirstName(gender));
-				name.Append(' ');
-			}
-
-			name.Append(LastName());
-
-			if (suffix)
-			{
-				name.Append(' ');
-				name.Append(NameSuffix());
-			}
-
-			return name.ToString();
+			Person person = Person(gender: gender);
+			return person.FullName(prefix, middle, middleInitial, suffix);
 		}
 
 		/// <summary>
@@ -482,6 +453,11 @@ namespace ChanceNET
 			ssn.Append(String(4, pool));
 
 			return ssn.ToString();
+		}
+
+		public Person Person(AgeRange ageRange = AgeRange.Any, Gender? gender = null)
+		{
+			return new Person(this, ageRange, gender);
 		}
 
 		public string AndroidId()

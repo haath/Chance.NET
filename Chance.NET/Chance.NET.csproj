@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chance.cs" />
+    <Compile Include="Classes\Person.cs" />
     <Compile Include="Classes\USState.cs" />
     <Compile Include="Classes\WorldCountry.cs" />
     <Compile Include="Data.cs" />

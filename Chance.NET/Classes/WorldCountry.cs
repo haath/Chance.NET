@@ -6,16 +6,8 @@ using System.Threading.Tasks;
 
 namespace ChanceNET
 {
-	public class WorldCountry
+	public struct WorldCountry
 	{
-		internal WorldCountry()
-		{
-			Name = null;
-			Alpha2Code = null;
-			Alpha3Code = null;
-			NumericCode = null;
-			Enabled = false;
-		}
 
 		internal WorldCountry(string name, string alpha2Code, string alpha3Code, string numericCode, bool enabled)
 		{
