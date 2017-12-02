@@ -10,16 +10,12 @@ namespace Tests
 {
 	class Program
 	{
+		const int COUNT = 1000000;
+
 		static void Main(string[] args)
 		{
 			Chance c = new Chance();
 
-			int count = 1000;
-
-			foreach (string postal in c.N(count, () => c.Address()))
-			{
-				Console.WriteLine(postal);
-			}
 		}
 	}
 }

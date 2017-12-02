@@ -104,15 +104,15 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] pickone
 	- [x] pickset
 	- [x] shuffle
-- [ ] Miscellaneous
+- [x] Miscellaneous
 	- [x] coin
 	- [x] dice
 	- [x] guid
 	- [x] hash
 	- [x] n
-	- [ ] normal
+	- [x] normal
 	- [x] radio
-	- [ ] rpg
+	- [x] rpg
 	- [x] tv
 	- [x] unique
 	- [x] weighted

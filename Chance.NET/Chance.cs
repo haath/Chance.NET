@@ -22,6 +22,18 @@ namespace ChanceNET
 
 		}
 
+		public Chance(string seed)
+		{
+			this.seed = 0;
+
+			for (int i = 0; i < seed.Length; i++)
+			{
+				this.seed = (int)seed[i] + (this.seed << 6) + (this.seed << 16) - this.seed;
+			}
+
+			rand = new Random(this.seed);
+		}
+
 		public int GetSeed()
 		{
 			return seed;
@@ -78,6 +90,54 @@ namespace ChanceNET
 		public double Double(double min, double max)
 		{
 			return min + rand.NextDouble() * (max - min);
+		}
+
+		/// <summary>
+		/// Return a normally-distributed random variate.
+		/// </summary>
+		/// <returns></returns>
+		public double Normal()
+		{
+			double s2 = 1.0 / 36;
+			double m = 0.5;
+
+			double res;
+
+			do
+			{
+				double x1 = Double();
+				double x2 = Double();
+
+				double sqrt = Math.Sqrt(-2 * s2 * Math.Log(x1));
+				double cos = Math.Cos(2 * Math.PI * x2);
+
+				res = sqrt * cos + m;
+			}
+			while (res < 0 || res >= 1.0);
+
+			return res;
+		}
+
+		/// <summary>
+		/// Return a normally-distributed value between min (inclusive) and max (exclusive).
+		/// </summary>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
+		public double Normal(double min, double max)
+		{
+			return min + Normal() * (max - min);
+		}
+
+		/// <summary>
+		/// Return a normally-distributed value between min (inclusive) and max (exclusive).
+		/// </summary>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
+		public int Normal(int min, int max)
+		{
+			return (int)Math.Floor(min + Normal() * (max - min));
 		}
 
 		/// <summary>
@@ -303,33 +363,7 @@ namespace ChanceNET
 
 
 			return paragraph.ToString();
-         }
-
-		public double Normal()
-		{
-			double u = Double();
-			double s2 = 1.0 / 9;
-			double m = 0.5;
-
-			double root = Math.Sqrt(2 * Math.PI * s2);
-			double st = Math.Sqrt(-2 * s2 * Math.Log(u * root));
-
-			if (u >= m)
-			{
-				return m + st;
-			}
-			else
-			{
-				return m - st;
-			}
-		}
-
-		double f(double x, double s)
-		{
-			double s2 = s*s;
-			double m = 0.5;
-			return Math.Exp(-((x - m) * (x - m) / (2 * s2)));
-		}
+        }
 
 		/// <summary>
 		/// Return a random Klout score. Range 1-99.
@@ -1052,6 +1086,34 @@ namespace ChanceNET
 		}
 
 		/// <summary>
+		/// Given an input looking like #d#, where the first # is the number of dice to roll and the second # is the max of each die, returns an array of dice values.
+		/// </summary>
+		/// <param name="rolls"></param>
+		/// <returns></returns>
+		public int[] Rpg(string rolls)
+		{
+			int times = int.Parse(rolls.Split('d')[0]);
+			int dice = int.Parse(rolls.Split('d')[1]);
+
+			int[] results = new int[times];
+			for (int i = 0; i < times; i++)
+			{
+				results[i] = Dice(dice);
+			}
+			return results;
+		}
+
+		/// <summary>
+		/// Given an input looking like #d#, where the first # is the number of dice to roll and the second # is the max of each die, returns the sum of the dice rolled.
+		/// </summary>
+		/// <param name="rolls"></param>
+		/// <returns></returns>
+		public int RpgSum(string rolls)
+		{
+			return Rpg(rolls).Sum();
+		}
+
+		/// <summary>
 		/// Generate a random radio call sign.
 		/// </summary>
 		/// <param name="side"></param>
@@ -1099,12 +1161,14 @@ namespace ChanceNET
 		/// <param name="length"></param>
 		/// <param name="func"></param>
 		/// <returns></returns>
-		public IEnumerable<T> N<T>(int length, Func<T> func)
+		public List<T> N<T>(int length, Func<T> func)
 		{
+			List<T> list = new List<T>();
 			for (int i = 0; i < length; i++)
 			{
-				yield return func();
+				list.Add(func());
 			}
+			return list;
 		}
 
 		public string FileExtension(FileExtensionTypes? type = null)
@@ -1187,6 +1251,12 @@ namespace ChanceNET
 			return Weighted(weightedList);
 		}
 
+		/// <summary>
+		/// Given a dictionary where each key-value pair is an item and its weight, this method made a weighted random pick of one item and return it.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="weightedList"></param>
+		/// <returns></returns>
 		public T Weighted<T>(Dictionary<T, double> weightedList)
 		{
 			double sum = weightedList.Sum(t => t.Value);
@@ -1197,7 +1267,7 @@ namespace ChanceNET
 			{
 				if (weightedList[item] < 0)
 				{
-					throw new ArgumentOutOfRangeException("Weights cannot be null.");
+					throw new ArgumentOutOfRangeException("Weights cannot be negative.");
 				}
 
 				partSum += weightedList[item];
@@ -1219,6 +1289,15 @@ namespace ChanceNET
 		public IEnumerable<T> Shuffle<T>(IEnumerable<T> list)
 		{
 			return list.OrderBy(e => Integer());
+		}
+
+		/// <summary>
+		/// This instance will use its own random generator to produce the seed for a new Chance instance and return it.
+		/// </summary>
+		/// <returns></returns>
+		public Chance New()
+		{
+			return new Chance(Integer());
 		}
 	}
 }
