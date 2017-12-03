@@ -450,5 +450,29 @@ namespace ChanceNET
 				"Ave", "Blvd", "Ctr", "Cir", "Ct", "Dr", "Ext", "Gln", "Grv", "Hts", "Hwy", "Jct", "Key", "Ln", "Loop", "Mnr", "Mill", "Park", "Pkwy", "Pass", "Path", "Pike", "Pl", "Plz", "Pt", "Rdg", "Riv", "Rd", "Sq", "St", "Ter", "Trl", "Tpke", "Vw", "Way"
 			};
 		}
+
+		public static IEnumerable<CreditCardType> CreditCardTypes
+		{
+			get
+			{
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.AmericanExpress, "American Express", "amex", "34", 15, "4-6-5");
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.Bankcard, "Bankcard", "bankcard", "5610", 16, "4-4-4-4");
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.ChinaUnionPay, "China UnionPay", "chinaunion", "62", 16, "4-4-4-4");
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.DinersClubCarteBlanche, "Diners Club Carte Blanche", "dcarte", "300", 14, "4-6-4");
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.DinersClubEnRoute, "Diners Club enRoute", "dcenroute", "2014", 15, "4-7-4");
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.DinersClubInternational, "Diners Club International", "dcintl", "36", 14, "4-6-4");
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.DinersClubUnitedStatesAndCanada, "Diners Club United States & Canada", "dcusc", "54", 16, "4-4-4-4");
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.DiscoverCard, "Discover Card", "discover", "6011", 16, "4-4-4-4");
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.InstaPayment, "InstaPayment", "instapay", "637", 16, "4-4-4-4");
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.JCB, "JCB", "jcb", "3528", 16, "4-4-4-4");
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.Laser, "Laser", "laser", "6304", 16, "4-4-4-4");
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.Maestro, "Maestro", "maestro", "5018", 16, "4-4-4-4");
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.Mastercard, "Mastercard", "mc", "51", 16, "4-4-4-4");
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.Solo, "Solo", "solo", "6334", 16, "4-4-4-4");
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.Switch, "Switch", "switch", "4903", 16, "4-4-4-4");
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.Visa, "Visa", "visa", "4", 16, "4-4-4-4");
+				yield return new CreditCardType(ChanceNET.CreditCardTypes.VisaElectron, "Visa Electron", "electron", "4026", 16, "4-4-4-4");
+			}
+		}
 	}
 }

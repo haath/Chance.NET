@@ -10,7 +10,7 @@ namespace Tests
 {
 	class Program
 	{
-		const int COUNT = 1000000;
+		const int COUNT = 1000;
 
 		static void Main(string[] args)
 		{
@@ -18,7 +18,9 @@ namespace Tests
 
 			for (int i = 0; i < COUNT; i++)
 			{
-				Console.WriteLine(c.Avatar(GravatarDefaults.Identicon));
+				CreditCard card = c.CreditCard();
+
+				Console.WriteLine(card.Type + "\t\t" + card.FormattedNumber);
 			}
 		}
 	}

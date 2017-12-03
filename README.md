@@ -88,15 +88,15 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] weekday (seperate weekends?)
 	- [x] year
 - [ ] Finance
-	- [ ] cc
-	- [ ] cc_type
+	- [x] cc
+	- [x] cc_type
+	- [x] exp
+	- [x] exp_month
+	- [x] exp_year
 	- [ ] currency
 	- [ ] currency_pair
 	- [ ] dollar
 	- [ ] euro
-	- [ ] exp
-	- [ ] exp_month
-	- [ ] exp_year
 - [ ] Helpers
 	- [x] capitalize
 	- [ ] mixin

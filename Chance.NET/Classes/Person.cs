@@ -37,7 +37,7 @@ namespace ChanceNET
 			}
 		}
 
-		internal Person(Chance chance, AgeRange ageRange = AgeRange.Any, Gender? gender = null)
+		internal Person(Chance chance, AgeRanges ageRange = AgeRanges.Any, Gender? gender = null)
 		{
 			Gender = gender ?? chance.Gender();
 

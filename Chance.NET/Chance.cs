@@ -70,9 +70,9 @@ namespace ChanceNET
 		/// </summary>
 		/// <returns>The natural.</returns>
 		/// <param name="max">Max.</param>
-		public int Natural(int min = 0, int max = int.MaxValue)
+		public int Natural(int max = int.MaxValue)
 		{
-			return rand.Next(min, max);
+			return rand.Next(0, max);
 		}
 
 		/// <summary>
@@ -381,33 +381,36 @@ namespace ChanceNET
 			return Hash(1)[0];
 		}
 
-		public int Age(AgeRange range = AgeRange.Any)
+		public int Age(AgeRanges range = AgeRanges.Any)
 		{
-			switch (range)
+			if (range == AgeRanges.Any)
+				return Natural(100);
+
+			Dictionary<int, double> ranges = new Dictionary<int, double>();
+
+			if (range.HasFlag(AgeRanges.Child))
 			{
-				case AgeRange.Any:
-					return Natural(100);
-
-				case AgeRange.Child:
-					return Integer(0, 13);
-
-				case AgeRange.Teen:
-					return Integer(13, 20);
-
-				case AgeRange.Adult:
-					return Integer(18, 65);
-
-				case AgeRange.Senior:
-					return Integer(60, 100);
-
-				default:
-					goto case AgeRange.Any;
+				ranges.Add(Integer(0, 13), 13);
 			}
+			if (range.HasFlag(AgeRanges.Teen))
+			{
+				ranges.Add(Integer(13, 20), 7);
+			}
+			if (range.HasFlag(AgeRanges.Adult))
+			{
+				ranges.Add(Integer(18, 65), 47);
+			}
+			if (range.HasFlag(AgeRanges.Senior))
+			{
+				ranges.Add(Integer(60, 100), 40);
+			}
+
+			return Weighted(ranges);
 		}
 
-		public DateTime Birthday(AgeRange range = AgeRange.Any)
+		public DateTime Birthday(AgeRanges range = AgeRanges.Any)
 		{
-			return Date(year: DateTime.Now.Year - Age());
+			return Date(year: DateTime.Now.Year - Age(range));
 		}
 
 		public string FirstName(Gender? gender = null)
@@ -490,7 +493,7 @@ namespace ChanceNET
 			return ssn.ToString();
 		}
 
-		public Person Person(AgeRange ageRange = AgeRange.Any, Gender? gender = null)
+		public Person Person(AgeRanges ageRange = AgeRanges.Any, Gender? gender = null)
 		{
 			return new Person(this, ageRange, gender);
 		}
@@ -895,8 +898,8 @@ namespace ChanceNET
 
 			// exchange
 			phone.Append(Integer(2, 10));
-			phone.Append(Natural(10));
-			phone.Append(Natural(10));
+			phone.Append(Natural(max: 10));
+			phone.Append(Natural(max: 10));
 			if (formatted) phone.Append(' ');
 
 			// subscriber
@@ -917,15 +920,15 @@ namespace ChanceNET
 			postal.Append(Char("XVTSRPNKLMHJGECBA"));
 
 			//fsa
-			postal.Append(Natural(10));
+			postal.Append(Natural(max: 10));
 			postal.Append(char.ToUpper(Alphanumeric()));
 
 			postal.Append(' ');
 
 			// ldu
-			postal.Append(Natural(10));
+			postal.Append(Natural(max: 10));
 			postal.Append(char.ToUpper(Alphanumeric()));
-			postal.Append(Natural(10));
+			postal.Append(Natural(max: 10));
 
 			return postal.ToString();
 		}
@@ -1006,7 +1009,7 @@ namespace ChanceNET
 
 		public string Address(bool shortStreetSuffix = true)
 		{
-			return Natural(5, 2001) + " " + Street(shortStreetSuffix);
+			return Integer(5, 2001) + " " + Street(shortStreetSuffix);
 		}
 
 		/// <summary>
@@ -1077,7 +1080,7 @@ namespace ChanceNET
 		/// <returns></returns>
 		public int Hour(bool twentyFour = false)
 		{
-			return twentyFour ? Natural(24) : Integer(1, 13);
+			return twentyFour ? Natural(max: 24) : Integer(1, 13);
 		}
 
 		/// <summary>
@@ -1086,7 +1089,7 @@ namespace ChanceNET
 		/// <returns></returns>
 		public int Minute()
 		{
-			return Natural(60);
+			return Natural(max: 60);
 		}
 
 		/// <summary>
@@ -1095,7 +1098,7 @@ namespace ChanceNET
 		/// <returns></returns>
 		public int Second()
 		{
-			return Natural(60);
+			return Natural(max: 60);
 		}
 
 		/// <summary>
@@ -1104,16 +1107,16 @@ namespace ChanceNET
 		/// <returns></returns>
 		public int Millisecond()
 		{
-			return Natural(1000);
+			return Natural(max: 1000);
 		}
 
 		/// <summary>
 		/// Generate a random month.
 		/// </summary>
 		/// <returns></returns>
-		public Month Month()
+		public Month Month(Month min = ChanceNET.Month.January, Month max = ChanceNET.Month.December)
 		{
-			return (Month)Integer(1, 13);
+			return (Month)Integer((int)min, (int)max + 1);
 		}
 
 		/// <summary>
@@ -1131,13 +1134,15 @@ namespace ChanceNET
 		/// Return a weekday
 		/// </summary>
 		/// <returns></returns>
-		public Weekday Weekday()
+		public Weekday Weekday(WeekdayTypes type = WeekdayTypes.Any)
 		{
-			return (Weekday)Integer(1, 8);
+			int min = type.HasFlag(WeekdayTypes.Weekday) ? 1 : 6;
+			int max = type.HasFlag(WeekdayTypes.Weekend) ? 8 : 6;
+			return (Weekday)Integer(min, max);
 		}
 
 		/// <summary>
-		/// Generate a random year.
+		/// Generate a random year between min and max (inclusive).
 		/// <para>By default, min is the current year and max is 100 years greater than min, with a ceiling on 9999, which is the maximum year for a DateTime field.</para>
 		/// </summary>
 		/// <returns></returns>
@@ -1145,7 +1150,119 @@ namespace ChanceNET
 		{
 			int mn = min ?? DateTime.Now.Year;
 			int mx = max ?? Math.Min(mn + 100, 9999);
-			return Integer(mn, mx);
+			return Integer(mn, mx + 1);
+		}
+
+		public string CreditCardNumber(CreditCardTypes? types = null)
+		{
+			CreditCardType type = CreditCardType(types);
+
+			StringBuilder number = new StringBuilder();
+
+			// Start with the prefix
+			number.Append(type.Prefix);
+
+			// Generate every digit except the last
+			while (number.Length < type.Length - 1)
+			{
+				number.Append(Natural(max: 10));
+			}
+
+			// Generate the last digit according to Luhn algorithm
+			int[] digits = number.ToString().ToCharArray().Select(digit => (int)(digit - '0')).ToArray();
+			number.Append(LuhnCalculate(digits));
+
+			return number.ToString();
+		}
+
+		static int LuhnCalculate(int[] digits)
+		{
+			digits = digits.Reverse().ToArray();
+			int sum = 0;
+
+			for (int i = 0, l = digits.Length; l > i; ++i)
+			{
+				int digit = +digits[i];
+				if (i % 2 == 0)
+				{
+					digit *= 2;
+					if (digit > 9)
+					{
+						digit -= 9;
+					}
+				}
+				sum += digit;
+			}
+			return (sum * 9) % 10;
+
+		}
+
+		public CreditCardType CreditCardType(CreditCardTypes? types = null)
+		{
+			CreditCardTypes type = types ?? (CreditCardTypes)0xFF;
+
+			IEnumerable<CreditCardType> pool = Data.CreditCardTypes.Where(t => type.HasFlag(t.Type));
+
+			return PickOne(pool);
+		}
+
+		/// <summary>
+		/// Generate a random credit card expiration year.
+		/// <para>A random year between today and 10 years in the future.</para>
+		/// </summary>
+		/// <returns></returns>
+		public int ExpirationYear()
+		{
+			int min = (DateTime.Now.Month + 1 == 12) ? DateTime.Now.Year + 1 : DateTime.Now.Year;
+			int max = DateTime.Now.Year + 10;
+			return Year(min, max);
+		}
+
+		/// <summary>
+		/// Generate a random credit card expiration month.
+		/// <para>If expYear is set and is the current year then this will make sure that the expiration month is after the current month.</para>
+		/// <para>This because many credit card sandboxes require an expiration date later than the current date so it’s necessary when generating
+		/// an expiration with the current year to generate a month later than the current month.</para>
+		/// <para>Exception to the above would be if the current month is December.</para>
+		/// </summary>
+		/// <param name="expYear">The expiration year of the card.</param>
+		/// <returns></returns>
+		public Month ExpirationMonth(int? expYear = null)
+		{
+			int min = (expYear != null && expYear == DateTime.Now.Year) ? DateTime.Now.Month + 1 : 1;
+			if (min == 13)
+				min = 12;
+			return Month(min: (Month)min);
+		}
+
+		/// <summary>
+		/// Generate a random credit card expiration date.
+		/// <para>This DateTime object will point to the last day of the month, since that is when all credit card types expire.
+		/// Thus making the returned object useful for comparisons.</para>
+		/// </summary>
+		/// <returns></returns>
+		public DateTime ExpirationDate()
+		{
+			int year = ExpirationYear();
+			int month = (int)ExpirationMonth(year);
+			int day = DateTime.DaysInMonth(year, month);
+
+			return new DateTime(year, month, day);
+		}
+
+		/// <summary>
+		/// Generate a random credit card expiration in the MM/YYYY format.
+		/// </summary>
+		/// <returns></returns>
+		public string ExpirationString()
+		{
+			int year = ExpirationYear();
+			return Pad((int)ExpirationMonth(year), 2) + "/" + year;
+		}
+
+		public CreditCard CreditCard(CreditCardTypes? types = null)
+		{
+			return new CreditCard(this, types);
 		}
 
 		/// <summary>
@@ -1317,23 +1434,33 @@ namespace ChanceNET
 
 		public string FileExtension(FileExtensionTypes? type = null)
 		{
-			switch (type)
+			if (type == null)
 			{
-				case FileExtensionTypes.Raster:
-					return PickOne(Data.FileExtensions.Raster);
-
-				case FileExtensionTypes.Vector:
-					return PickOne(Data.FileExtensions.Vector);
-
-				case FileExtensionTypes._3D:
-					return PickOne(Data.FileExtensions._3D);
-
-				case FileExtensionTypes.Document:
-					return PickOne(Data.FileExtensions.Document);
-
-				default:
-					return PickOne(Data.FileExtensions.Any);
+				return PickOne(Data.FileExtensions.Any);
 			}
+
+			List<string> extensions = new List<string>();
+
+			FileExtensionTypes t = (FileExtensionTypes)type;
+
+			if (t.HasFlag(FileExtensionTypes.Raster))
+			{
+				extensions.AddRange(Data.FileExtensions.Raster);
+			}
+			if (t.HasFlag(FileExtensionTypes.Vector))
+			{
+				extensions.AddRange(Data.FileExtensions.Vector);
+			}
+			if (t.HasFlag(FileExtensionTypes._3D))
+			{
+				extensions.AddRange(Data.FileExtensions._3D);
+			}
+			if (t.HasFlag(FileExtensionTypes.Document))
+			{
+				extensions.AddRange(Data.FileExtensions.Document);
+			}
+
+			return PickOne(extensions);
 		}
 
 		/// <summary>
