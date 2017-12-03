@@ -756,6 +756,15 @@ namespace ChanceNET
 			return "#" + BitConverter.ToString(color).Replace("-", string.Empty);
 		}
 
+		/// <summary>
+		/// Returns the name of a random color.
+		/// </summary>
+		/// <returns></returns>
+		public string ColorName()
+		{
+			return PickOne(Data.ColorNames);
+		}
+
 		public string Company()
 		{
 			return PickOne(Data.Companies);
@@ -1263,6 +1272,57 @@ namespace ChanceNET
 		public CreditCard CreditCard(CreditCardTypes? types = null)
 		{
 			return new CreditCard(this, types);
+		}
+
+		/// <summary>
+		/// Retrurns a random currency.
+		/// </summary>
+		/// <returns></returns>
+		public Currency Currency()
+		{
+			return PickOne(Data.Currencies);
+		}
+
+		/// <summary>
+		/// Generate a currency pair. Handy for simulating currency conversions. Guaranteed to return a unique pair (and not the same currency twice).
+		/// </summary>
+		/// <returns></returns>
+		public Currency[] CurrencyPair()
+		{
+			Currency c1 = Currency();
+			Currency c2;
+			do
+			{
+				c2 = Currency();
+			}
+			while (c1.Code == c2.Code);
+			return new Currency[2] { c1, c2 };
+		}
+
+		/// <summary>
+		/// Return a random dollar amount, formatted with separators.
+		/// <para>By default returns dollar amount lesser than 10000. Optionally specify the max to make it larger (or smaller).</para>
+		/// </summary>
+		/// <returns></returns>
+		public string Dollar(double min = 0, double max = 10000)
+		{
+			double amount = Math.Round(Double(min, max), 2);
+
+			string prefix = amount > 0 ? "$" : "-$";
+
+			return string.Format("{0}{1:N2}", prefix, Math.Abs(amount));
+		}
+
+		/// <summary>
+		/// Return a random euro amount, formatted with separators.
+		/// <para>By default returns dollar amount lesser than 10000. Optionally specify the max to make it larger (or smaller).</para>
+		/// </summary>
+		/// <returns></returns>
+		public string Euro(double min = 0, double max = 10000)
+		{
+			double amount = Math.Round(Double(min, max), 2);
+
+			return string.Format("{0:N2}€", amount);
 		}
 
 		/// <summary>

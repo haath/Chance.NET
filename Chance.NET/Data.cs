@@ -477,5 +477,143 @@ namespace ChanceNET
 				yield return new CreditCardType(ChanceNET.CreditCardTypes.VisaElectron, "Visa Electron", "electron", "4026", 16, "4-4-4-4");
 			}
 		}
+
+		public static string[] ColorNames =
+		{
+			"AliceBlue", "Black", "Navy", "DarkBlue", "MediumBlue", "Blue", "DarkGreen", "Green", "Teal", "DarkCyan", "DeepSkyBlue", "DarkTurquoise", "MediumSpringGreen", "Lime", "SpringGreen",
+			"Aqua", "Cyan", "MidnightBlue", "DodgerBlue", "LightSeaGreen", "ForestGreen", "SeaGreen", "DarkSlateGray", "LimeGreen", "MediumSeaGreen", "Turquoise", "RoyalBlue", "SteelBlue", "DarkSlateBlue", "MediumTurquoise",
+			"Indigo", "DarkOliveGreen", "CadetBlue", "CornflowerBlue", "RebeccaPurple", "MediumAquaMarine", "DimGray", "SlateBlue", "OliveDrab", "SlateGray", "LightSlateGray", "MediumSlateBlue", "LawnGreen", "Chartreuse",
+			"Aquamarine", "Maroon", "Purple", "Olive", "Gray", "SkyBlue", "LightSkyBlue", "BlueViolet", "DarkRed", "DarkMagenta", "SaddleBrown", "Ivory", "White",
+			"DarkSeaGreen", "LightGreen", "MediumPurple", "DarkViolet", "PaleGreen", "DarkOrchid", "YellowGreen", "Sienna", "Brown", "DarkGray", "LightBlue", "GreenYellow", "PaleTurquoise", "LightSteelBlue", "PowderBlue",
+			"FireBrick", "DarkGoldenRod", "MediumOrchid", "RosyBrown", "DarkKhaki", "Silver", "MediumVioletRed", "IndianRed", "Peru", "Chocolate", "Tan", "LightGray", "Thistle", "Orchid", "GoldenRod", "PaleVioletRed",
+			"Crimson", "Gainsboro", "Plum", "BurlyWood", "LightCyan", "Lavender", "DarkSalmon", "Violet", "PaleGoldenRod", "LightCoral", "Khaki", "AliceBlue", "HoneyDew", "Azure", "SandyBrown", "Wheat", "Beige", "WhiteSmoke",
+			"MintCream", "GhostWhite", "Salmon", "AntiqueWhite", "Linen", "LightGoldenRodYellow", "OldLace", "Red", "Fuchsia", "Magenta", "DeepPink", "OrangeRed", "Tomato", "HotPink", "Coral", "DarkOrange", "LightSalmon", "Orange",
+			"LightPink", "Pink", "Gold", "PeachPuff", "NavajoWhite", "Moccasin", "Bisque", "MistyRose", "BlanchedAlmond", "PapayaWhip", "LavenderBlush", "SeaShell", "Cornsilk", "LemonChiffon", "FloralWhite", "Snow", "Yellow", "LightYellow"
+		};
+
+		public static IEnumerable<Currency> Currencies
+		{
+			get
+			{
+				yield return new Currency("USD", "US Dollar", "$", "US dollars");
+				yield return new Currency("CAD", "Canadian Dollar", "CA$", "Canadian dollars");
+				yield return new Currency("EUR", "Euro", "€", "euros");
+				yield return new Currency("AED", "United Arab Emirates Dirham", "AED", "UAE dirhams");
+				yield return new Currency("AFN", "Afghan Afghani", "Af", "Afghan Afghanis");
+				yield return new Currency("ALL", "Albanian Lek", "ALL", "Albanian lekë");
+				yield return new Currency("AMD", "Armenian Dram", "AMD", "Armenian drams");
+				yield return new Currency("ARS", "Argentine Peso", "AR$", "Argentine pesos");
+				yield return new Currency("AUD", "Australian Dollar", "AU$", "Australian dollars");
+				yield return new Currency("AZN", "Azerbaijani Manat", "man.", "Azerbaijani manats");
+				yield return new Currency("BAM", "Bosnia-Herzegovina Convertible Mark", "KM", "Bosnia-Herzegovina convertible marks");
+				yield return new Currency("BDT", "Bangladeshi Taka", "Tk", "Bangladeshi takas");
+				yield return new Currency("BGN", "Bulgarian Lev", "BGN", "Bulgarian leva");
+				yield return new Currency("BHD", "Bahraini Dinar", "BD", "Bahraini dinars");
+				yield return new Currency("BIF", "Burundian Franc", "FBu", "Burundian francs");
+				yield return new Currency("BND", "Brunei Dollar", "BN$", "Brunei dollars");
+				yield return new Currency("BOB", "Bolivian Boliviano", "Bs", "Bolivian bolivianos");
+				yield return new Currency("BRL", "Brazilian Real", "R$", "Brazilian reals");
+				yield return new Currency("BWP", "Botswanan Pula", "BWP", "Botswanan pulas");
+				yield return new Currency("BYR", "Belarusian Ruble", "BYR", "Belarusian rubles");
+				yield return new Currency("BZD", "Belize Dollar", "BZ$", "Belize dollars");
+				yield return new Currency("CDF", "Congolese Franc", "CDF", "Congolese francs");
+				yield return new Currency("CHF", "Swiss Franc", "CHF", "Swiss francs");
+				yield return new Currency("CLP", "Chilean Peso", "CL$", "Chilean pesos");
+				yield return new Currency("CNY", "Chinese Yuan", "CN¥", "Chinese yuan");
+				yield return new Currency("COP", "Colombian Peso", "CO$", "Colombian pesos");
+				yield return new Currency("CRC", "Costa Rican Colón", "₡", "Costa Rican colóns");
+				yield return new Currency("CVE", "Cape Verdean Escudo", "CV$", "Cape Verdean escudos");
+				yield return new Currency("CZK", "Czech Republic Koruna", "Kč", "Czech Republic korunas");
+				yield return new Currency("DJF", "Djiboutian Franc", "Fdj", "Djiboutian francs");
+				yield return new Currency("DKK", "Danish Krone", "Dkr", "Danish kroner");
+				yield return new Currency("DOP", "Dominican Peso", "RD$", "Dominican pesos");
+				yield return new Currency("DZD", "Algerian Dinar", "DA", "Algerian dinars");
+				yield return new Currency("EEK", "Estonian Kroon", "Ekr", "Estonian kroons");
+				yield return new Currency("EGP", "Egyptian Pound", "EGP", "Egyptian pounds");
+				yield return new Currency("ERN", "Eritrean Nakfa", "Nfk", "Eritrean nakfas");
+				yield return new Currency("ETB", "Ethiopian Birr", "Br", "Ethiopian birrs");
+				yield return new Currency("GBP", "British Pound Sterling", "£", "British pounds sterling");
+				yield return new Currency("GEL", "Georgian Lari", "GEL", "Georgian laris");
+				yield return new Currency("GHS", "Ghanaian Cedi", "GH₵", "Ghanaian cedis");
+				yield return new Currency("GNF", "Guinean Franc", "FG", "Guinean francs");
+				yield return new Currency("GTQ", "Guatemalan Quetzal", "GTQ", "Guatemalan quetzals");
+				yield return new Currency("HKD", "Hong Kong Dollar", "HK$", "Hong Kong dollars");
+				yield return new Currency("HNL", "Honduran Lempira", "HNL", "Honduran lempiras");
+				yield return new Currency("HRK", "Croatian Kuna", "kn", "Croatian kunas");
+				yield return new Currency("HUF", "Hungarian Forint", "Ft", "Hungarian forints");
+				yield return new Currency("IDR", "Indonesian Rupiah", "Rp", "Indonesian rupiahs");
+				yield return new Currency("ILS", "Israeli New Sheqel", "₪", "Israeli new sheqels");
+				yield return new Currency("INR", "Indian Rupee", "Rs", "Indian rupees");
+				yield return new Currency("IQD", "Iraqi Dinar", "IQD", "Iraqi dinars");
+				yield return new Currency("IRR", "Iranian Rial", "IRR", "Iranian rials");
+				yield return new Currency("ISK", "Icelandic Króna", "Ikr", "Icelandic krónur");
+				yield return new Currency("JMD", "Jamaican Dollar", "J$", "Jamaican dollars");
+				yield return new Currency("JOD", "Jordanian Dinar", "JD", "Jordanian dinars");
+				yield return new Currency("JPY", "Japanese Yen", "¥", "Japanese yen");
+				yield return new Currency("KES", "Kenyan Shilling", "Ksh", "Kenyan shillings");
+				yield return new Currency("KHR", "Cambodian Riel", "KHR", "Cambodian riels");
+				yield return new Currency("KMF", "Comorian Franc", "CF", "Comorian francs");
+				yield return new Currency("KRW", "South Korean Won", "₩", "South Korean won");
+				yield return new Currency("KWD", "Kuwaiti Dinar", "KD", "Kuwaiti dinars");
+				yield return new Currency("KZT", "Kazakhstani Tenge", "KZT", "Kazakhstani tenges");
+				yield return new Currency("LBP", "Lebanese Pound", "LB£", "Lebanese pounds");
+				yield return new Currency("LKR", "Sri Lankan Rupee", "SLRs", "Sri Lankan rupees");
+				yield return new Currency("LTL", "Lithuanian Litas", "Lt", "Lithuanian litai");
+				yield return new Currency("LVL", "Latvian Lats", "Ls", "Latvian lati");
+				yield return new Currency("LYD", "Libyan Dinar", "LD", "Libyan dinars");
+				yield return new Currency("MAD", "Moroccan Dirham", "MAD", "Moroccan dirhams");
+				yield return new Currency("MDL", "Moldovan Leu", "MDL", "Moldovan lei");
+				yield return new Currency("MGA", "Malagasy Ariary", "MGA", "Malagasy Ariaries");
+				yield return new Currency("MKD", "Macedonian Denar", "MKD", "Macedonian denari");
+				yield return new Currency("MMK", "Myanma Kyat", "MMK", "Myanma kyats");
+				yield return new Currency("MOP", "Macanese Pataca", "MOP$", "Macanese patacas");
+				yield return new Currency("MUR", "Mauritian Rupee", "MURs", "Mauritian rupees");
+				yield return new Currency("MXN", "Mexican Peso", "MX$", "Mexican pesos");
+				yield return new Currency("MYR", "Malaysian Ringgit", "RM", "Malaysian ringgits");
+				yield return new Currency("MZN", "Mozambican Metical", "MTn", "Mozambican meticals");
+				yield return new Currency("NAD", "Namibian Dollar", "N$", "Namibian dollars");
+				yield return new Currency("NGN", "Nigerian Naira", "₦", "Nigerian nairas");
+				yield return new Currency("NIO", "Nicaraguan Córdoba", "C$", "Nicaraguan córdobas");
+				yield return new Currency("NOK", "Norwegian Krone", "Nkr", "Norwegian kroner");
+				yield return new Currency("NPR", "Nepalese Rupee", "NPRs", "Nepalese rupees");
+				yield return new Currency("NZD", "New Zealand Dollar", "NZ$", "New Zealand dollars");
+				yield return new Currency("OMR", "Omani Rial", "OMR", "Omani rials");
+				yield return new Currency("PAB", "Panamanian Balboa", "B/.", "Panamanian balboas");
+				yield return new Currency("PEN", "Peruvian Nuevo Sol", "S/.", "Peruvian nuevos soles");
+				yield return new Currency("PHP", "Philippine Peso", "₱", "Philippine pesos");
+				yield return new Currency("PKR", "Pakistani Rupee", "PKRs", "Pakistani rupees");
+				yield return new Currency("PLN", "Polish Zloty", "zł", "Polish zlotys");
+				yield return new Currency("PYG", "Paraguayan Guarani", "₲", "Paraguayan guaranis");
+				yield return new Currency("QAR", "Qatari Rial", "QR", "Qatari rials");
+				yield return new Currency("RON", "Romanian Leu", "RON", "Romanian lei");
+				yield return new Currency("RSD", "Serbian Dinar", "din.", "Serbian dinars");
+				yield return new Currency("RUB", "Russian Ruble", "RUB", "Russian rubles");
+				yield return new Currency("RWF", "Rwandan Franc", "RWF", "Rwandan francs");
+				yield return new Currency("SAR", "Saudi Riyal", "SR", "Saudi riyals");
+				yield return new Currency("SDG", "Sudanese Pound", "SDG", "Sudanese pounds");
+				yield return new Currency("SEK", "Swedish Krona", "Skr", "Swedish kronor");
+				yield return new Currency("SGD", "Singapore Dollar", "S$", "Singapore dollars");
+				yield return new Currency("SOS", "Somali Shilling", "Ssh", "Somali shillings");
+				yield return new Currency("SYP", "Syrian Pound", "SY£", "Syrian pounds");
+				yield return new Currency("THB", "Thai Baht", "฿", "Thai baht");
+				yield return new Currency("TND", "Tunisian Dinar", "DT", "Tunisian dinars");
+				yield return new Currency("TOP", "Tongan Paʻanga", "T$", "Tongan paʻanga");
+				yield return new Currency("TRY", "Turkish Lira", "TL", "Turkish Lira");
+				yield return new Currency("TTD", "Trinidad and Tobago Dollar", "TT$", "Trinidad and Tobago dollars");
+				yield return new Currency("TWD", "New Taiwan Dollar", "NT$", "New Taiwan dollars");
+				yield return new Currency("TZS", "Tanzanian Shilling", "TSh", "Tanzanian shillings");
+				yield return new Currency("UAH", "Ukrainian Hryvnia", "₴", "Ukrainian hryvnias");
+				yield return new Currency("UGX", "Ugandan Shilling", "USh", "Ugandan shillings");
+				yield return new Currency("UYU", "Uruguayan Peso", "$U", "Uruguayan pesos");
+				yield return new Currency("UZS", "Uzbekistan Som", "UZS", "Uzbekistan som");
+				yield return new Currency("VEF", "Venezuelan Bolívar", "Bs.F.", "Venezuelan bolívars");
+				yield return new Currency("VND", "Vietnamese Dong", "₫", "Vietnamese dong");
+				yield return new Currency("XAF", "CFA Franc BEAC", "FCFA", "CFA francs BEAC");
+				yield return new Currency("XOF", "CFA Franc BCEAO", "CFA", "CFA francs BCEAO");
+				yield return new Currency("YER", "Yemeni Rial", "YR", "Yemeni rials");
+				yield return new Currency("ZAR", "South African Rand", "R", "South African rand");
+				yield return new Currency("ZMK", "Zambian Kwacha", "ZK", "Zambian kwachas");
+			}
+		}
 	}
 }

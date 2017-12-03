@@ -43,6 +43,7 @@
     <Compile Include="Chance.cs" />
     <Compile Include="Classes\CreditCard.cs" />
     <Compile Include="Classes\CreditCardType.cs" />
+    <Compile Include="Classes\Currency.cs" />
     <Compile Include="Classes\Person.cs" />
     <Compile Include="Classes\USState.cs" />
     <Compile Include="Classes\WorldCountry.cs" />

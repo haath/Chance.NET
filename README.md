@@ -93,10 +93,10 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] exp
 	- [x] exp_month
 	- [x] exp_year
-	- [ ] currency
-	- [ ] currency_pair
-	- [ ] dollar
-	- [ ] euro
+	- [x] currency
+	- [x] currency_pair
+	- [x] dollar
+	- [x] euro
 - [ ] Helpers
 	- [x] capitalize
 	- [ ] mixin

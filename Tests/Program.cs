@@ -14,13 +14,13 @@ namespace Tests
 
 		static void Main(string[] args)
 		{
+			Console.OutputEncoding = Encoding.UTF8;
+
 			Chance c = new Chance();
 
 			for (int i = 0; i < COUNT; i++)
 			{
-				CreditCard card = c.CreditCard();
-
-				Console.WriteLine(card.Type + "\t\t" + card.FormattedNumber);
+				Console.WriteLine(c.Euro());
 			}
 		}
 	}
