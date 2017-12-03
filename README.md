@@ -48,7 +48,7 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] google_analytics
 	- [x] hashtag
 	- [x] mac
-	- [x] ip (pending subnet option)
+	- [x] ip
 	- [x] ipv6
 	- [x] port
 	- [x] klout
@@ -85,9 +85,9 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] millisecond
 	- [x] month
 	- [x] timezone
-	- [x] weekday (seperate weekends?)
+	- [x] weekday
 	- [x] year
-- [ ] Finance
+- [x] Finance
 	- [x] cc
 	- [x] cc_type
 	- [x] exp
@@ -99,7 +99,7 @@ This project aims to mimic the original chance.js api as closely as possible whi
 	- [x] euro
 - [ ] Helpers
 	- [x] capitalize
-	- [ ] mixin
+	- [ ] ~~mixin~~ (Does not translate well into C#)
 	- [x] pad
 	- [x] pickone
 	- [x] pickset

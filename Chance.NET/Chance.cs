@@ -617,6 +617,12 @@ namespace ChanceNET
 			return "#" + Word();
 		}
 
+		/// <summary>
+		/// Generate a ranomd IPv4 address.
+		/// <para>Optionally, you may also provide a subnet in the known form "192.168.1.0/24" to have the generated IP belong to that subnet.</para>
+		/// </summary>
+		/// <param name="subnet"></param>
+		/// <returns></returns>
 		public string IP(string subnet = null)
 		{
 			StringBuilder ip = new StringBuilder();
@@ -639,9 +645,15 @@ namespace ChanceNET
 				int bits = int.Parse(m.Groups[5].Value);
 
 				int bit = 0;
+				byte mask = 1 << 7;
+
 				while (bits-- > 0)
 				{
-					
+					p[bit / 8] = (byte)((p[bit / 8] & ~mask) | (sp[bit / 8] & mask));
+
+					mask = (byte)(mask >> 1);
+					if (mask == 0)
+						mask = 1 << 7;
 
 					bit++;
 				}
