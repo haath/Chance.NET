@@ -7,6 +7,11 @@ This project aims to mimic the original chance.js api as closely as possible whi
 - [Docs](http://chancejs.com)
 - [Source](https://github.com/chancejs/chancejs)
 
+## Installation
+Version 1.0.0 out on: [NuGet](https://nuget.gmantaos.com/?specialType=singlePackage&id=Chance.NET)
+
+Add the following to your NuGet sources: `https://nuget.gmantaos.com/api/v2/`
+
 ## Progress
 
 - [x] Basics
