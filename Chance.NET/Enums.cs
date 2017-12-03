@@ -169,6 +169,10 @@ namespace ChanceNET
 		Solo							= 1 << 13,
 		Switch							= 1 << 14,
 		Visa							= 1 << 15,
-		VisaElectron					= 1 << 16
+		VisaElectron					= 1 << 16,
+
+		Dankort							= 1 << 17,
+		InterPayment					= 1 << 18,
+		UATP							= 1 << 19
 	}
 }
