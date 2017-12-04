@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -623,7 +624,7 @@ namespace ChanceNET
 		/// </summary>
 		/// <param name="subnet"></param>
 		/// <returns></returns>
-		public string IP(string subnet = null)
+		public IPAddress IP(string subnet = null)
 		{
 			StringBuilder ip = new StringBuilder();
 
@@ -667,10 +668,14 @@ namespace ChanceNET
 			ip.Append('.');
 			ip.Append(p[3]);
 
-			return ip.ToString();
+			return IPAddress.Parse(ip.ToString());
 		}
 
-		public string IPv6()
+		/// <summary>
+		/// Generate a random IPv6 address.
+		/// </summary>
+		/// <returns>The v6.</returns>
+		public IPAddress IPv6()
 		{
 			StringBuilder ipv6 = new StringBuilder();
 
@@ -681,9 +686,13 @@ namespace ChanceNET
 				ipv6.Append(Hex(4));
 			}
 
-			return ipv6.ToString();
+			return IPAddress.Parse(ipv6.ToString());
 		}
 
+		/// <summary>
+		/// Generate a random MAC address.
+		/// </summary>
+		/// <returns>The mac.</returns>
 		public string MAC()
 		{
 			StringBuilder mac = new StringBuilder();
@@ -703,26 +712,47 @@ namespace ChanceNET
 			return mac.ToString();
 		}
 
+		/// <summary>
+		/// Generate a random MD5 hash.
+		/// </summary>
+		/// <returns>The MD.</returns>
 		public byte[] MD5()
 		{
 			return Hash(12);
 		}
 
+		/// <summary>
+		/// Generate a random SHA1 hash.
+		/// </summary>
+		/// <returns>The SHA.</returns>
 		public byte[] SHA1()
 		{
 			return Hash(20);
 		}
 
+		/// <summary>
+		/// Generate a random SHA256 hash.
+		/// </summary>
+		/// <returns>The 256.</returns>
 		public byte[] SHA256()
 		{
 			return Hash(32);
 		}
 
+		/// <summary>
+		/// Generate a random SHA512 hash.
+		/// </summary>
+		/// <returns>The 512.</returns>
 		public byte[] SHA512()
 		{
 			return Hash(64);
 		}
 
+		/// <summary>
+		/// Get a random profession name.
+		/// </summary>
+		/// <returns>The profession.</returns>
+		/// <param name="rank">If set to <c>true</c> the name will be preceded by a rank.</param>
 		public string Profession(bool rank = false)
 		{
 			if (rank)
@@ -777,14 +807,33 @@ namespace ChanceNET
 			return PickOne(Data.ColorNames);
 		}
 
+		/// <summary>
+		/// Get a random company name.
+		/// </summary>
+		/// <returns>The company.</returns>
 		public string Company()
 		{
 			return PickOne(Data.Companies);
 		}
 
+		/// <summary>
+		/// Generate a random twitter username.
+		/// </summary>
+		/// <returns>The twitter.</returns>
 		public string Twitter()
 		{
 			return "@" + Word();
+		}
+
+		/// <summary>
+		/// Generate a random IPEndPoint which is a pair of an IP and a port.
+		/// </summary>
+		/// <returns>The point.</returns>
+		/// <param name="subnet">Subnet.</param>
+		/// <param name="port">Port.</param>
+		public IPEndPoint EndPoint(string subnet = null, int? port = null)
+		{
+			return new IPEndPoint(IP(subnet), port ?? Port());
 		}
 
 		public string Url(string protocol = null, string domain = null, 
@@ -798,11 +847,19 @@ namespace ChanceNET
 			return protocol + "://" + domain + "/" + path + "." + extension;
 		}
 
+		/// <summary>
+		/// Generate a random valid port number.
+		/// </summary>
+		/// <returns>The port.</returns>
 		public int Port()
 		{
 			return Natural(65536);
 		}
 
+		/// <summary>
+		/// Generate a random altitude.
+		/// </summary>
+		/// <returns>The altitude.</returns>
 		public double Altitude()
 		{
 			return Double(0, 8849);
@@ -872,6 +929,10 @@ namespace ChanceNET
 			return PickOne(Data.Countries);
 		}
 
+		/// <summary>
+		/// Get a random US state.
+		/// </summary>
+		/// <returns>The state.</returns>
 		public USState State()
 		{
 			return PickOne(Data.States);
@@ -902,20 +963,22 @@ namespace ChanceNET
 		/// <para>Conforms to NANP for a proper US phone number.</para>
 		/// </summary>
 		/// <param name="areaCode"></param>
+		/// <param name="formatted"></param>
 		/// <returns></returns>
-		public string Phone(int? areaCode = null, bool formatted = true)
+		public string Phone(string areaCode = null, bool formatted = true)
 		{
 			return PhoneUS(areaCode, formatted);
 		}
 
-		string PhoneUS(int? areaCode = null, bool formatted = true)
+		string PhoneUS(string areaCode = null, bool formatted = true)
 		{
 			StringBuilder phone = new StringBuilder();
 
-			string code = areaCode == null ? AreaCode() : "(" + areaCode + ")";
+			string code = areaCode ?? AreaCode(false);
 
+			if (formatted) phone.Append('(');
 			phone.Append(code);
-			if (formatted) phone.Append(' ');
+			if (formatted) phone.Append(") ");
 
 			// exchange
 			phone.Append(Integer(2, 10));
@@ -1016,6 +1079,11 @@ namespace ChanceNET
 			return street.ToString();
 		}
 
+		/// <summary>
+		/// Get a random street suffix
+		/// </summary>
+		/// <returns>The suffix.</returns>
+		/// <param name="abbreviation">If set to <c>true</c> the abbreviation will be returned.</param>
 		public string StreetSuffix(bool abbreviation = false)
 		{
 			if (abbreviation)
@@ -1028,9 +1096,25 @@ namespace ChanceNET
 			}
 		}
 
-		public string Address(bool shortStreetSuffix = true)
+		/// <summary>
+		/// Generate a random address with a street name and number.
+		/// </summary>
+		/// <returns>The address.</returns>
+		/// <param name="numberFirst">If set to <c>true</c> the number will be before the street name.</param>
+		/// <param name="shortStreetSuffix">If set to <c>true</c> the street suffix will be abbreviated.</param>
+		/// <param name="minNumber">Minimum number.</param>
+		/// <param name="maxNumber">Max number.</param>
+		public string Address(bool numberFirst = true, bool shortStreetSuffix = true, int minNumber = 5, int maxNumber = 2000)
 		{
-			return Integer(5, 2001) + " " + Street(shortStreetSuffix);
+			int number = Integer(minNumber, maxNumber + 1);
+			if (numberFirst)
+			{
+				return number + " " + Street(shortStreetSuffix);
+			}
+			else
+			{
+				return Street(shortStreetSuffix) + " " + number;
+			}
 		}
 
 		/// <summary>
@@ -1174,6 +1258,11 @@ namespace ChanceNET
 			return Integer(mn, mx + 1);
 		}
 
+		/// <summary>
+		/// Generate a random valid credit card number without spacing.
+		/// </summary>
+		/// <returns>The card number.</returns>
+		/// <param name="types">Types.</param>
 		public string CreditCardNumber(CreditCardTypes? types = null)
 		{
 			CreditCardType type = CreditCardType(types);
@@ -1281,6 +1370,11 @@ namespace ChanceNET
 			return Pad((int)ExpirationMonth(year), 2) + "/" + year;
 		}
 
+		/// <summary>
+		/// Generate a random credit card that has not expired.
+		/// </summary>
+		/// <returns>The card.</returns>
+		/// <param name="types">Types.</param>
 		public CreditCard CreditCard(CreditCardTypes? types = null)
 		{
 			return new CreditCard(this, types);
@@ -1504,6 +1598,11 @@ namespace ChanceNET
 			return list;
 		}
 
+		/// <summary>
+		/// Get a random file extension.
+		/// </summary>
+		/// <returns>The extension.</returns>
+		/// <param name="type">Type.</param>
 		public string FileExtension(FileExtensionTypes? type = null)
 		{
 			if (type == null)
@@ -1553,7 +1652,7 @@ namespace ChanceNET
 				{
 					val = func();
 				} 
-				while (!list.Contains(val));
+				while (list.Contains(val));
 					
 				list.Add(val);
 			}
@@ -1572,6 +1671,13 @@ namespace ChanceNET
 			return list.ElementAt(index);
 		}
 
+		/// <summary>
+		/// Picks a number of random unique elements from the given list.
+		/// </summary>
+		/// <returns>The set.</returns>
+		/// <param name="list">List.</param>
+		/// <param name="count">Count.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
 		public IEnumerable<T> PickSet<T>(IEnumerable<T> list, int count = 1)
 		{
 			return Shuffle(list).Take(count);

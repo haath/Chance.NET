@@ -20,7 +20,7 @@ namespace Tests
 
 			for (int i = 0; i < COUNT; i++)
 			{
-				Console.WriteLine(c.IP("192.168.1.0/24"));
+				Console.WriteLine(c.IPv6());
 			}
 		}
 	}

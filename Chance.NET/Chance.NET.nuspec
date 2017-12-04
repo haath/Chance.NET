@@ -2,14 +2,14 @@
 <package >
   <metadata>
     <id>Chance.NET</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>Chance.NET randomness generator</title>
     <authors>G. Mantaos</authors>
     <owners>G. Mantaos</owners>
     <projectUrl>https://git.gmantaos.com/Haath/Chance.NET</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A library to generate random things, from numbers and strings to credit cards and human names.</description>
-    <releaseNotes>First release.</releaseNotes>
+    <releaseNotes>Fixed a bug and changed IP generation.</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>mysql db sql wrapper</tags>
   </metadata>
