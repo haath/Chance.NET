@@ -911,6 +911,34 @@ namespace ChanceNET
 			return Double(min, max);
 		}
 
+		public Location Location()
+		{
+			double lat = Latitude();
+			double lng = Longitude();
+			return new Location(lat, lng);
+		}
+
+		/// <summary>
+		/// Given a geographical location and a range in meters, generate a new random location that is within the given range of the given location.
+		/// </summary>
+		/// <param name="centerLat"></param>
+		/// <param name="centerLng"></param>
+		/// <param name="range">The range in meters.</param>
+		/// <returns></returns>
+		public Location Location(double centerLat, double centerLng, double range)
+		{
+			if (range <= 0)
+			{
+				throw new ArgumentOutOfRangeException("range needs to be positive.");
+			}
+			throw new NotImplementedException();
+		}
+
+		public Location Location(Location center, double range)
+		{
+			return Location(center.Latitude, center.Longitude, range);
+		}
+
 		/// <summary>
 		/// Generate random coordinates, which are latitude and longitude, comma separated.
 		/// </summary>
@@ -1465,6 +1493,32 @@ namespace ChanceNET
 			char[] chars = text.ToCharArray();
 			chars[0] = char.ToUpper(chars[0]);
 			return new string(chars);
+		}
+
+		/// <summary>
+		/// Given two sets of geographical coordinates, calculate their distance in meters.
+		/// </summary>
+		/// <param name="lat1"></param>
+		/// <param name="lng1"></param>
+		/// <param name="lat2"></param>
+		/// <param name="lng2"></param>
+		/// <returns></returns>
+		public static double Distance(double lat1, double lng1, double lat2, double lng2)
+		{
+			const int EARTH_RADIUS = 6371000;
+
+			Func<double, double> toRad = ang =>
+			{
+				return (Math.PI / 180) * ang;
+			};
+
+			double dLng = toRad(lng1 - lng2);
+			double dLat = toRad(lat1 - lat2);
+			double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2)
+					+ Math.Cos(toRad(lat1)) * Math.Cos(toRad(lat2))
+					* Math.Sin(dLng / 2) * Math.Sin(dLng / 2);
+			double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+			return (float)(EARTH_RADIUS * c);
 		}
 
 		public int Dice(int sides)
