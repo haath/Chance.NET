@@ -10,8 +10,8 @@ namespace ChanceNET
 {
     public class Chance
     {
-		int seed;
-		Random rand;
+		protected int seed { get; private set; }
+		protected Random rand;
 
 		public Chance(int seed)
 		{

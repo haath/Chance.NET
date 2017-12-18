@@ -11,9 +11,9 @@
     <description>A library to generate random things, from numbers and strings to credit cards and human names.</description>
     <releaseNotes>Fixed a bug and changed IP generation.</releaseNotes>
     <copyright>Copyright 2017</copyright>
-    <tags>mysql db sql wrapper</tags>
+    <tags>chance rng random generate randomness seed testing tests unit generator pseudo</tags>
   </metadata>
 	<files>
-	  <file src="bin\Debug\ChanceNET.???" target="lib" />
+	  <file src="bin/Debug/ChanceNET.???" target="lib" />
 	</files>
 </package>
