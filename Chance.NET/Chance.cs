@@ -12,8 +12,8 @@ namespace ChanceNET
 	{
 		const int EARTH_RADIUS = 6371000;
 
-		int seed;
-		Random rand;
+		protected int seed { get; private set; }
+		protected virtual Random rand { get; }
 
 		public Chance(int seed)
 		{

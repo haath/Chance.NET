@@ -2,18 +2,18 @@
 <package >
   <metadata>
     <id>Chance.NET</id>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
     <title>Chance.NET randomness generator</title>
     <authors>G. Mantaos</authors>
     <owners>G. Mantaos</owners>
     <projectUrl>https://git.gmantaos.com/Haath/Chance.NET</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A library to generate random things, from numbers and strings to credit cards and human names.</description>
-    <releaseNotes>Fixed a bug and changed IP generation.</releaseNotes>
+    <releaseNotes>Implemented radial location generation and a thread-safe version of the Chance class.</releaseNotes>
     <copyright>Copyright 2017</copyright>
-    <tags>mysql db sql wrapper</tags>
+    <tags>chance rng random generate randomness seed testing tests unit generator pseudo</tags>
   </metadata>
 	<files>
-	  <file src="bin\Debug\ChanceNET.???" target="lib" />
+	  <file src="bin/Debug/ChanceNET.???" target="lib" />
 	</files>
 </package>
