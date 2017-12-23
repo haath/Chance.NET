@@ -11,7 +11,7 @@ namespace ChanceNET
 		int concurrentSeed;
 		ThreadLocal<Random> concurrentRand;
 
-		new Random rand {
+		protected override Random rand {
 			get { return concurrentRand.Value; }
 		}
 

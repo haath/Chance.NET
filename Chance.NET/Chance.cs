@@ -11,7 +11,7 @@ namespace ChanceNET
     public class Chance
     {
 		protected int seed { get; private set; }
-		protected Random rand;
+		protected virtual Random rand { get; }
 
 		public Chance(int seed)
 		{
