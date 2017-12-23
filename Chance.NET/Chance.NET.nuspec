@@ -2,11 +2,11 @@
 <package >
   <metadata>
     <id>Chance.NET</id>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <title>Chance.NET randomness generator</title>
     <authors>G. Mantaos</authors>
     <owners>G. Mantaos</owners>
-    <projectUrl>https://git.gmantaos.com/Haath/Chance.NET</projectUrl>
+    <projectUrl>https://github.com/gmantaos/Chance.NET</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A library to generate random things, from numbers and strings to credit cards and human names.</description>
     <releaseNotes>Implemented radial location generation and a thread-safe version of the Chance class.</releaseNotes>
