@@ -7,6 +7,7 @@
     <authors>G. Mantaos</authors>
     <owners>G. Mantaos</owners>
     <projectUrl>https://github.com/gmantaos/Chance.NET</projectUrl>
+	<iconUrl>https://raw.githubusercontent.com/gmantaos/Chance.NET/master/assets/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A library to generate random things, from numbers and strings to credit cards and human names.</description>
     <releaseNotes>Implemented radial location generation and a thread-safe version of the Chance class.</releaseNotes>
