@@ -9,7 +9,9 @@ using System.Text.RegularExpressions;
 namespace ChanceNET
 {
     public class Chance
-    {
+	{
+		const int EARTH_RADIUS = 6371000;
+
 		int seed;
 		Random rand;
 
@@ -899,7 +901,7 @@ namespace ChanceNET
 		/// <returns></returns>
 		public double Latitude(double min = -90, double max = 90)
 		{
-			return Double(min, max);
+			return ((max - min) * Math.Acos(1 - 2 * Double()) / Math.PI) + min;
 		}
 
 		/// <summary>
@@ -931,7 +933,22 @@ namespace ChanceNET
 			{
 				throw new ArgumentOutOfRangeException("range needs to be positive.");
 			}
-			throw new NotImplementedException();
+
+			Location center = new Location(centerLat, centerLng);
+
+			centerLat *= Math.PI / 180;
+			centerLng *= Math.PI / 180;
+
+			Location location;
+			do
+			{
+				double lat = (2 * range / (Math.PI * EARTH_RADIUS)) * Math.Acos(1 - 2 * Double()) + centerLat - range / EARTH_RADIUS;
+				double lng = (2 * range / EARTH_RADIUS) * Double() + centerLng - range / EARTH_RADIUS;
+				location = new Location(lat * 180 / Math.PI, lng * 180 / Math.PI);
+			}
+			while (Distance(center, location) > range);
+
+			return location;
 		}
 
 		public Location Location(Location center, double range)
@@ -1505,8 +1522,6 @@ namespace ChanceNET
 		/// <returns></returns>
 		public static double Distance(double lat1, double lng1, double lat2, double lng2)
 		{
-			const int EARTH_RADIUS = 6371000;
-
 			Func<double, double> toRad = ang =>
 			{
 				return (Math.PI / 180) * ang;
@@ -1519,6 +1534,11 @@ namespace ChanceNET
 					* Math.Sin(dLng / 2) * Math.Sin(dLng / 2);
 			double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
 			return (float)(EARTH_RADIUS * c);
+		}
+
+		public static double Distance(Location l1, Location l2)
+		{
+			return Distance(l1.Latitude, l1.Longitude, l2.Latitude, l2.Longitude);
 		}
 
 		public int Dice(int sides)
