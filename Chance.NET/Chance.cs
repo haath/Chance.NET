@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -1743,6 +1744,18 @@ namespace ChanceNET
 		{
 			int index = rand.Next(0, list.Count());
 			return list.ElementAt(index);
+		}
+
+		public T PickEnum<T>() where T : struct, IConvertible
+		{
+			if (!typeof(T).GetTypeInfo().IsEnum)
+			{
+				throw new ArgumentException("T must be an enumerated type");
+			}
+
+			IEnumerable<T> vals = Enum.GetValues(typeof(T)).Cast<T>();
+
+			return PickOne(vals);
 		}
 
 		/// <summary>

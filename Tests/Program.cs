@@ -25,19 +25,16 @@ namespace Tests
 
 			for (int i = 0; i < COUNT; i++)
 			{
-				Location l1 = c.Location(l0, 1000);
-
-				double d = Chance.Distance(l0, l1);
-
-				min = Math.Min(min, d);
-				max = Math.Max(max, d);
-
-				Console.WriteLine(l1.ToString() + "\t" + d);
+				Console.WriteLine(c.PickEnum<Test>());
 			}
-
-			Console.WriteLine("Min: " + min);
-			Console.WriteLine("Max: " + max);
 			
+		}
+
+		enum Test
+		{
+			Val1,
+			val2,
+			Val3
 		}
 	}
 }
