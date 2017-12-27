@@ -11,8 +11,6 @@ namespace ChanceNET
 {
     public class Chance
 	{
-		const int EARTH_RADIUS = 6371000;
-
 		protected int seed { get; private set; }
 		protected virtual Random rand { get; }
 
@@ -22,10 +20,12 @@ namespace ChanceNET
 			rand = new Random(seed);
 		}
 
-		public Chance() : this(Environment.TickCount)
-		{
-
-		}
+		/// <summary>
+		/// The default seed value is derived from the system clock and has finite resolution. As a result, different Chance objects that are created in close succession
+		/// by a call to the default constructor will have identical default seed values and, therefore, will produce identical sets of random numbers. 
+		/// <para>To create multiple Chance objects without a seed, it is recommended that you use the Chance.New() method.</para>
+		/// </summary>
+		public Chance() : this(Environment.TickCount) { }
 
 		public Chance(string seed)
 		{
@@ -39,6 +39,10 @@ namespace ChanceNET
 			rand = new Random(this.seed);
 		}
 
+		/// <summary>
+		/// Get the underlying seed of this Chance instance.
+		/// </summary>
+		/// <returns></returns>
 		public int GetSeed()
 		{
 			return seed;
@@ -273,7 +277,7 @@ namespace ChanceNET
 		{
 			StringBuilder word = new StringBuilder();
 
-			syllables = syllables ?? Integer(1, 5);
+			syllables = syllables ?? Normal(1, 5);
 
 			for (int i = 0; i < syllables; i++)
 			{
@@ -914,10 +918,10 @@ namespace ChanceNET
 			return Double(min, max);
 		}
 
-		public Location Location()
+		public Location Location(double minLat = -90, double maxLat = 90, double minLng = -180, double maxLng = 180)
 		{
-			double lat = Latitude();
-			double lng = Longitude();
+			double lat = Latitude(minLat, maxLat);
+			double lng = Longitude(minLng, maxLng);
 			return new Location(lat, lng);
 		}
 
@@ -930,6 +934,7 @@ namespace ChanceNET
 		/// <returns></returns>
 		public Location Location(double centerLat, double centerLng, double range)
 		{
+			const int EARTH_RADIUS = 6371000;
 			if (range <= 0)
 			{
 				throw new ArgumentOutOfRangeException("range needs to be positive.");
@@ -952,6 +957,12 @@ namespace ChanceNET
 			return location;
 		}
 
+		/// <summary>
+		/// Given a geographical location and a range in meters, generate a new random location that is within the given range of the given location.
+		/// </summary>
+		/// <param name="center"></param>
+		/// <param name="range">The range in meters.</param>
+		/// <returns></returns>
 		public Location Location(Location center, double range)
 		{
 			return Location(center.Latitude, center.Longitude, range);
@@ -1181,7 +1192,6 @@ namespace ChanceNET
 		/// <param name="minYear"></param>
 		/// <param name="maxYear"></param>
 		/// <returns></returns>
-
 		public DateTime Date(int? year = null, Month? month = null, int? day = null, int? minYear = null, int? maxYear = null)
 		{
 			DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
@@ -1235,7 +1245,7 @@ namespace ChanceNET
 		}
 
 		/// <summary>
-		/// Generate a random minute from 0 to 59. Idea is for generating a clock time.
+		/// Generate a random minute from 0 to 59. Ideal for generating a clock time.
 		/// </summary>
 		/// <returns></returns>
 		public int Minute()
@@ -1244,7 +1254,7 @@ namespace ChanceNET
 		}
 
 		/// <summary>
-		/// Generate a random second from 0 to 59. Idea is for generating a clock time.
+		/// Generate a random second from 0 to 59. Ideal for generating a clock time.
 		/// </summary>
 		/// <returns></returns>
 		public int Second()
@@ -1253,7 +1263,7 @@ namespace ChanceNET
 		}
 
 		/// <summary>
-		/// Generate a random millisecond from 0 to 999. Idea is for generating a clock time.
+		/// Generate a random millisecond from 0 to 999. Ideal for generating a clock time.
 		/// </summary>
 		/// <returns></returns>
 		public int Millisecond()
@@ -1523,6 +1533,7 @@ namespace ChanceNET
 		/// <returns></returns>
 		public static double Distance(double lat1, double lng1, double lat2, double lng2)
 		{
+			const int EARTH_RADIUS = 6371000;
 			Func<double, double> toRad = ang =>
 			{
 				return (Math.PI / 180) * ang;
@@ -1657,7 +1668,7 @@ namespace ChanceNET
 
 		/// <summary>
 		/// Provide any function that generates random stuff (usually another Chance function) 
-		/// and a number and N() will generate a list of items with a length matching the length you specified.
+		/// and a number and N() will generate a list of items with a length matching the length specified.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="length"></param>
@@ -1711,7 +1722,7 @@ namespace ChanceNET
 
 		/// <summary>
 		/// Provide any function that generates random stuff (usually another Chance function) and a number
-		/// and Unique() will generate a random array of unique (not repeating) items with a length matching the one you specified.
+		/// and Unique() will generate a random array of unique (not repeating) items with a length matching the one specified.
 		/// </summary>
 		/// <returns>The unique.</returns>
 		/// <param name="length">Length.</param>
@@ -1746,6 +1757,11 @@ namespace ChanceNET
 			return list.ElementAt(index);
 		}
 
+		/// <summary>
+		/// Pick a random value from an enumerable type.
+		/// </summary>
+		/// <typeparam name="T">An enumerable type</typeparam>
+		/// <returns></returns>
 		public T PickEnum<T>() where T : struct, IConvertible
 		{
 			if (!typeof(T).GetTypeInfo().IsEnum)

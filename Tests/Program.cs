@@ -25,7 +25,7 @@ namespace Tests
 
 			for (int i = 0; i < COUNT; i++)
 			{
-				Console.WriteLine(c.PickEnum<Test>());
+				Console.WriteLine(c.State().SquareMiles);
 			}
 			
 		}

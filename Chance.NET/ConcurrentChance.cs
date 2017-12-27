@@ -15,11 +15,12 @@ namespace ChanceNET
 			get { return concurrentRand.Value; }
 		}
 
-		public ConcurrentChance() : this(Environment.TickCount)
-		{
-			concurrentSeed = seed;
-			concurrentRand = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref concurrentSeed)));
-		}
+		/// <summary>
+		/// The default seed value is derived from the system clock and has finite resolution. As a result, different Chance objects that are created in close succession
+		/// by a call to the default constructor will have identical default seed values and, therefore, will produce identical sets of random numbers. 
+		/// <para>To create multiple Chance objects without a seed, it is recommended that you use the Chance.New() method.</para>
+		/// </summary>
+		public ConcurrentChance() : this(Environment.TickCount) { }
 
 		public ConcurrentChance(int seed) : base(seed)
 		{

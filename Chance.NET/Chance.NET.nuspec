@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Chance.NET</id>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
     <title>Chance.NET randomness generator</title>
     <authors>G. Mantaos</authors>
     <owners>G. Mantaos</owners>
@@ -15,6 +15,7 @@
     <tags>chance rng random generate randomness seed testing tests unit generator pseudo</tags>
   </metadata>
 	<files>
-	  <file src="bin/Debug/ChanceNET.???" target="lib" />
+	  <file src="bin/Release/ChanceNET.dll" target="lib" />
+	  <file src="bin/Release/ChanceNET.xml" target="lib" />
 	</files>
 </package>
