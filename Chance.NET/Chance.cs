@@ -918,6 +918,15 @@ namespace ChanceNET
 			return Double(min, max);
 		}
 
+		/// <summary>
+		/// Generate a random geographical location. 
+		/// The generation is mathematically accurate to be uniformally distributed around the globe.
+		/// </summary>
+		/// <returns>The location.</returns>
+		/// <param name="minLat">Minimum lat.</param>
+		/// <param name="maxLat">Max lat.</param>
+		/// <param name="minLng">Minimum lng.</param>
+		/// <param name="maxLng">Max lng.</param>
 		public Location Location(double minLat = -90, double maxLat = 90, double minLng = -180, double maxLng = 180)
 		{
 			double lat = Latitude(minLat, maxLat);
@@ -937,7 +946,7 @@ namespace ChanceNET
 			const int EARTH_RADIUS = 6371000;
 			if (range <= 0)
 			{
-				throw new ArgumentOutOfRangeException("range needs to be positive.");
+				throw new ArgumentOutOfRangeException("Range needs to be positive.");
 			}
 
 			Location center = new Location(centerLat, centerLng);
@@ -948,8 +957,10 @@ namespace ChanceNET
 			Location location;
 			do
 			{
-				double lat = (2 * range / (Math.PI * EARTH_RADIUS)) * Math.Acos(1 - 2 * Double()) + centerLat - range / EARTH_RADIUS;
-				double lng = (2 * range / EARTH_RADIUS) * Double() + centerLng - range / EARTH_RADIUS;
+				double u1 = Double();
+				double u2 = Double();
+				double lat = (2 * range / (Math.PI * EARTH_RADIUS)) * Math.Acos(1 - 2 * u1) + centerLat - range / EARTH_RADIUS;
+				double lng = (2 * range / EARTH_RADIUS) * u2 + centerLng - range / EARTH_RADIUS;
 				location = new Location(lat * 180 / Math.PI, lng * 180 / Math.PI);
 			}
 			while (Distance(center, location) > range);
@@ -1363,6 +1374,11 @@ namespace ChanceNET
 
 		}
 
+		/// <summary>
+		/// Pick a random credit card type.
+		/// </summary>
+		/// <returns>The card type.</returns>
+		/// <param name="types">The flags of types to limit to.</param>
 		public CreditCardType CreditCardType(CreditCardTypes? types = null)
 		{
 			CreditCardTypes type = types ?? (CreditCardTypes)0xFF;
@@ -1772,6 +1788,33 @@ namespace ChanceNET
 			IEnumerable<T> vals = Enum.GetValues(typeof(T)).Cast<T>();
 
 			return PickOne(vals);
+		}
+
+		/// <summary>
+		/// Generate a flags Enum with an amount of random flags set.
+		/// </summary>
+		/// <returns>The flags.</returns>
+		/// <param name="count">The amount of unique flags to set. 
+		/// If larger than the amount of values of the enum, all the flags will be set</param>
+		/// <typeparam name="T">The Enum type.</typeparam>
+		public T PickFlags<T>(int count) where T : struct, IConvertible
+		{
+			if (!typeof(T).GetTypeInfo().IsEnum)
+			{
+				throw new ArgumentException("T must be an enumerated type");
+			}
+
+			IEnumerable<T> vals = Enum.GetValues(typeof(T)).Cast<T>();
+
+			int val = 0;
+
+			foreach (T flag in PickSet(vals, count))
+			{
+				int f = (int)(object)flag;
+				val = val | f;
+			}
+
+			return (T)(object)val;
 		}
 
 		/// <summary>

@@ -25,16 +25,18 @@ namespace Tests
 
 			for (int i = 0; i < COUNT; i++)
 			{
-				Console.WriteLine(c.State().SquareMiles);
+				Test t = c.PickFlags<Test>(6);
+				Console.WriteLine(t + " " + t.HasFlag(Test.Val1) + " " + t.HasFlag(Test.val2) + " " + t.HasFlag(Test.Val3));
 			}
 			
 		}
 
+		[Flags]
 		enum Test
 		{
-			Val1,
-			val2,
-			Val3
+			Val1	= 1,
+			val2	= 2,
+			Val3	= 4
 		}
 	}
 }
