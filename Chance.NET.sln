@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chance.NET", "Chance.NET\Chance.NET.csproj", "{2FD8BCDD-9C08-4DD4-A883-61DDF5E5D2E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{26FB48DF-3C65-447C-A382-26FEF18E996A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttributeGenerator", "AttributeGenerator\AttributeGenerator.csproj", "{B053EC2E-1326-451D-942F-2DE532A498F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,15 @@ Global
 		{26FB48DF-3C65-447C-A382-26FEF18E996A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26FB48DF-3C65-447C-A382-26FEF18E996A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26FB48DF-3C65-447C-A382-26FEF18E996A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B053EC2E-1326-451D-942F-2DE532A498F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B053EC2E-1326-451D-942F-2DE532A498F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B053EC2E-1326-451D-942F-2DE532A498F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B053EC2E-1326-451D-942F-2DE532A498F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23D84E6D-D055-4322-B362-12E065CF225F}
 	EndGlobalSection
 EndGlobal

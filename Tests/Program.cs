@@ -25,8 +25,8 @@ namespace Tests
 
 			for (int i = 0; i < COUNT; i++)
 			{
-				Test t = c.PickFlags<Test>(6);
-				Console.WriteLine(t + " " + t.HasFlag(Test.Val1) + " " + t.HasFlag(Test.val2) + " " + t.HasFlag(Test.Val3));
+				Location lx = c.Location(l0.Latitude, l0.Longitude, 100);
+				Console.WriteLine(lx.ToString() + " " + Chance.Distance(l0, lx));
 			}
 			
 		}
