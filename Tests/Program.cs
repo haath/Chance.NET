@@ -5,9 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 using ChanceNET;
+using ChanceNET.Attributes;
 
 namespace Tests
 {
+	public class Test
+	{
+		[FirstName]
+		public string FirstName;
+	}
+
 	class Program
 	{
 		const int COUNT = 10000;

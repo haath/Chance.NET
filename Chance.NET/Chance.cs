@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
+using ChanceNET.Attributes;
+
 namespace ChanceNET
 {
     public class Chance
@@ -1893,6 +1895,50 @@ namespace ChanceNET
 		public Chance New()
 		{
 			return new Chance(Integer());
+		}
+
+		public T Object<T>() where T : new()
+		{
+			return Object(new T());
+		}
+
+		public T Object<T>(T obj)
+		{
+			foreach (MemberInfo member in GetTypeMembers<T, ChanceAttribute>())
+			{
+				ChanceAttribute attr = member.GetCustomAttribute<ChanceAttribute>();
+
+				object value = attr.GetValue(this);
+
+				SetValue(obj, member, value);
+			}
+			return obj;
+		}
+
+		static IEnumerable<MemberInfo> GetTypeMembers<T, Q>() where Q : Attribute
+		{
+			foreach (MemberInfo member in typeof(T).GetRuntimeProperties())
+			{
+				if (member.GetCustomAttribute<Q>() != null)
+					yield return member;
+			}
+			foreach (MemberInfo member in typeof(T).GetRuntimeFields())
+			{
+				if (member.GetCustomAttribute<Q>() != null)
+					yield return member;
+			}
+		}
+
+		static void SetValue<T>(T obj, MemberInfo member, object value)
+		{
+			if (member is PropertyInfo)
+			{
+				(member as PropertyInfo).SetValue(obj, value);
+			}
+			else if (member is FieldInfo)
+			{
+				(member as FieldInfo).SetValue(obj, value);
+			}
 		}
 	}
 }
