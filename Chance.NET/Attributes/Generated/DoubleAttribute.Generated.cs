@@ -14,7 +14,7 @@ namespace ChanceNET.Attributes
 		Double max;
 
 
-		public DoubleAttribute(Double min, Double max)
+		public DoubleAttribute(Double min = 0, Double max = 1)
 		{
 			this.min = min;
 			this.max = max;

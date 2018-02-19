@@ -9,10 +9,10 @@ using ChanceNET.Attributes;
 
 namespace Tests
 {
-	public class Test
+	public class Obj
 	{
-		[FirstName]
-		public string FirstName;
+		[Integer(10, 30)]
+		public int FirstName;
 	}
 
 	class Program
@@ -25,15 +25,12 @@ namespace Tests
 
 			Chance c = new Chance();
 
-			double min = double.MaxValue;
-			double max = double.MinValue;
-
 			Location l0 = c.Location();
 
 			for (int i = 0; i < COUNT; i++)
 			{
-				Location lx = c.Location(l0.Latitude, l0.Longitude, 100);
-				Console.WriteLine(lx.ToString() + " " + Chance.Distance(l0, lx));
+				Obj o = c.Object<Obj>();
+				Console.WriteLine(o.FirstName);
 			}
 			
 		}

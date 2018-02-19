@@ -13,19 +13,20 @@ namespace AttributeGenerator.cs
 {
 	class Program
 	{
+		const BindingFlags BINDING_FLAGS = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
 		const string SAVE_PATH = "../../../Chance.NET/Attributes/Generated/";
 
 		static void Main(string[] args)
 		{
-			MethodInfo[] methods = typeof(Chance).GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 			string template = File.ReadAllText("AttributeTemplate.cs");
 
 			Directory.CreateDirectory(SAVE_PATH);
 
-			foreach (MethodInfo method in methods)
+			foreach (string methodName in MethodNames())
 			{
-				string generated = Generate(template, method);
-				string fileName = string.Format("{0}Attribute.Generated.cs", method.Name);
+				List<MethodInfo> methods = MethodsWithName(methodName);
+				string generated = Generate(template, methods);
+				string fileName = string.Format("{0}Attribute.Generated.cs", methodName);
 				string filePath = Path.Combine(SAVE_PATH, fileName);
 
 				if (generated != null)
@@ -35,9 +36,61 @@ namespace AttributeGenerator.cs
 			}
 		}
 
-		static string Generate(string template, MethodInfo method)
+		static HashSet<string> MethodNames()
 		{
-			if (method.IsGenericMethod)
+			HashSet<string> methodNames = new HashSet<string>();
+			MethodInfo[] methods = typeof(Chance).GetMethods(BINDING_FLAGS);
+			foreach (MethodInfo method in methods)
+			{
+				methodNames.Add(method.Name);
+			}
+			return methodNames;
+		}
+
+		static List<MethodInfo> MethodsWithName(string name)
+		{
+			List<MethodInfo> methods = new List<MethodInfo>();
+			foreach (MethodInfo method in typeof(Chance).GetMethods(BINDING_FLAGS))
+			{
+				if (method.Name == name)
+					methods.Add(method);
+			}
+			return methods;
+		}
+
+		static List<ParameterInfo> JointParameters(List<MethodInfo> methods)
+		{
+			List<ParameterInfo> parameters = new List<ParameterInfo>();
+
+			Func<ParameterInfo, bool> contains = (p) => parameters.Exists(param => param.Name == p.Name && param.ParameterType == p.ParameterType);
+			Action<ParameterInfo> tryAdd = (p) =>
+			{
+				if (!contains(p) || p.HasDefaultValue)
+				{
+					parameters.RemoveAll(param => param.Name == p.Name && param.ParameterType == p.ParameterType);
+					parameters.Add(p);
+				}
+			};
+
+			foreach (MethodInfo method in methods)
+			{
+				foreach (ParameterInfo param in method.GetParameters())
+				{
+					tryAdd(param);
+				}
+			}
+
+			return parameters;
+		}
+
+		static Type GetGeneric(List<MethodInfo> methods)
+		{
+			return methods.Exists(m => m.IsGenericMethod) ? methods.First(m => m.IsGenericMethod).GetGenericArguments()[0] : null;
+		}
+
+		static string Generate(string template, List<MethodInfo> methods)
+		{
+			if (GetGeneric(methods) != null)
 				return null;
 
 			StringBuilder fields = new StringBuilder();
@@ -45,13 +98,13 @@ namespace AttributeGenerator.cs
 			StringBuilder fieldAssign = new StringBuilder();
 			StringBuilder methodCallParams = new StringBuilder();
 
-			ParameterInfo[] methodParams = method.GetParameters();
+			List<ParameterInfo> methodParams = JointParameters(methods);
 			foreach (ParameterInfo param in methodParams)
 			{
 				string paramTypeName = GetTypeName(param.ParameterType);
 				Type paramType = GetParamType(param);
 
-				if (!IsSimpleType(paramType))
+				if (!IsSimpleType(paramType) || param.ParameterType == typeof(Location))
 					return null;
 
 				fields.AppendFormat("		{0} {1};\n", paramTypeName, param.Name);
@@ -89,11 +142,11 @@ namespace AttributeGenerator.cs
 				methodCallParams.Append(param.Name);
 			}
 
-			return template.Replace("@{name}", method.Name)
+			return template.Replace("@{name}", methods[0].Name)
 							.Replace("@{fields}", fields.ToString())
 							.Replace("@{parameters}", parameters.ToString())
 							.Replace("@{fieldAssign}", fieldAssign.ToString())
-							.Replace("@{methodName}", method.Name)
+							.Replace("@{methodName}", methods[0].Name)
 							.Replace("@{methodCallParams}", methodCallParams.ToString())
 							.Replace("True", "true")
 							.Replace("False", "false");

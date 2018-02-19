@@ -8,22 +8,22 @@ using System.Threading.Tasks;
 namespace ChanceNET.Attributes
 {
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-	public class LocationAttribute : ChanceAttribute
+	public class NormalIntegerAttribute : ChanceAttribute
 	{
-		Location center;
-		Double range;
+		Int32 min;
+		Int32 max;
 
 
-		public LocationAttribute(Location center, Double range)
+		public NormalIntegerAttribute(Int32 min, Int32 max)
 		{
-			this.center = center;
-			this.range = range;
+			this.min = min;
+			this.max = max;
 
 		}
 
 		internal override object GetValue(Chance chance)
 		{
-			return chance.Location(center, range);
+			return chance.NormalInteger(min, max);
 		}
 	}
 }

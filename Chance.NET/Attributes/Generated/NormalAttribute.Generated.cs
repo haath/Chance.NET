@@ -10,11 +10,11 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class NormalAttribute : ChanceAttribute
 	{
-		Int32 min;
-		Int32 max;
+		Double min;
+		Double max;
 
 
-		public NormalAttribute(Int32 min, Int32 max)
+		public NormalAttribute(Double min, Double max)
 		{
 			this.min = min;
 			this.max = max;

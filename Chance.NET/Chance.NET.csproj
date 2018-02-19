@@ -111,7 +111,7 @@
     <Compile Include="Attributes\Generated\LastNameAttribute.Generated.cs" />
     <Compile Include="Attributes\Generated\LatitudeAttribute.Generated.cs" />
     <Compile Include="Attributes\Generated\LetterAttribute.Generated.cs" />
-    <Compile Include="Attributes\Generated\LocationAttribute.Generated.cs" />
+    <Compile Include="Attributes\Generated\LocationAttribute.cs" />
     <Compile Include="Attributes\Generated\LongAttribute.Generated.cs" />
     <Compile Include="Attributes\Generated\LongitudeAttribute.Generated.cs" />
     <Compile Include="Attributes\Generated\MACAttribute.Generated.cs" />
@@ -124,6 +124,7 @@
     <Compile Include="Attributes\Generated\NaturalAttribute.Generated.cs" />
     <Compile Include="Attributes\Generated\NewAttribute.Generated.cs" />
     <Compile Include="Attributes\Generated\NormalAttribute.Generated.cs" />
+    <Compile Include="Attributes\Generated\NormalIntegerAttribute.Generated.cs" />
     <Compile Include="Attributes\Generated\ParagraphAttribute.Generated.cs" />
     <Compile Include="Attributes\Generated\PersonAttribute.Generated.cs" />
     <Compile Include="Attributes\Generated\PhoneAttribute.Generated.cs" />

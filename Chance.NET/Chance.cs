@@ -86,19 +86,10 @@ namespace ChanceNET
 		}
 
 		/// <summary>
-		/// Generate a random double between 0.0 (inclusive) and 1.0 (exclusive)
-		/// </summary>
-		/// <returns></returns>
-		public double Double()
-		{
-			return rand.NextDouble();
-		}
-
-		/// <summary>
 		/// Generate a random double between min (inclusive) and max (exclusive)
 		/// </summary>
 		/// <returns></returns>
-		public double Double(double min, double max)
+		public double Double(double min = 0.0, double max = 1.0)
 		{
 			return min + rand.NextDouble() * (max - min);
 		}
@@ -146,7 +137,7 @@ namespace ChanceNET
 		/// <param name="min"></param>
 		/// <param name="max"></param>
 		/// <returns></returns>
-		public int Normal(int min, int max)
+		public int NormalInteger(int min, int max)
 		{
 			return (int)Math.Floor(min + Normal() * (max - min));
 		}
@@ -279,7 +270,7 @@ namespace ChanceNET
 		{
 			StringBuilder word = new StringBuilder();
 
-			syllables = syllables ?? Normal(1, 5);
+			syllables = syllables ?? NormalInteger(1, 5);
 
 			for (int i = 0; i < syllables; i++)
 			{
