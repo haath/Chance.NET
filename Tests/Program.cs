@@ -7,12 +7,20 @@ using System.Threading.Tasks;
 using ChanceNET;
 using ChanceNET.Attributes;
 
+using Newtonsoft.Json;
+
 namespace Tests
 {
-	public class Obj
+	public class Book
 	{
-		[Integer(10, 30)]
-		public int FirstName;
+		[Integer(min: 1950)]
+		public int PublishingYear;
+		
+		[Person]
+		public Person Author;
+
+		[String(10)]
+		public string Title;
 	}
 
 	class Program
@@ -29,8 +37,12 @@ namespace Tests
 
 			for (int i = 0; i < COUNT; i++)
 			{
-				Obj o = c.Object<Obj>();
-				Console.WriteLine(o.FirstName);
+				Book o = c.Object<Book>();
+
+
+				Console.WriteLine(JsonConvert.SerializeObject(o, Formatting.Indented));
+
+				c.Location()
 			}
 			
 		}

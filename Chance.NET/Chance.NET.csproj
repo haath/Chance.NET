@@ -156,6 +156,7 @@
     <Compile Include="Attributes\Generated\Wp8ANID2Attribute.Generated.cs" />
     <Compile Include="Attributes\Generated\YearAttribute.Generated.cs" />
     <Compile Include="Attributes\Generated\ZipAttribute.Generated.cs" />
+    <Compile Include="Attributes\LocationAttribute.cs" />
     <Compile Include="Chance.cs" />
     <Compile Include="Classes\CreditCard.cs" />
     <Compile Include="Classes\CreditCardType.cs" />

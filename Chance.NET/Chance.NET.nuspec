@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Chance.NET</id>
-    <version>1.1.3</version>
+    <version>1.2.0</version>
     <title>Chance.NET randomness generator</title>
     <authors>G. Mantaos</authors>
     <owners>G. Mantaos</owners>
@@ -10,7 +10,7 @@
 	<iconUrl>https://raw.githubusercontent.com/gmantaos/Chance.NET/master/assets/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A library to generate random things, from numbers and strings to credit cards and human names.</description>
-    <releaseNotes>Implemented radial location generation and a thread-safe version of the Chance class.</releaseNotes>
+    <releaseNotes>Serializable object generation with attributes.</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>chance rng random generate randomness seed testing tests unit generator pseudo</tags>
   </metadata>
