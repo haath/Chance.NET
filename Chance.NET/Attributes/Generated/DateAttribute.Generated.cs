@@ -11,13 +11,13 @@ namespace ChanceNET.Attributes
 	public class DateAttribute : ChanceAttribute
 	{
 		Int32? year;
-		Month? month;
+		Month month;
 		Int32? day;
 		Int32? minYear;
 		Int32? maxYear;
 
 
-		public DateAttribute(Int32? year = null, Month? month = null, Int32? day = null, Int32? minYear = null, Int32? maxYear = null)
+		public DateAttribute(Int32? year = null, Month month = (Month)0xFF, Int32? day = null, Int32? minYear = null, Int32? maxYear = null)
 		{
 			this.year = year;
 			this.month = month;

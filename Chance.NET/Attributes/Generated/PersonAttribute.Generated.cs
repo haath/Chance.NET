@@ -11,10 +11,10 @@ namespace ChanceNET.Attributes
 	public class PersonAttribute : ChanceAttribute
 	{
 		AgeRanges ageRange;
-		Gender? gender;
+		Gender gender;
 
 
-		public PersonAttribute(AgeRanges ageRange = AgeRanges.Any, Gender? gender = null)
+		public PersonAttribute(AgeRanges ageRange = (AgeRanges)0xFF, Gender gender = (Gender)0xFF)
 		{
 			this.ageRange = ageRange;
 			this.gender = gender;

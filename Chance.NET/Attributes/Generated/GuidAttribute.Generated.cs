@@ -13,7 +13,7 @@ namespace ChanceNET.Attributes
 		GuidVersion version;
 
 
-		public GuidAttribute(GuidVersion version = GuidVersion.V4)
+		public GuidAttribute(GuidVersion version = (GuidVersion)0xFF)
 		{
 			this.version = version;
 

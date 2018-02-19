@@ -15,6 +15,7 @@ namespace AttributeGenerator.cs
 	{
 		const BindingFlags BINDING_FLAGS = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
 		const string SAVE_PATH = "../../../Chance.NET/Attributes/Generated/";
+		
 
 		static void Main(string[] args)
 		{
@@ -131,6 +132,10 @@ namespace AttributeGenerator.cs
 					{
 						defaultValue = "'" + defaultValue + "'";
 					}
+					else if (paramType.IsEnum)
+					{
+						defaultValue = string.Format("({0})0xFF", paramType.Name);
+					}
 
 					parameters.AppendFormat("{0} {1} = {2}", paramTypeName, param.Name, defaultValue);
 				}
@@ -164,7 +169,11 @@ namespace AttributeGenerator.cs
 			bool isNullable = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
 			Type paramType = isNullable ? type.GetGenericArguments()[0] : type;
 
-			if (isNullable)
+			if (paramType.GetTypeInfo().IsEnum)
+			{
+				return paramType.Name;
+			}
+			else if (isNullable)
 			{
 				return paramType.Name + "?";
 			}

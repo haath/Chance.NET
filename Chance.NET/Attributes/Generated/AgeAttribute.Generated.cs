@@ -13,7 +13,7 @@ namespace ChanceNET.Attributes
 		AgeRanges range;
 
 
-		public AgeAttribute(AgeRanges range = AgeRanges.Any)
+		public AgeAttribute(AgeRanges range = (AgeRanges)0xFF)
 		{
 			this.range = range;
 

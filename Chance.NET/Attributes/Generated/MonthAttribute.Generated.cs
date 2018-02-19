@@ -14,7 +14,7 @@ namespace ChanceNET.Attributes
 		Month max;
 
 
-		public MonthAttribute(Month min = Month.January, Month max = Month.December)
+		public MonthAttribute(Month min = (Month)0xFF, Month max = (Month)0xFF)
 		{
 			this.min = min;
 			this.max = max;

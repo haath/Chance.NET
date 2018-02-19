@@ -13,7 +13,7 @@ namespace ChanceNET.Attributes
 		WeekdayTypes type;
 
 
-		public WeekdayAttribute(WeekdayTypes type = WeekdayTypes.Any)
+		public WeekdayAttribute(WeekdayTypes type = (WeekdayTypes)0xFF)
 		{
 			this.type = type;
 
