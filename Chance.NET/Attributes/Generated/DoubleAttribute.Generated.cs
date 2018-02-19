@@ -10,8 +10,8 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class DoubleAttribute : ChanceAttribute
 	{
-		Double min;
-		Double max;
+		Double min = 0;
+		Double max = 1;
 
 
 		public DoubleAttribute(Double min = 0, Double max = 1)

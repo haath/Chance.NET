@@ -10,10 +10,10 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class CoordinatesAttribute : ChanceAttribute
 	{
-		Double latMin;
-		Double latMax;
-		Double lngMin;
-		Double lngMax;
+		Double latMin = -90;
+		Double latMax = 90;
+		Double lngMin = -180;
+		Double lngMax = 180;
 
 
 		public CoordinatesAttribute(Double latMin = -90, Double latMax = 90, Double lngMin = -180, Double lngMax = 180)

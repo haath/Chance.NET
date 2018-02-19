@@ -10,7 +10,7 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class AreaCodeAttribute : ChanceAttribute
 	{
-		Boolean parentheses;
+		Boolean parentheses = true;
 
 
 		public AreaCodeAttribute(Boolean parentheses = true)

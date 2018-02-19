@@ -10,9 +10,9 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class WordAttribute : ChanceAttribute
 	{
-		Int32? syllables;
-		Int32? length;
-		Boolean capitalize;
+		Int32? syllables = null;
+		Int32? length = null;
+		Boolean capitalize = false;
 
 
 		public WordAttribute(Int32? syllables = null, Int32? length = null, Boolean capitalize = false)

@@ -10,7 +10,7 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class StreetAttribute : ChanceAttribute
 	{
-		Boolean shortSuffix;
+		Boolean shortSuffix = true;
 
 
 		public StreetAttribute(Boolean shortSuffix = true)

@@ -10,7 +10,7 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class ProfessionAttribute : ChanceAttribute
 	{
-		Boolean rank;
+		Boolean rank = false;
 
 
 		public ProfessionAttribute(Boolean rank = false)

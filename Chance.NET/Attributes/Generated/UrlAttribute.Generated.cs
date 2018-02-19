@@ -10,10 +10,10 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class UrlAttribute : ChanceAttribute
 	{
-		String protocol;
-		String domain;
-		String path;
-		String extension;
+		String protocol = null;
+		String domain = null;
+		String path = null;
+		String extension = null;
 
 
 		public UrlAttribute(String protocol = "null", String domain = "null", String path = "null", String extension = "null")

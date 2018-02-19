@@ -10,7 +10,7 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class SyllableAttribute : ChanceAttribute
 	{
-		Int32? length;
+		Int32? length = null;
 
 
 		public SyllableAttribute(Int32? length = null)

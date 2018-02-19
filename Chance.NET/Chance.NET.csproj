@@ -157,6 +157,7 @@
     <Compile Include="Attributes\Generated\YearAttribute.Generated.cs" />
     <Compile Include="Attributes\Generated\ZipAttribute.Generated.cs" />
     <Compile Include="Attributes\LocationAttribute.cs" />
+    <Compile Include="Attributes\NullableDefaultAttribute.cs" />
     <Compile Include="Chance.cs" />
     <Compile Include="Classes\CreditCard.cs" />
     <Compile Include="Classes\CreditCardType.cs" />

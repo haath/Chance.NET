@@ -10,8 +10,8 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class EndPointAttribute : ChanceAttribute
 	{
-		String subnet;
-		Int32? port;
+		String subnet = null;
+		Int32? port = null;
 
 
 		public EndPointAttribute(String subnet = "null", Int32? port = null)

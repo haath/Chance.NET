@@ -10,9 +10,9 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class EmailAttribute : ChanceAttribute
 	{
-		Int32? length;
-		String domain;
-		String tld;
+		Int32? length = null;
+		String domain = null;
+		String tld = null;
 
 
 		public EmailAttribute(Int32? length = null, String domain = "null", String tld = "null")

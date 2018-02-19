@@ -9,7 +9,7 @@ using System.Reflection;
 using ChanceNET;
 using ChanceNET.Attributes;
 
-namespace AttributeGenerator.cs
+namespace ChanceNET
 {
 	class Program
 	{
@@ -108,7 +108,15 @@ namespace AttributeGenerator.cs
 				if (!IsSimpleType(paramType) || param.ParameterType == typeof(Location))
 					return null;
 
-				fields.AppendFormat("		{0} {1};\n", paramTypeName, param.Name);
+				if (param.HasDefaultValue)
+				{
+					object defaultValue = GetDefaultValue(methods, param);
+					fields.AppendFormat("		{0} {1} = {2};\n", paramTypeName, param.Name, defaultValue);
+				}
+				else
+				{
+					fields.AppendFormat("		{0} {1};\n", paramTypeName, param.Name);
+				}
 				fieldAssign.AppendFormat("			this.{0} = {0};\n", param.Name);
 
 				if (parameters.Length > 0)
@@ -155,6 +163,43 @@ namespace AttributeGenerator.cs
 							.Replace("@{methodCallParams}", methodCallParams.ToString())
 							.Replace("True", "true")
 							.Replace("False", "false");
+		}
+
+		static object GetDefaultValue(List<MethodInfo> methods, ParameterInfo param)
+		{
+			bool isNullable = param.ParameterType.IsGenericType && param.ParameterType.GetGenericTypeDefinition() == typeof(Nullable<>);
+			Type paramType = GetParamType(param);
+			object defaultValue = param.DefaultValue ?? "null";
+			if (paramType.IsEnum && !defaultValue.ToString().Equals("null"))
+			{
+				defaultValue = paramType.Name + "." + defaultValue;
+			}
+			if (paramType == typeof(string) && param.DefaultValue != null)
+			{
+				defaultValue = "\"" + defaultValue + "\"";
+			}
+			else if (paramType == typeof(char))
+			{
+				defaultValue = "'" + defaultValue + "'";
+			}
+			else if (paramType.IsEnum)
+			{
+				defaultValue = string.Format("({0})0xFF", paramType.Name);
+			}
+
+			if (isNullable)
+			{
+				List<NullableDefaultAttribute> defaults = new List<NullableDefaultAttribute>();
+				foreach (MethodInfo method in methods)
+					defaults.AddRange(method.GetCustomAttributes<NullableDefaultAttribute>());
+
+				NullableDefaultAttribute paramDefault = defaults.FirstOrDefault(d => d.Name == param.Name);
+
+				if (paramDefault != null)
+					return paramDefault.DefaultValue;
+			}
+
+			return defaultValue;
 		}
 
 		static Type GetParamType(ParameterInfo param)

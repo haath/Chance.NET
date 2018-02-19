@@ -10,8 +10,8 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class EuroAttribute : ChanceAttribute
 	{
-		Double min;
-		Double max;
+		Double min = 0;
+		Double max = 10000;
 
 
 		public EuroAttribute(Double min = 0, Double max = 10000)

@@ -10,9 +10,9 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class ParagraphAttribute : ChanceAttribute
 	{
-		Int32? sentences;
-		Int32? words;
-		Int32? length;
+		Int32? sentences = null;
+		Int32? words = null;
+		Int32? length = null;
 
 
 		public ParagraphAttribute(Int32? sentences = null, Int32? words = null, Int32? length = null)

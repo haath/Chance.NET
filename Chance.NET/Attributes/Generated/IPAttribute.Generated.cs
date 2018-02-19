@@ -10,7 +10,7 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class IPAttribute : ChanceAttribute
 	{
-		String subnet;
+		String subnet = null;
 
 
 		public IPAttribute(String subnet = "null")

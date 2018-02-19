@@ -10,11 +10,11 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class SentenceAttribute : ChanceAttribute
 	{
-		Int32? words;
-		Int32? length;
-		Boolean capitalize;
-		Boolean punctuation;
-		Char punctuationMark;
+		Int32? words = null;
+		Int32? length = null;
+		Boolean capitalize = false;
+		Boolean punctuation = false;
+		Char punctuationMark = '.';
 
 
 		public SentenceAttribute(Int32? words = null, Int32? length = null, Boolean capitalize = false, Boolean punctuation = false, Char punctuationMark = '.')

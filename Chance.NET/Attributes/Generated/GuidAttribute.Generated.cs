@@ -10,7 +10,7 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class GuidAttribute : ChanceAttribute
 	{
-		GuidVersion version;
+		GuidVersion version = (GuidVersion)0xFF;
 
 
 		public GuidAttribute(GuidVersion version = (GuidVersion)0xFF)

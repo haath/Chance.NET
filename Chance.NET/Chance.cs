@@ -1203,14 +1203,26 @@ namespace ChanceNET
 			DateTime maxDate = new DateTime(maxYear ?? 9999, 1, 1);
 
 			TimeSpan range = maxDate - randomDate;
-			TimeSpan toAdd = new TimeSpan((long)(Double() * range.Ticks));
-			
-			randomDate += toAdd;
 
-			int randYear = year ?? randomDate.Year;
-			int randMonth = (int?)month ?? randomDate.Month;
-			int randDay = day ?? randomDate.Day;
+			int attempts = 0;
+			int randYear = 0, randMonth = 0, randDay = 0;
 
+			while (attempts++ < 100)
+			{
+				TimeSpan toAdd = new TimeSpan((long)(Double() * range.Ticks));
+
+				randomDate += toAdd;
+
+				randYear = year ?? randomDate.Year;
+				randMonth = (int?)month ?? randomDate.Month;
+				randDay = day ?? randomDate.Day;
+
+				try
+				{
+					// It rarely got out of range, don't judge me.
+					return new DateTime(randYear, randMonth, randDay, randomDate.Hour, randomDate.Minute, randomDate.Second, randomDate.Millisecond, DateTimeKind.Utc);
+				} catch (ArgumentOutOfRangeException) { }
+			}
 			return new DateTime(randYear, randMonth, randDay, randomDate.Hour, randomDate.Minute, randomDate.Second, randomDate.Millisecond, DateTimeKind.Utc);
 		}
 
@@ -1311,7 +1323,9 @@ namespace ChanceNET
 		/// <para>By default, min is the current year and max is 100 years greater than min, with a ceiling on 9999, which is the maximum year for a DateTime field.</para>
 		/// </summary>
 		/// <returns></returns>
-		public int Year(int? min, int? max)
+		[NullableDefault("min", "DateTime.Now.Year")]
+		[NullableDefault("max", "9999")]
+		public int Year(int? min = null, int? max = null)
 		{
 			int mn = min ?? DateTime.Now.Year;
 			int mx = max ?? Math.Min(mn + 100, 9999);
@@ -1908,12 +1922,13 @@ namespace ChanceNET
 
 		static IEnumerable<MemberInfo> GetTypeMembers<T, Q>() where Q : Attribute
 		{
-			foreach (MemberInfo member in typeof(T).GetRuntimeProperties())
+			const BindingFlags FLAGS = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+			foreach (MemberInfo member in typeof(T).GetTypeInfo().GetProperties(FLAGS))
 			{
 				if (member.GetCustomAttribute<Q>() != null)
 					yield return member;
 			}
-			foreach (MemberInfo member in typeof(T).GetRuntimeFields())
+			foreach (MemberInfo member in typeof(T).GetTypeInfo().GetFields(FLAGS))
 			{
 				if (member.GetCustomAttribute<Q>() != null)
 					yield return member;

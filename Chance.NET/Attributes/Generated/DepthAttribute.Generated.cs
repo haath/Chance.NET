@@ -10,8 +10,8 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class DepthAttribute : ChanceAttribute
 	{
-		Double min;
-		Double max;
+		Double min = -10994;
+		Double max = 0;
 
 
 		public DepthAttribute(Double min = -10994, Double max = 0)

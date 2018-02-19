@@ -10,11 +10,11 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class DateAttribute : ChanceAttribute
 	{
-		Int32? year;
-		Month month;
-		Int32? day;
-		Int32? minYear;
-		Int32? maxYear;
+		Int32? year = null;
+		Month month = (Month)0xFF;
+		Int32? day = null;
+		Int32? minYear = null;
+		Int32? maxYear = null;
 
 
 		public DateAttribute(Int32? year = null, Month month = (Month)0xFF, Int32? day = null, Int32? minYear = null, Int32? maxYear = null)

@@ -10,7 +10,7 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class DomainAttribute : ChanceAttribute
 	{
-		String tld;
+		String tld = null;
 
 
 		public DomainAttribute(String tld = "null")

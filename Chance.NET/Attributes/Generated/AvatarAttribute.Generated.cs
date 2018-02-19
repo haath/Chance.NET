@@ -10,7 +10,7 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class AvatarAttribute : ChanceAttribute
 	{
-		GravatarDefaults defaultType;
+		GravatarDefaults defaultType = (GravatarDefaults)0xFF;
 
 
 		public AvatarAttribute(GravatarDefaults defaultType = (GravatarDefaults)0xFF)

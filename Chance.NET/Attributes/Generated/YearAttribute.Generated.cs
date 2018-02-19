@@ -10,11 +10,11 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class YearAttribute : ChanceAttribute
 	{
-		Int32? min;
-		Int32? max;
+		Int32? min = DateTime.Now.Year;
+		Int32? max = 9999;
 
 
-		public YearAttribute(Int32? min, Int32? max)
+		public YearAttribute(Int32? min = null, Int32? max = null)
 		{
 			this.min = min;
 			this.max = max;

@@ -10,8 +10,8 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class SSNAttribute : ChanceAttribute
 	{
-		Boolean dashes;
-		Boolean ssnFour;
+		Boolean dashes = true;
+		Boolean ssnFour = false;
 
 
 		public SSNAttribute(Boolean dashes = true, Boolean ssnFour = false)

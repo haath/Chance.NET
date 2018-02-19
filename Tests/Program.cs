@@ -41,8 +41,6 @@ namespace Tests
 
 
 				Console.WriteLine(JsonConvert.SerializeObject(o, Formatting.Indented));
-
-				c.Location()
 			}
 			
 		}

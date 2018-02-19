@@ -10,8 +10,8 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class DollarAttribute : ChanceAttribute
 	{
-		Double min;
-		Double max;
+		Double min = 0;
+		Double max = 10000;
 
 
 		public DollarAttribute(Double min = 0, Double max = 10000)

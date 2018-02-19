@@ -10,7 +10,7 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class FileExtensionAttribute : ChanceAttribute
 	{
-		FileExtensionTypes type;
+		FileExtensionTypes type = (FileExtensionTypes)0xFF;
 
 
 		public FileExtensionAttribute(FileExtensionTypes type = (FileExtensionTypes)0xFF)

@@ -10,10 +10,10 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class AddressAttribute : ChanceAttribute
 	{
-		Boolean numberFirst;
-		Boolean shortStreetSuffix;
-		Int32 minNumber;
-		Int32 maxNumber;
+		Boolean numberFirst = true;
+		Boolean shortStreetSuffix = true;
+		Int32 minNumber = 5;
+		Int32 maxNumber = 2000;
 
 
 		public AddressAttribute(Boolean numberFirst = true, Boolean shortStreetSuffix = true, Int32 minNumber = 5, Int32 maxNumber = 2000)

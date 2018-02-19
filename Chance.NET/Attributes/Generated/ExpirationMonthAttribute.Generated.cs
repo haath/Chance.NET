@@ -10,7 +10,7 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class ExpirationMonthAttribute : ChanceAttribute
 	{
-		Int32? expYear;
+		Int32? expYear = null;
 
 
 		public ExpirationMonthAttribute(Int32? expYear = null)

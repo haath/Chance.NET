@@ -10,7 +10,7 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class FirstNameAttribute : ChanceAttribute
 	{
-		Gender gender;
+		Gender gender = (Gender)0xFF;
 
 
 		public FirstNameAttribute(Gender gender = (Gender)0xFF)

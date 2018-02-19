@@ -10,7 +10,7 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class HourAttribute : ChanceAttribute
 	{
-		Boolean twentyFour;
+		Boolean twentyFour = false;
 
 
 		public HourAttribute(Boolean twentyFour = false)

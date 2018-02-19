@@ -10,9 +10,9 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class ColorAttribute : ChanceAttribute
 	{
-		Byte? red;
-		Byte? green;
-		Byte? blue;
+		Byte? red = null;
+		Byte? green = null;
+		Byte? blue = null;
 
 
 		public ColorAttribute(Byte? red = null, Byte? green = null, Byte? blue = null)

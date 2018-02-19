@@ -10,7 +10,7 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class GeohashAttribute : ChanceAttribute
 	{
-		Int32 length;
+		Int32 length = 7;
 
 
 		public GeohashAttribute(Int32 length = 7)

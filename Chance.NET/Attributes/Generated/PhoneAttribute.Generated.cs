@@ -10,8 +10,8 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class PhoneAttribute : ChanceAttribute
 	{
-		String areaCode;
-		Boolean formatted;
+		String areaCode = null;
+		Boolean formatted = true;
 
 
 		public PhoneAttribute(String areaCode = "null", Boolean formatted = true)

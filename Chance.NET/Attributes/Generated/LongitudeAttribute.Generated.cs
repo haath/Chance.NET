@@ -10,8 +10,8 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class LongitudeAttribute : ChanceAttribute
 	{
-		Double min;
-		Double max;
+		Double min = -180;
+		Double max = 180;
 
 
 		public LongitudeAttribute(Double min = -180, Double max = 180)

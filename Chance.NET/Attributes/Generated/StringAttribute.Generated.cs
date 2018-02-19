@@ -11,7 +11,7 @@ namespace ChanceNET.Attributes
 	public class StringAttribute : ChanceAttribute
 	{
 		Int32 length;
-		String pool;
+		String pool = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
 
 
 		public StringAttribute(Int32 length, String pool = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()")

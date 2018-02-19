@@ -10,7 +10,7 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class NaturalAttribute : ChanceAttribute
 	{
-		Int32 max;
+		Int32 max = 2147483647;
 
 
 		public NaturalAttribute(Int32 max = 2147483647)

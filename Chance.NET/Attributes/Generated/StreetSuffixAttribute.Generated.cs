@@ -10,7 +10,7 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class StreetSuffixAttribute : ChanceAttribute
 	{
-		Boolean abbreviation;
+		Boolean abbreviation = false;
 
 
 		public StreetSuffixAttribute(Boolean abbreviation = false)

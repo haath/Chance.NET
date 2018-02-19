@@ -10,8 +10,8 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class LongAttribute : ChanceAttribute
 	{
-		Int64 min;
-		Int64 max;
+		Int64 min = -9223372036854775808;
+		Int64 max = 9223372036854775807;
 
 
 		public LongAttribute(Int64 min = -9223372036854775808, Int64 max = 9223372036854775807)
