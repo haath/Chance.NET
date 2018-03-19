@@ -1,7 +1,11 @@
 
 ![logo](assets/logo.png)
 
+[![Nuget](https://img.shields.io/nuget/v/Chance.NET.svg)](https://www.nuget.org/packages/Chance.NET/)
+
 [Chance.js](http://chancejs.com) port into native C# targetting portable .NET Standard.
+
+
 
 This project aims to mimic the original chance.js api as closely as possible while adapting 
 it to C# types and practices. For example using enums for options and returning regular objects 
