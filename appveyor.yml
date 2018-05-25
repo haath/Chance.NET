@@ -1,0 +1,45 @@
+version: 1.1.{build}
+skip_non_tags: false
+image: Visual Studio 2017
+configuration: Release
+init:
+- ps: >-
+    function gitVersion() {
+      write-host "Setting version according to the git release tag."
+      $branch=$env:APPVEYOR_REPO_TAG_NAME
+      $posAfterVchar = $branch.LastIndexOf("v") + 1
+      $versionLength = $branch.Length - $posAfterVchar
+      $gitVersion=$branch.substring($posAfterVchar, $versionLength)
+      $newVersion="$gitVersion"
+      write-host "Update appveyor build version to:$newVersion"
+      $env:appveyor_build_version="$newVersion"
+      appveyor UpdateBuild -Version "$newVersion"
+    }
+    if ($env:APPVEYOR_REPO_TAG -eq $true) {
+      gitVersion
+    }
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+before_build:
+- cmd: >-
+    dotnet restore
+
+    nuget restore
+build:
+  verbosity: minimal
+test: off
+artifacts:
+- path: Chance.NET\**\.nupkg
+  name: NuGet
+deploy:
+- provider: NuGet
+  on:
+    appveyor_repo_tag: true
+  api_key:
+    secure: U909gTvHqZ0NpnlX9zlt7uIjpgecLfDAixvOtApwnfVYseBihEUBnR3mSqV9ASzY
