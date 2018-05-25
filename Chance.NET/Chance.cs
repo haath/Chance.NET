@@ -1883,6 +1883,26 @@ namespace ChanceNET
 		}
 
 		/// <summary>
+		/// Get a random animal.
+		/// </summary>
+		/// <param name="type">A flag enum of animal times to restrict the choice from.</param>
+		/// <returns></returns>
+		public string Animal(AnimalTypes type = AnimalTypes.All)
+		{
+			HashSet<string> animals = new HashSet<string>();
+
+			foreach (AnimalTypes t in Enum.GetValues(typeof(AnimalTypes)).Cast<AnimalTypes>())
+			{
+				if (t != AnimalTypes.All && type.HasFlag(t))
+				{
+					animals.UnionWith(Data.Animals[t]);
+				}
+			}
+
+			return PickOne(animals);
+		}
+
+		/// <summary>
 		/// Shuffle the specified list.
 		/// </summary>
 		/// <returns>The shuffle.</returns>

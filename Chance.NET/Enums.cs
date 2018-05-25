@@ -174,4 +174,17 @@ namespace ChanceNET
 		InterPayment					= 1 << 18,
 		UATP							= 1 << 19
 	}
+
+	[Flags]
+	public enum AnimalTypes
+	{
+		Ocean		= 1 << 0,
+		Desert		= 1 << 1,
+		Grassland	= 1 << 2,
+		Forest		= 1 << 3,
+		Farm		= 1 << 4,
+		Pets		= 1 << 5,
+		Zoo			= 1 << 6,
+		All			= ~0
+	}
 }

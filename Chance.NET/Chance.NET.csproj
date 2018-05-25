@@ -13,4 +13,12 @@
     <PackageTags>chance rng random generate randomness seed testing tests unit generator pseudo</PackageTags>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.6|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard1.6\Chance.NET.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.6|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.6\Chance.NET.xml</DocumentationFile>
+  </PropertyGroup>
+
 </Project>
