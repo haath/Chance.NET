@@ -1,9 +1,10 @@
 
 ![logo](assets/logo.png)
 
-[![Nuget](https://img.shields.io/nuget/v/Chance.NET.svg)](https://www.nuget.org/packages/Chance.NET)
-[![Nuget](https://img.shields.io/nuget/dt/Chance.NET.svg)](https://www.nuget.org/packages/Chance.NET)
-[![Build status](https://ci.appveyor.com/api/projects/status/ahkrm585ivrcqqsv/branch/master?svg=true)](https://ci.appveyor.com/project/gmantaos/chance-net/branch/master)
+[![ ](https://img.shields.io/nuget/v/Chance.NET.svg)](https://www.nuget.org/packages/Chance.NET)
+[![ ](https://img.shields.io/nuget/dt/Chance.NET.svg)](https://www.nuget.org/packages/Chance.NET)
+[![ ](https://ci.appveyor.com/api/projects/status/ahkrm585ivrcqqsv/branch/master?svg=true)](https://ci.appveyor.com/project/gmantaos/chance-net/branch/master)
+[![ ](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 [Chance.js](http://chancejs.com) port into native C# targetting portable .NET Standard.
 
