@@ -51,7 +51,7 @@ for (...)
 }
 ```
 
-### API
+## API
 
 Almost every function that is implemented in [Chance.js](http://chancejs.com).
 Apart from those, you will find new additions listed below.
@@ -72,6 +72,36 @@ double range           = 100;
 
 // This point will be somewhere around the Red Square in Moscow
 Location point = chance.Location(centerLatitude, centerLongitude, range);
+```
+
+### Credit Cards
+
+```csharp
+CreditCardType ccType = chance.CreditCardType();
+
+ccType.Type;           // MasterCard
+ccType.Prefix;         // "51"
+ccType.SpacingPattern; // "4-4-4-4"
+```
+
+```csharp
+CreditCard cc = chance.CreditCard();
+
+cc.Number;           // "4246023945944476"
+cc.NumberFormatted;  // "4246 0239 4594 4476"
+cc.ExpirationMonth;  // June
+cc.ExpirationYear;   // 2020
+cc.ExpirationString; // 06/20
+```
+
+### People
+
+```csharp
+Person p = chance.Person(gender: Gender.Male);
+
+p.Gender;    // Male
+p.FirstName; // John
+p.SSN;       // "501940398"
 ```
 
 ### Generating objects
