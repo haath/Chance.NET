@@ -13,14 +13,14 @@ namespace Tests
 {
 	public class Book
 	{
-		[Integer(min: 1950)]
+		[Year]
 		public int PublishingYear;
-		
-		[Person]
-		public Person Author;
 
 		[String(10)]
 		public string Title;
+		
+		[Paragraph(length: 10)]
+		public string Summary;
 	}
 
 	class Program
@@ -40,7 +40,7 @@ namespace Tests
 				Book o = c.Object<Book>();
 
 
-				Console.WriteLine(JsonConvert.SerializeObject(o, Formatting.Indented));
+				Console.WriteLine(o.PublishingYear);
 			}
 			
 		}

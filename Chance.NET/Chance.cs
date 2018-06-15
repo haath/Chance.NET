@@ -1354,7 +1354,7 @@ namespace ChanceNET
 		[NullableDefault("max", "9999")]
 		public int Year(int min = 0, int max = 9999)
 		{
-			int mn = min >= 0 ? min : DateTime.Now.Year;
+			int mn = min >= 1970 ? min : DateTime.Now.Year;
 			int mx = Math.Min(mn + 100, max);
 			return Integer(mn, mx + 1);
 		}
@@ -1960,7 +1960,7 @@ namespace ChanceNET
 
 		static IEnumerable<MemberInfo> GetTypeMembers<T, Q>() where Q : Attribute
 		{
-			const BindingFlags FLAGS = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+			const BindingFlags FLAGS = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
 			foreach (MemberInfo member in typeof(T).GetTypeInfo().GetProperties(FLAGS))
 			{
 				if (member.GetCustomAttribute<Q>() != null)
