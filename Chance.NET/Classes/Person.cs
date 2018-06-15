@@ -17,6 +17,7 @@ namespace ChanceNET
 		public readonly string SSN;
 		public readonly DateTime Birthday;
 		public readonly string Phone;
+		public readonly string Email;
 
 		public int Age
 		{
@@ -49,6 +50,7 @@ namespace ChanceNET
 			SSN			= chance.SSN();
 			Birthday	= chance.Birthday(ageRange);
 			Phone		= chance.Phone();
+			Email       = chance.Email();
 		}
 
 		public string FullName(bool prefix = false, bool middle = false, bool middleInitial = false, bool suffix = false)

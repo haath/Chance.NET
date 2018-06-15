@@ -67,7 +67,6 @@ namespace ChanceNET
 	[Flags]
 	public enum WeekdayTypes
 	{
-		Any		= 0xFF,
 		Weekday	= 1 << 0,
 		Weekend	= 1 << 1
 	}
@@ -184,7 +183,6 @@ namespace ChanceNET
 		Forest		= 1 << 3,
 		Farm		= 1 << 4,
 		Pets		= 1 << 5,
-		Zoo			= 1 << 6,
-		All			= ~0
+		Zoo			= 1 << 6
 	}
 }

@@ -11,10 +11,10 @@ namespace ChanceNET.Attributes
 	public class EndPointAttribute : ChanceAttribute
 	{
 		String subnet = null;
-		Int32? port = null;
+		UInt16 port = 0;
 
 
-		public EndPointAttribute(String subnet = "null", Int32? port = null)
+		public EndPointAttribute(String subnet = "null", UInt16 port = 0)
 		{
 			this.subnet = subnet;
 			this.port = port;

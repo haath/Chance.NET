@@ -10,18 +10,18 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class FileExtensionAttribute : ChanceAttribute
 	{
-		FileExtensionTypes type = (FileExtensionTypes)0xFF;
+		FileExtensionTypes types = (FileExtensionTypes)0xFF;
 
 
-		public FileExtensionAttribute(FileExtensionTypes type = (FileExtensionTypes)0xFF)
+		public FileExtensionAttribute(FileExtensionTypes types = (FileExtensionTypes)0xFF)
 		{
-			this.type = type;
+			this.types = types;
 
 		}
 
 		internal override object GetValue(Chance chance)
 		{
-			return chance.FileExtension(type);
+			return chance.FileExtension(types);
 		}
 	}
 }

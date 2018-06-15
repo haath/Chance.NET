@@ -223,7 +223,7 @@ namespace ChanceNET
 		/// </summary>
 		/// <param name="length">The length of the syllable. The default is randomly picked to be either 2 or 3.</param>
 		/// <returns></returns>
-		public string Syllable(int? length = null)
+		public string Syllable(int length = 0)
 		{
 			const string consonants = "bcdfghjklmnprstvwz";
 			const string vowels = "aeiou";
@@ -233,7 +233,7 @@ namespace ChanceNET
 
 			StringBuilder syllable = new StringBuilder();
 
-			length = length ?? Integer(2, 4);
+			length = length > 0 ? length : Integer(2, 4);
 
 			for (int i = 0; i < length; i++)
 			{
@@ -266,11 +266,11 @@ namespace ChanceNET
 		/// <param name="length">The maximum length of the generated string</param>
 		/// <param name="capitalize">Capitalize the first letter</param>
 		/// <returns></returns>
-		public string Word(int? syllables = null, int? length = null, bool capitalize = false)
+		public string Word(int syllables = 0, int length = 0, bool capitalize = false)
 		{
 			StringBuilder word = new StringBuilder();
 
-			syllables = syllables ?? NormalInteger(1, 5);
+			syllables = syllables > 0 ? syllables : NormalInteger(1, 5);
 
 			for (int i = 0; i < syllables; i++)
 			{
@@ -282,7 +282,7 @@ namespace ChanceNET
 				word[0] = char.ToUpper(word[0]);
 			}
 
-			int wordLength = length ?? word.Length;
+			int wordLength = length > 0 ? length : word.Length;
 
 			return word.ToString().Substring(0, wordLength);
 		}
@@ -291,16 +291,17 @@ namespace ChanceNET
 		/// Return a random sentence populated by semi-pronounceable random (nonsense) words.
 		/// </summary>
 		/// <param name="words">The amount of the words of the sentence. Default is to pick a random amount between 12 and 19</param>
+		/// <param name="length">The length of the sentence string. Default is any length.</param>
 		/// <param name="capitalize">Capitalize the first letter of the sentence.</param>
 		/// <param name="punctuation">Whether to put punctuation at the end of the sentence.</param>
 		/// <param name="punctuationMark">The character to use as punctuation</param>
 		/// <returns></returns>
-		public string Sentence(int? words = null, int? length = null,
+		public string Sentence(int words = 0, int length = 0,
 		                       bool capitalize = false, bool punctuation = false ,char punctuationMark = '.')
 		{
 			StringBuilder sentence = new StringBuilder();
 
-			int wordCount = words ?? Integer(12, 19);
+			int wordCount = words > 0 ? words : Integer(12, 19);
 
 			for (int i = 0; i < wordCount; i++)
 			{
@@ -314,7 +315,7 @@ namespace ChanceNET
 				sentence[0] = char.ToUpper(sentence[0]);
 			}
 
-			int sentenceLength = length ?? sentence.Length;
+			int sentenceLength = length > 0 ? length : sentence.Length;
 
 			string result = sentence.ToString().Substring(0, sentenceLength);
 
@@ -326,11 +327,11 @@ namespace ChanceNET
 			return result;
 		}
 
-		public string Paragraph(int? sentences = null, int? words = null, int? length = null)
+		public string Paragraph(int sentences = 0, int words = 0, int length = 0)
 		{
 			StringBuilder paragraph = new StringBuilder();
 
-			int sentenceCount = sentences ?? Integer(3, 8);
+			int sentenceCount = sentences > 0 ? sentences : Integer(3, 8);
 			int wordCount = 0;
 
 			char lastPunctuation = '.';
@@ -347,13 +348,13 @@ namespace ChanceNET
 				string sentence = Sentence(punctuation: true, punctuationMark: lastPunctuation, capitalize: capitalize);
 				int sentenceWords = sentence.Split(' ').Length;
 
-				if (words != null && (wordCount + sentenceWords) > words)
+				if (words > 0 && (wordCount + sentenceWords) > words)
 				{
 					sentence = Sentence(punctuation: true, punctuationMark: lastPunctuation,
 					                    words: words - wordCount);
 				}
 
-				if (length != null && (paragraph.Length + sentence.Length) > length)
+				if (length > 0 && (paragraph.Length + sentence.Length) > length)
 				{
 					sentence = Sentence(punctuation: true, punctuationMark: lastPunctuation,
 					                    length : length - paragraph.Length, capitalize: capitalize);
@@ -414,7 +415,12 @@ namespace ChanceNET
 			return Date(year: DateTime.Now.Year - Age(range));
 		}
 
-		public string FirstName(Gender? gender = null)
+		/// <summary>
+		/// Pick a random first name.
+		/// </summary>
+		/// <param name="gender">Pick for a specific gender. Default is any.</param>
+		/// <returns></returns>
+		public string FirstName(Gender gender = (Gender)~0)
 		{
 			switch (gender)
 			{
@@ -439,7 +445,12 @@ namespace ChanceNET
 			return PickOne(Data.LastNames);
 		}
 
-		public string NamePrefix(Gender? gender = null)
+		/// <summary>
+		/// Pick a random name prefix like Sr. or Dr.
+		/// </summary>
+		/// <param name="gender">Pick for a specific gender. Default is any.</param>
+		/// <returns></returns>
+		public string NamePrefix(Gender gender = (Gender)~0)
 		{
 			switch (gender)
 			{
@@ -459,7 +470,16 @@ namespace ChanceNET
 			return PickOne(Data.Suffixes);
 		}
 
-		public string FullName(Gender? gender = null, bool prefix = false,
+		/// <summary>
+		/// Pick a random full name.
+		/// </summary>
+		/// <param name="gender">Pick for a specific gender. Default is any.</param>
+		/// <param name="prefix"></param>
+		/// <param name="middle"></param>
+		/// <param name="middleInitial"></param>
+		/// <param name="suffix"></param>
+		/// <returns></returns>
+		public string FullName(Gender gender = (Gender)~0, bool prefix = false,
 			bool middle = false, bool middleInitial = false, bool suffix = false)
 		{
 			Person person = Person(gender: gender);
@@ -494,7 +514,13 @@ namespace ChanceNET
 			return ssn.ToString();
 		}
 
-		public Person Person(AgeRanges ageRange = AgeRanges.Any, Gender? gender = null)
+		/// <summary>
+		/// Generate a random person.
+		/// </summary>
+		/// <param name="ageRange"></param>
+		/// <param name="gender">Pick for a specific gender. Default is any.</param>
+		/// <returns></returns>
+		public Person Person(AgeRanges ageRange = AgeRanges.Any, Gender gender = (Gender)~0)
 		{
 			return new Person(this, ageRange, gender);
 		}
@@ -570,7 +596,7 @@ namespace ChanceNET
 		/// <param name="length">Length.</param>
 		/// <param name="domain">Domain.</param>
 		/// <param name="tld">Tld.</param>
-		public string Email(int? length = null, string domain = null, string tld = null)
+		public string Email(int length = 0, string domain = null, string tld = null)
 		{
 			return Word(length: length) + "@" + (domain ?? Domain(tld));
 		}
@@ -768,15 +794,15 @@ namespace ChanceNET
 		/// <summary>
 		/// Return a URL to a random avatar from Gravatar.
 		/// </summary>
-		/// <param name="defaultType"></param>
+		/// <param name="defaultType">The type of default generated avatar. Default is none.</param>
 		/// <returns></returns>
-		public string Avatar(GravatarDefaults? defaultType = null)
+		public string Avatar(GravatarDefaults defaultType = 0)
 		{
 			StringBuilder avatar = new StringBuilder("https://www.gravatar.com/avatar/");
 
 			avatar.Append(BitConverter.ToString(MD5()).Replace("-", string.Empty).ToLower());
 
-			if (defaultType != null)
+			if (defaultType != 0)
 			{
 				avatar.Append("?d=");
 				avatar.Append(defaultType.ToString().ToLower());
@@ -829,11 +855,11 @@ namespace ChanceNET
 		/// Generate a random IPEndPoint which is a pair of an IP and a port.
 		/// </summary>
 		/// <returns>The point.</returns>
-		/// <param name="subnet">Subnet.</param>
-		/// <param name="port">Port.</param>
-		public IPEndPoint EndPoint(string subnet = null, int? port = null)
+		/// <param name="subnet">Pick from a specific subnet.</param>
+		/// <param name="port">Use a specific port instead of a random one.</param>
+		public IPEndPoint EndPoint(string subnet = null, ushort port = 0)
 		{
-			return new IPEndPoint(IP(subnet), port ?? Port());
+			return new IPEndPoint(IP(subnet), port > 0 ? port : Port());
 		}
 
 		public string Url(string protocol = null, string domain = null, 
@@ -851,9 +877,9 @@ namespace ChanceNET
 		/// Generate a random valid port number.
 		/// </summary>
 		/// <returns>The port.</returns>
-		public int Port()
+		public ushort Port()
 		{
-			return Natural(65536);
+			return (ushort)Natural(65536);
 		}
 
 		/// <summary>
@@ -1188,19 +1214,19 @@ namespace ChanceNET
 		}
 
 		/// <summary>
-		/// 
+		/// Generate a random date.
 		/// </summary>
-		/// <param name="year"></param>
-		/// <param name="month"></param>
-		/// <param name="day"></param>
-		/// <param name="minYear"></param>
-		/// <param name="maxYear"></param>
+		/// <param name="year">Pick from a specific year. Default is any.</param>
+		/// <param name="month">Pick on a specific month. Default is any.</param>
+		/// <param name="day">Pick a specific day. Default is any.</param>
+		/// <param name="minYear">The minimum year to choose from.</param>
+		/// <param name="maxYear">The maximum year to choose from.</param>
 		/// <returns></returns>
-		public DateTime Date(int? year = null, Month? month = null, int? day = null, int? minYear = null, int? maxYear = null)
+		public DateTime Date(int year = 0, Month month = (Month)~0, int day = 0, int minYear = 1970, int maxYear = 9999)
 		{
 			DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-			DateTime randomDate = new DateTime(minYear ?? 1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-			DateTime maxDate = new DateTime(maxYear ?? 9999, 1, 1);
+			DateTime randomDate = new DateTime(minYear, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+			DateTime maxDate = new DateTime(maxYear, 1, 1);
 
 			TimeSpan range = maxDate - randomDate;
 
@@ -1213,9 +1239,9 @@ namespace ChanceNET
 
 				randomDate += toAdd;
 
-				randYear = year ?? randomDate.Year;
+				randYear = year > 1970 ? year : randomDate.Year;
 				randMonth = (int?)month ?? randomDate.Month;
-				randDay = day ?? randomDate.Day;
+				randDay = day > 0 ? day : randomDate.Day;
 
 				try
 				{
@@ -1308,10 +1334,11 @@ namespace ChanceNET
 		}
 
 		/// <summary>
-		/// Return a weekday
+		/// Pick a random day of the week.
 		/// </summary>
+		/// <param name="type">The type of day of the week. Default is any.</param>
 		/// <returns></returns>
-		public Weekday Weekday(WeekdayTypes type = WeekdayTypes.Any)
+		public Weekday Weekday(WeekdayTypes type = (WeekdayTypes)~0)
 		{
 			int min = type.HasFlag(WeekdayTypes.Weekday) ? 1 : 6;
 			int max = type.HasFlag(WeekdayTypes.Weekend) ? 8 : 6;
@@ -1325,10 +1352,10 @@ namespace ChanceNET
 		/// <returns></returns>
 		[NullableDefault("min", "DateTime.Now.Year")]
 		[NullableDefault("max", "9999")]
-		public int Year(int? min = null, int? max = null)
+		public int Year(int min = 0, int max = 9999)
 		{
-			int mn = min ?? DateTime.Now.Year;
-			int mx = max ?? Math.Min(mn + 100, 9999);
+			int mn = min >= 0 ? min : DateTime.Now.Year;
+			int mx = Math.Min(mn + 100, max);
 			return Integer(mn, mx + 1);
 		}
 
@@ -1336,8 +1363,8 @@ namespace ChanceNET
 		/// Generate a random valid credit card number without spacing.
 		/// </summary>
 		/// <returns>The card number.</returns>
-		/// <param name="types">Types.</param>
-		public string CreditCardNumber(CreditCardTypes? types = null)
+		/// <param name="types">The CC types to limit the choice to. Default is any.</param>
+		public string CreditCardNumber(CreditCardTypes types = (CreditCardTypes)~0)
 		{
 			CreditCardType type = CreditCardType(types);
 
@@ -1385,12 +1412,10 @@ namespace ChanceNET
 		/// Pick a random credit card type.
 		/// </summary>
 		/// <returns>The card type.</returns>
-		/// <param name="types">The flags of types to limit to.</param>
-		public CreditCardType CreditCardType(CreditCardTypes? types = null)
+		/// <param name="types">The CC types to limit the choice to. Default is any.</param>
+		public CreditCardType CreditCardType(CreditCardTypes types = (CreditCardTypes)~0)
 		{
-			CreditCardTypes type = types ?? (CreditCardTypes)0xFF;
-
-			IEnumerable<CreditCardType> pool = Data.CreditCardTypes.Where(t => type.HasFlag(t.Type));
+			IEnumerable<CreditCardType> pool = Data.CreditCardTypes.Where(t => types.HasFlag(t.Type));
 
 			return PickOne(pool);
 		}
@@ -1416,9 +1441,9 @@ namespace ChanceNET
 		/// </summary>
 		/// <param name="expYear">The expiration year of the card.</param>
 		/// <returns></returns>
-		public Month ExpirationMonth(int? expYear = null)
+		public Month ExpirationMonth(int expYear = 0)
 		{
-			int min = (expYear != null && expYear == DateTime.Now.Year) ? DateTime.Now.Month + 1 : 1;
+			int min = (expYear > 0 && expYear == DateTime.Now.Year) ? DateTime.Now.Month + 1 : 1;
 			if (min == 13)
 				min = 12;
 			return Month(min: (Month)min);
@@ -1453,8 +1478,8 @@ namespace ChanceNET
 		/// Generate a random credit card that has not expired.
 		/// </summary>
 		/// <returns>The card.</returns>
-		/// <param name="types">Types.</param>
-		public CreditCard CreditCard(CreditCardTypes? types = null)
+		/// <param name="types">The CC types to limit the choice to. Default is any.</param>
+		public CreditCard CreditCard(CreditCardTypes types = (CreditCardTypes)~0)
 		{
 			return new CreditCard(this, types);
 		}
@@ -1652,9 +1677,9 @@ namespace ChanceNET
 		/// <summary>
 		/// Generate a random radio call sign.
 		/// </summary>
-		/// <param name="side"></param>
+		/// <param name="side">The radio side to limit the choice to. Default is any.</param>
 		/// <returns></returns>
-		public string Radio(RadioSide? side = null)
+		public string Radio(RadioSide side = (RadioSide)~0)
 		{
 			StringBuilder radio = new StringBuilder();
 			switch (side)
@@ -1682,9 +1707,9 @@ namespace ChanceNET
 		/// <summary>
 		/// Generate a TV station call sign. This is an alias for Radio() since they both follow the same rules.
 		/// </summary>
-		/// <param name="side"></param>
+		/// <param name="side">The radio side to limit the choice to. Default is any.</param>
 		/// <returns></returns>
-		public string Tv(RadioSide? side = null)
+		public string Tv(RadioSide side = (RadioSide)~0)
 		{
 			return Radio(side);
 		}
@@ -1711,31 +1736,24 @@ namespace ChanceNET
 		/// Get a random file extension.
 		/// </summary>
 		/// <returns>The extension.</returns>
-		/// <param name="type">Type.</param>
-		public string FileExtension(FileExtensionTypes? type = null)
+		/// <param name="types">The file types to limit the choice to. Default is any.</param>
+		public string FileExtension(FileExtensionTypes types = (FileExtensionTypes)~0)
 		{
-			if (type == null)
-			{
-				return PickOne(Data.FileExtensions.Any);
-			}
-
 			List<string> extensions = new List<string>();
 
-			FileExtensionTypes t = (FileExtensionTypes)type;
-
-			if (t.HasFlag(FileExtensionTypes.Raster))
+			if (types.HasFlag(FileExtensionTypes.Raster))
 			{
 				extensions.AddRange(Data.FileExtensions.Raster);
 			}
-			if (t.HasFlag(FileExtensionTypes.Vector))
+			if (types.HasFlag(FileExtensionTypes.Vector))
 			{
 				extensions.AddRange(Data.FileExtensions.Vector);
 			}
-			if (t.HasFlag(FileExtensionTypes._3D))
+			if (types.HasFlag(FileExtensionTypes._3D))
 			{
 				extensions.AddRange(Data.FileExtensions._3D);
 			}
-			if (t.HasFlag(FileExtensionTypes.Document))
+			if (types.HasFlag(FileExtensionTypes.Document))
 			{
 				extensions.AddRange(Data.FileExtensions.Document);
 			}
@@ -1885,15 +1903,15 @@ namespace ChanceNET
 		/// <summary>
 		/// Get a random animal.
 		/// </summary>
-		/// <param name="type">A flag enum of animal times to restrict the choice from.</param>
+		/// <param name="type">A flag enum of animal times to restrict the choice from. Default is any.</param>
 		/// <returns></returns>
-		public string Animal(AnimalTypes type = AnimalTypes.All)
+		public string Animal(AnimalTypes type = (AnimalTypes)~0)
 		{
 			HashSet<string> animals = new HashSet<string>();
 
 			foreach (AnimalTypes t in Enum.GetValues(typeof(AnimalTypes)).Cast<AnimalTypes>())
 			{
-				if (t != AnimalTypes.All && type.HasFlag(t))
+				if (type.HasFlag(t))
 				{
 					animals.UnionWith(Data.Animals[t]);
 				}

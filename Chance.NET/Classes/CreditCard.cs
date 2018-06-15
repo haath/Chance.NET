@@ -51,7 +51,7 @@ namespace ChanceNET
 			}
 		}
 
-		internal CreditCard(Chance chance, CreditCardTypes? types = null)
+		internal CreditCard(Chance chance, CreditCardTypes types = (CreditCardTypes)~0)
 		{
 			TypeInfo = chance.CreditCardType(types);
 			Number = chance.CreditCardNumber(TypeInfo.Type);

@@ -10,12 +10,12 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class ParagraphAttribute : ChanceAttribute
 	{
-		Int32? sentences = null;
-		Int32? words = null;
-		Int32? length = null;
+		Int32 sentences = 0;
+		Int32 words = 0;
+		Int32 length = 0;
 
 
-		public ParagraphAttribute(Int32? sentences = null, Int32? words = null, Int32? length = null)
+		public ParagraphAttribute(Int32 sentences = 0, Int32 words = 0, Int32 length = 0)
 		{
 			this.sentences = sentences;
 			this.words = words;
