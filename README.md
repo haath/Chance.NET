@@ -33,6 +33,8 @@ Or provide a seed.
 Chance chance = new Chance(42);
 ```
 
+Which can also be a string.
+
 ```csharp
 Chance chance = new Chance("string seed");
 ```
@@ -112,7 +114,7 @@ the `Chance.Object<T>()` method.
 ```csharp
 public class Book
 {
-	[Integer(min: 1950)]
+	[Year]
 	public int PublishingYear;
 		
 	[Person]
@@ -120,6 +122,9 @@ public class Book
 
 	[String(10)]
 	public string Title;
+	
+	[Paragraph(sentences: 6)]
+	public string Summary;
 }
 ```
 
