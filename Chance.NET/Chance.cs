@@ -13,13 +13,22 @@ namespace ChanceNET
 {
     public class Chance
 	{
-		protected int seed { get; private set; }
-		protected virtual Random rand { get; }
+		/// <summary>
+		/// The seed that this generator was initialized with.
+		/// Changing this value after initialization will have no effect on the underlying System.Random generator.
+		/// </summary>
+		public int Seed { get; private set; }
 
+		protected virtual Random Rand { get; }
+
+		/// <summary>
+		/// Initialize a new Chance generator from an integer seed.
+		/// </summary>
+		/// <param name="seed"></param>
 		public Chance(int seed)
 		{
-			this.seed = seed;
-			rand = new Random(seed);
+			this.Seed = seed;
+			Rand = new Random(seed);
 		}
 
 		/// <summary>
@@ -29,16 +38,20 @@ namespace ChanceNET
 		/// </summary>
 		public Chance() : this(Environment.TickCount) { }
 
+		/// <summary>
+		/// Initialize a new Chance generator from a string seed.
+		/// </summary>
+		/// <param name="seed"></param>
 		public Chance(string seed)
 		{
-			this.seed = 0;
+			this.Seed = 0;
 
 			for (int i = 0; i < seed.Length; i++)
 			{
-				this.seed = (int)seed[i] + (this.seed << 6) + (this.seed << 16) - this.seed;
+				this.Seed = (int)seed[i] + (this.Seed << 6) + (this.Seed << 16) - this.Seed;
 			}
 
-			rand = new Random(this.seed);
+			Rand = new Random(this.Seed);
 		}
 
 		/// <summary>
@@ -47,7 +60,7 @@ namespace ChanceNET
 		/// <returns></returns>
 		public int GetSeed()
 		{
-			return seed;
+			return Seed;
 		}
 
 		/// <summary>
@@ -58,7 +71,7 @@ namespace ChanceNET
 		/// <returns></returns>
 		public int Integer(int min = int.MinValue, int max = int.MaxValue)
 		{
-			return rand.Next(min, max);
+			return Rand.Next(min, max);
 		}
 
 		/// <summary>
@@ -70,7 +83,7 @@ namespace ChanceNET
 		public long Long(long min = long.MinValue, long max = long.MaxValue)
 		{
 			byte[] buf = new byte[8];
-			rand.NextBytes(buf);
+			Rand.NextBytes(buf);
 			long longRand = BitConverter.ToInt64(buf, 0);
 			return (Math.Abs(longRand % (max - min)) + min);
 		}
@@ -82,7 +95,7 @@ namespace ChanceNET
 		/// <param name="max">Max.</param>
 		public int Natural(int max = int.MaxValue)
 		{
-			return rand.Next(0, max);
+			return Rand.Next(0, max);
 		}
 
 		/// <summary>
@@ -91,7 +104,7 @@ namespace ChanceNET
 		/// <returns></returns>
 		public double Double(double min = 0.0, double max = 1.0)
 		{
-			return min + rand.NextDouble() * (max - min);
+			return min + Rand.NextDouble() * (max - min);
 		}
 
 		/// <summary>
@@ -143,26 +156,17 @@ namespace ChanceNET
 		}
 
 		/// <summary>
-		/// Generate a random boolean with a 50% chance of being true
-		/// </summary>
-		/// <returns></returns>
-		public bool Bool()
-		{
-			return rand.NextDouble() < 0.5;
-		}
-
-		/// <summary>
 		/// Generate a random boolean with a given likelihood of being true, between 0.0 and 1.0
 		/// </summary>
 		/// <param name="likelihood">The chance to return true</param>
 		/// <returns></returns>
-		public bool Bool(double likelihood)
+		public bool Bool(double likelihood = 0.5)
 		{
-			return rand.NextDouble() < likelihood;
+			return Rand.NextDouble() < likelihood;
 		}
 
 		/// <summary>
-		/// Generate a random character
+		/// Pick a random character
 		/// </summary>
 		/// <param name="pool"></param>
 		/// <returns></returns>
@@ -171,13 +175,17 @@ namespace ChanceNET
 			return PickOne(pool.ToCharArray());
 		}
 
+		/// <summary>
+		/// Pick a random alphanumeric character a-z, A-Z, 0-9.
+		/// </summary>
+		/// <returns></returns>
 		public char Alphanumeric()
 		{
-			return Char("abcdefghijklmnopqrstuvwxyz0123456789");
+			return Char("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 		}
 		
 		/// <summary>
-		/// Generate a random letter a-z, A-Z
+		/// Pick a random letter a-z, A-Z.
 		/// </summary>
 		/// <returns></returns>
 		public char Letter()
@@ -195,13 +203,13 @@ namespace ChanceNET
 		{
 			return new string(
 				Enumerable.Repeat(pool, length)
-					.Select(s => s[rand.Next(s.Length)])
+					.Select(s => s[Rand.Next(s.Length)])
 					.ToArray()
 				);
 		}
 
 		/// <summary>
-		/// Generate a random hexadecimal string
+		/// Generate a random hexadecimal string.
 		/// </summary>
 		/// <param name="length"></param>
 		/// <returns></returns>
@@ -211,10 +219,15 @@ namespace ChanceNET
 			return String(length, pool);
 		}
 
+		/// <summary>
+		/// Generate a random byte array of a given length.
+		/// </summary>
+		/// <param name="length"></param>
+		/// <returns></returns>
 		public byte[] Hash(int length)
 		{
 			byte[] hash = new byte[length];
-			rand.NextBytes(hash);
+			Rand.NextBytes(hash);
 			return hash;
 		}
 
@@ -327,6 +340,13 @@ namespace ChanceNET
 			return result;
 		}
 
+		/// <summary>
+		/// Generate a random paragraph which consists of capitalized sentences from the Chance.Sentence() method.
+		/// </summary>
+		/// <param name="sentences"></param>
+		/// <param name="words"></param>
+		/// <param name="length"></param>
+		/// <returns></returns>
 		public string Paragraph(int sentences = 0, int words = 0, int length = 0)
 		{
 			StringBuilder paragraph = new StringBuilder();
@@ -378,11 +398,20 @@ namespace ChanceNET
 			return Integer(1, 100);
 		}
 
+		/// <summary>
+		/// Generate a random byte.
+		/// </summary>
+		/// <returns></returns>
 		public byte Byte()
 		{
 			return Hash(1)[0];
 		}
 
+		/// <summary>
+		/// Pick a random human age (0-100) in the given range.
+		/// </summary>
+		/// <param name="range"></param>
+		/// <returns></returns>
 		public int Age(AgeRanges range = AgeRanges.Any)
 		{
 			if (range == AgeRanges.Any)
@@ -410,6 +439,11 @@ namespace ChanceNET
 			return Weighted(ranges);
 		}
 
+		/// <summary>
+		/// Get the birth date of a person of a random age within the given range.
+		/// </summary>
+		/// <param name="range"></param>
+		/// <returns></returns>
 		public DateTime Birthday(AgeRanges range = AgeRanges.Any)
 		{
 			return Date(year: DateTime.Now.Year - Age(range));
@@ -435,11 +469,19 @@ namespace ChanceNET
 			}
 		}
 
-		public Gender Gender()
+		/// <summary>
+		/// Pick a random gender with a given likelihood of picking male, between 0.0 and 1.0.
+		/// </summary>
+		/// <returns></returns>
+		public Gender Gender(double maleLikelihood = 0.5)
 		{
-			return Bool() ? ChanceNET.Gender.Male : ChanceNET.Gender.Female;
+			return Bool(maleLikelihood) ? ChanceNET.Gender.Male : ChanceNET.Gender.Female;
 		}
 
+		/// <summary>
+		/// Pick a random last name.
+		/// </summary>
+		/// <returns></returns>
 		public string LastName()
 		{
 			return PickOne(Data.LastNames);
@@ -465,6 +507,10 @@ namespace ChanceNET
 			}
 		}
 
+		/// <summary>
+		/// Pick a random name suffix like "Jr.", "II" etc.
+		/// </summary>
+		/// <returns></returns>
 		public string NameSuffix()
 		{
 			return PickOne(Data.Suffixes);
@@ -525,11 +571,19 @@ namespace ChanceNET
 			return new Person(this, ageRange, gender);
 		}
 
+		/// <summary>
+		/// Generate a random android id.
+		/// </summary>
+		/// <returns></returns>
 		public string AndroidId()
 		{
 			return "APA91" + String(178, "0123456789abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_");
 		}
 
+		/// <summary>
+		/// Generate a random apple token.
+		/// </summary>
+		/// <returns></returns>
 		public string AppleToken()
 		{
 			return String(64, "abcdef1234567890");
@@ -564,6 +618,12 @@ namespace ChanceNET
 			return Hex(8);
 		}
 
+		/// <summary>
+		/// Generate a random GUID.
+		/// https://en.wikipedia.org/wiki/Universally_unique_identifier
+		/// </summary>
+		/// <param name="version"></param>
+		/// <returns></returns>
 		public string Guid(GuidVersion version = GuidVersion.V4)
 		{
 			const string pool = "abcdef1234567890";
@@ -631,7 +691,10 @@ namespace ChanceNET
 			return "10000" + String(11, "1234567890");
 		}
 
-
+		/// <summary>
+		/// Generate a random Google Analytics token.
+		/// </summary>
+		/// <returns></returns>
 		public string GoogleAnalytics()
 		{
 			string account = Pad(Natural(max: 999999), 6);
@@ -639,6 +702,10 @@ namespace ChanceNET
 			return "UA-" + account + "-" + property;
 		}
 
+		/// <summary>
+		/// Generate a random social media hashtag, which is just a '#' symbol followed by a word.
+		/// </summary>
+		/// <returns></returns>
 		public string Hashtag()
 		{
 			return "#" + Word();
@@ -862,15 +929,23 @@ namespace ChanceNET
 			return new IPEndPoint(IP(subnet), port > 0 ? port : Port());
 		}
 
-		public string Url(string protocol = null, string domain = null, 
+		/// <summary>
+		/// Generate a random URL.
+		/// </summary>
+		/// <param name="scheme"></param>
+		/// <param name="domain"></param>
+		/// <param name="path"></param>
+		/// <param name="extension"></param>
+		/// <returns></returns>
+		public string Url(string scheme = null, string domain = null, 
 		                  string path = null, string extension = null)
 		{
-			protocol = protocol ?? "http";
+			scheme = scheme ?? "http";
 			domain = domain ?? Domain();
 			path = path ?? Word();
 			extension = extension ?? FileExtension();
 
-			return protocol + "://" + domain + "/" + path + "." + extension;
+			return scheme + "://" + domain + "/" + path + "." + extension;
 		}
 
 		/// <summary>
@@ -982,7 +1057,7 @@ namespace ChanceNET
 				double lng = (2 * range / EARTH_RADIUS) * u2 + centerLng - range / EARTH_RADIUS;
 				location = new Location(lat * 180 / Math.PI, lng * 180 / Math.PI);
 			}
-			while (Distance(center, location) > range);
+			while (center.DistanceTo(location) > range);
 
 			return location;
 		}
@@ -1154,6 +1229,11 @@ namespace ChanceNET
 			return Pad(code, 5);
 		}
 
+		/// <summary>
+		/// Generate a random street name.
+		/// </summary>
+		/// <param name="shortSuffix"></param>
+		/// <returns></returns>
 		public string Street(bool shortSuffix = true)
 		{
 			StringBuilder street = new StringBuilder();
@@ -1564,7 +1644,7 @@ namespace ChanceNET
 			return num.ToString();
 		}
 
-		public static string Capitalize(string text)
+		static string Capitalize(string text)
 		{
 			char[] chars = text.ToCharArray();
 			chars[0] = char.ToUpper(chars[0]);
@@ -1572,75 +1652,82 @@ namespace ChanceNET
 		}
 
 		/// <summary>
-		/// Given two sets of geographical coordinates, calculate their distance in meters.
+		/// The result of the roll of a die with a specified number of sides.
 		/// </summary>
-		/// <param name="lat1"></param>
-		/// <param name="lng1"></param>
-		/// <param name="lat2"></param>
-		/// <param name="lng2"></param>
+		/// <param name="sides"></param>
 		/// <returns></returns>
-		public static double Distance(double lat1, double lng1, double lat2, double lng2)
-		{
-			const int EARTH_RADIUS = 6371000;
-			Func<double, double> toRad = ang =>
-			{
-				return (Math.PI / 180) * ang;
-			};
-
-			double dLng = toRad(lng1 - lng2);
-			double dLat = toRad(lat1 - lat2);
-			double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2)
-					+ Math.Cos(toRad(lat1)) * Math.Cos(toRad(lat2))
-					* Math.Sin(dLng / 2) * Math.Sin(dLng / 2);
-			double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-			return (float)(EARTH_RADIUS * c);
-		}
-
-		public static double Distance(Location l1, Location l2)
-		{
-			return Distance(l1.Latitude, l1.Longitude, l2.Latitude, l2.Longitude);
-		}
-
 		public int Dice(int sides)
 		{
 			return Integer(1, sides + 1);
 		}
 
+		/// <summary>
+		/// The result of the roll of a 4-sided die.
+		/// </summary>
+		/// <returns></returns>
 		public int D4()
 		{
 			return Dice(4);
 		}
 
+		/// <summary>
+		/// The result of the roll of a 6-sided die.
+		/// </summary>
+		/// <returns></returns>
 		public int D6()
 		{
 			return Dice(6);
 		}
 
+		/// <summary>
+		/// The result of the roll of an 8-sided die.
+		/// </summary>
+		/// <returns></returns>
 		public int D8()
 		{
 			return Dice(8);
 		}
 
+		/// <summary>
+		/// The result of the roll of a 10-sided die.
+		/// </summary>
+		/// <returns></returns>
 		public int D10()
 		{
 			return Dice(10);
 		}
 
+		/// <summary>
+		/// The result of the roll of a 12-sided die.
+		/// </summary>
+		/// <returns></returns>
 		public int D12()
 		{
 			return Dice(12);
 		}
 
+		/// <summary>
+		/// The result of the roll of a 20-sided die.
+		/// </summary>
+		/// <returns></returns>
 		public int D20()
 		{
 			return Dice(20);
 		}
 
+		/// <summary>
+		/// The result of the roll of a 30-sided die.
+		/// </summary>
+		/// <returns></returns>
 		public int D30()
 		{
 			return Dice(30);
 		}
 
+		/// <summary>
+		/// The result of the roll of an 100-sided die.
+		/// </summary>
+		/// <returns></returns>
 		public int D100()
 		{
 			return Dice(100);
@@ -1794,7 +1881,7 @@ namespace ChanceNET
 		/// <returns></returns>
 		public T PickOne<T>(IEnumerable<T> list)
 		{
-			int index = rand.Next(0, list.Count());
+			int index = Rand.Next(0, list.Count());
 			return list.ElementAt(index);
 		}
 
@@ -1940,11 +2027,23 @@ namespace ChanceNET
 			return new Chance(Integer());
 		}
 
+		/// <summary>
+		/// Generate a new object of type T, generating a random value for each of its fields and properties
+		/// that have a relevant Chance attribute.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
 		public T Object<T>() where T : new()
 		{
 			return Object(new T());
 		}
 
+		/// <summary>
+		/// Generate a random value for each of the object's fields and properties that have a relevant Chance attribute.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="obj"></param>
+		/// <returns></returns>
 		public T Object<T>(T obj)
 		{
 			foreach (MemberInfo member in GetTypeMembers<T, ChanceAttribute>())

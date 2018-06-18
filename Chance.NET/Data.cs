@@ -63,7 +63,7 @@ namespace ChanceNET
 
 		public static string[] Suffixes =
 		{
-			"D.O.", "Ph.D.", "Esq.", "Jr.", "J.D.", "M.A.", "M.B.A", "M.S.", "M.D.", "Sr.", "III", "IV", "B.E.", "B.TECH"
+			"D.O.", "Ph.D.", "Esq.", "Jr.", "J.D.", "M.A.", "M.B.A", "M.S.", "M.D.", "Sr.", "II", "III", "IV", "B.E.", "B.TECH"
 		};
 
 		public static string[] TLDs =

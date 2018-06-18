@@ -10,10 +10,10 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class BoolAttribute : ChanceAttribute
 	{
-		Double likelihood;
+		Double likelihood = 0.5;
 
 
-		public BoolAttribute(Double likelihood)
+		public BoolAttribute(Double likelihood = 0.5)
 		{
 			this.likelihood = likelihood;
 
