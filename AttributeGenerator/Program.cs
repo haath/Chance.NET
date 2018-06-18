@@ -41,7 +41,9 @@ namespace ChanceNET
 		static HashSet<string> MethodNames()
 		{
 			HashSet<string> methodNames = new HashSet<string>();
-			MethodInfo[] methods = typeof(Chance).GetMethods(BINDING_FLAGS);
+
+			IEnumerable<MethodInfo> methods = typeof(Chance).GetMethods(BINDING_FLAGS).Where(m => !m.IsSpecialName);
+
 			foreach (MethodInfo method in methods)
 			{
 				if (!EXCLUDE.Contains(method.Name))
@@ -55,7 +57,7 @@ namespace ChanceNET
 		static List<MethodInfo> MethodsWithName(string name)
 		{
 			List<MethodInfo> methods = new List<MethodInfo>();
-			foreach (MethodInfo method in typeof(Chance).GetMethods(BINDING_FLAGS))
+			foreach (MethodInfo method in typeof(Chance).GetMethods(BINDING_FLAGS).Where(m => !m.IsSpecialName))
 			{
 				if (method.Name == name)
 					methods.Add(method);

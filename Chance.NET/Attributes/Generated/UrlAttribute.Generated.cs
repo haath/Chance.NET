@@ -10,15 +10,15 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class UrlAttribute : ChanceAttribute
 	{
-		String protocol = null;
+		String scheme = null;
 		String domain = null;
 		String path = null;
 		String extension = null;
 
 
-		public UrlAttribute(String protocol = "null", String domain = "null", String path = "null", String extension = "null")
+		public UrlAttribute(String scheme = "null", String domain = "null", String path = "null", String extension = "null")
 		{
-			this.protocol = protocol;
+			this.scheme = scheme;
 			this.domain = domain;
 			this.path = path;
 			this.extension = extension;
@@ -27,7 +27,7 @@ namespace ChanceNET.Attributes
 
 		internal override object GetValue(Chance chance)
 		{
-			return chance.Url(protocol, domain, path, extension);
+			return chance.Url(scheme, domain, path, extension);
 		}
 	}
 }
