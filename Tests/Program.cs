@@ -19,7 +19,7 @@ namespace Tests
 		[String(10)]
 		public string Title;
 		
-		[Paragraph(length: 10)]
+		[Paragraph(sentences: 10)]
 		public string Summary;
 	}
 
@@ -40,7 +40,7 @@ namespace Tests
 				Book o = c.Object<Book>();
 
 
-				Console.WriteLine(o.PublishingYear);
+				Console.WriteLine(o.Summary);
 			}
 			
 		}

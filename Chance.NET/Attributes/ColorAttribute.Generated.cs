@@ -10,22 +10,13 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class ColorAttribute : ChanceAttribute
 	{
-		Byte? red = null;
-		Byte? green = null;
-		Byte? blue = null;
-
-
-		public ColorAttribute(Byte? red = null, Byte? green = null, Byte? blue = null)
+		public ColorAttribute()
 		{
-			this.red = red;
-			this.green = green;
-			this.blue = blue;
-
 		}
 
 		internal override object GetValue(Chance chance)
 		{
-			return chance.Color(red, green, blue);
+			return chance.Color();
 		}
 	}
 }

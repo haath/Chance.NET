@@ -15,7 +15,8 @@ namespace ChanceNET
 	{
 		const BindingFlags BINDING_FLAGS = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
 		const string SAVE_PATH = "../../../Chance.NET/Attributes/Generated/";
-		
+
+		static string[] EXCLUDE = new string[] { "Color" };
 
 		static void Main(string[] args)
 		{
@@ -43,7 +44,10 @@ namespace ChanceNET
 			MethodInfo[] methods = typeof(Chance).GetMethods(BINDING_FLAGS);
 			foreach (MethodInfo method in methods)
 			{
-				methodNames.Add(method.Name);
+				if (!EXCLUDE.Contains(method.Name))
+				{
+					methodNames.Add(method.Name);
+				}
 			}
 			return methodNames;
 		}
