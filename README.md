@@ -1,10 +1,21 @@
+<h1 align="center">
+  <img src="assets/logo.png">
+</h1>
 
-![logo](assets/logo.png)
-
-[![ ](https://img.shields.io/nuget/v/Chance.NET.svg)](https://www.nuget.org/packages/Chance.NET)
-[![ ](https://img.shields.io/nuget/dt/Chance.NET.svg)](https://www.nuget.org/packages/Chance.NET)
-[![ ](https://ci.appveyor.com/api/projects/status/ahkrm585ivrcqqsv/branch/master?svg=true)](https://ci.appveyor.com/project/gmantaos/chance-net/branch/master)
-[![ ](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+<p align="center">
+<a href="https://www.nuget.org/packages/Chance.NET">
+  <img src="https://img.shields.io/nuget/v/Chance.NET.svg">
+</a>
+<a href="https://www.nuget.org/packages/Chance.NET">
+  <img src="https://img.shields.io/nuget/dt/Chance.NET.svg">
+</a>
+<a href="https://ci.appveyor.com/project/gmantaos/chance-net">
+  <img src="https://ci.appveyor.com/api/projects/status/ahkrm585ivrcqqsv/branch/master?svg=true">
+</a>
+<a href="LICENSE">
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg">
+</a>
+</p>
 
 [Chance.js](http://chancejs.com) port into native C# targetting portable .NET Standard.
 
