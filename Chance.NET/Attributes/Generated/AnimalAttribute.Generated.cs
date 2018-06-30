@@ -10,10 +10,10 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class AnimalAttribute : ChanceAttribute
 	{
-		AnimalTypes type = (AnimalTypes)0xFF;
+		AnimalTypes type = (AnimalTypes)~0;
 
 
-		public AnimalAttribute(AnimalTypes type = (AnimalTypes)0xFF)
+		public AnimalAttribute(AnimalTypes type = (AnimalTypes)~0)
 		{
 			this.type = type;
 

@@ -10,10 +10,10 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class RadioAttribute : ChanceAttribute
 	{
-		RadioSide side = (RadioSide)0xFF;
+		RadioSide side = (RadioSide)~0;
 
 
-		public RadioAttribute(RadioSide side = (RadioSide)0xFF)
+		public RadioAttribute(RadioSide side = (RadioSide)~0)
 		{
 			this.side = side;
 

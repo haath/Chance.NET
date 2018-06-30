@@ -33,7 +33,6 @@ before_build:
     nuget restore
 build:
   verbosity: minimal
-test: off
 artifacts:
 - path: Chance.NET\**\.nupkg
   name: NuGet

@@ -16,7 +16,7 @@ namespace ChanceNET
 		const BindingFlags BINDING_FLAGS = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
 		const string SAVE_PATH = "../../../Chance.NET/Attributes/Generated/";
 
-		static string[] EXCLUDE = new string[] { "Color" };
+		static string[] EXCLUDE = new string[] { "Color", "Date" };
 
 		static void Main(string[] args)
 		{
@@ -148,7 +148,7 @@ namespace ChanceNET
 					}
 					else if (paramType.IsEnum)
 					{
-						defaultValue = string.Format("({0})0xFF", paramType.Name);
+						defaultValue = string.Format("({0})~0", paramType.Name);
 					}
 
 					parameters.AppendFormat("{0} {1} = {2}", paramTypeName, param.Name, defaultValue);
@@ -190,7 +190,7 @@ namespace ChanceNET
 			}
 			else if (paramType.IsEnum)
 			{
-				defaultValue = string.Format("({0})0xFF", paramType.Name);
+				defaultValue = string.Format("({0})~0", paramType.Name);
 			}
 
 			if (isNullable)

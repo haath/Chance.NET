@@ -1302,13 +1302,15 @@ namespace ChanceNET
 		/// <param name="minYear">The minimum year to choose from.</param>
 		/// <param name="maxYear">The maximum year to choose from.</param>
 		/// <returns></returns>
-		public DateTime Date(int year = 0, Month month = (Month)~0, int day = 0, int minYear = 1970, int maxYear = 9999)
+		public DateTime Date(int year = 0, Month month = (Month)0, int day = 0, int minYear = 1970, int maxYear = 9999)
 		{
 			DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-			DateTime randomDate = new DateTime(minYear, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-			DateTime maxDate = new DateTime(maxYear, 1, 1);
+			DateTime minDate = new DateTime(minYear, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+			DateTime maxDate = new DateTime(maxYear, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 
-			TimeSpan range = maxDate - randomDate;
+			DateTime genDate = default(DateTime);
+
+			TimeSpan range = maxDate - minDate;
 
 			int attempts = 0;
 			int randYear = 0, randMonth = 0, randDay = 0;
@@ -1317,19 +1319,21 @@ namespace ChanceNET
 			{
 				TimeSpan toAdd = new TimeSpan((long)(Double() * range.Ticks));
 
-				randomDate += toAdd;
+				genDate = new DateTime(minYear, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+				genDate += toAdd;
 
-				randYear = year > 1970 ? year : randomDate.Year;
-				randMonth = (int?)month ?? randomDate.Month;
-				randDay = day > 0 ? day : randomDate.Day;
+				randYear = year > 1970 ? year : genDate.Year;
+				randMonth = ((int)month) > 0 ? (int)month : genDate.Month;
+				randDay = day > 0 ? day : genDate.Day;
 
 				try
 				{
 					// It rarely got out of range, don't judge me.
-					return new DateTime(randYear, randMonth, randDay, randomDate.Hour, randomDate.Minute, randomDate.Second, randomDate.Millisecond, DateTimeKind.Utc);
+					return new DateTime(randYear, randMonth, randDay, genDate.Hour, genDate.Minute, genDate.Second, genDate.Millisecond, DateTimeKind.Utc);
 				} catch (ArgumentOutOfRangeException) { }
 			}
-			return new DateTime(randYear, randMonth, randDay, randomDate.Hour, randomDate.Minute, randomDate.Second, randomDate.Millisecond, DateTimeKind.Utc);
+			Console.WriteLine("out");
+			return new DateTime(randYear, randMonth, randDay, genDate.Hour, genDate.Minute, genDate.Second, genDate.Millisecond, DateTimeKind.Utc);
 		}
 
 		/// <summary>

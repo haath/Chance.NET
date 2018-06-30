@@ -10,11 +10,11 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class MonthAttribute : ChanceAttribute
 	{
-		Month min = (Month)0xFF;
-		Month max = (Month)0xFF;
+		Month min = (Month)~0;
+		Month max = (Month)~0;
 
 
-		public MonthAttribute(Month min = (Month)0xFF, Month max = (Month)0xFF)
+		public MonthAttribute(Month min = (Month)~0, Month max = (Month)~0)
 		{
 			this.min = min;
 			this.max = max;

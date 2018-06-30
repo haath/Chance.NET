@@ -10,10 +10,10 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class BirthdayAttribute : ChanceAttribute
 	{
-		AgeRanges range = (AgeRanges)0xFF;
+		AgeRanges range = (AgeRanges)~0;
 
 
-		public BirthdayAttribute(AgeRanges range = (AgeRanges)0xFF)
+		public BirthdayAttribute(AgeRanges range = (AgeRanges)~0)
 		{
 			this.range = range;
 

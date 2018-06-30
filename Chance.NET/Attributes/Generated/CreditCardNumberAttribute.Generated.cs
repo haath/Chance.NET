@@ -10,10 +10,10 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class CreditCardNumberAttribute : ChanceAttribute
 	{
-		CreditCardTypes types = (CreditCardTypes)0xFF;
+		CreditCardTypes types = (CreditCardTypes)~0;
 
 
-		public CreditCardNumberAttribute(CreditCardTypes types = (CreditCardTypes)0xFF)
+		public CreditCardNumberAttribute(CreditCardTypes types = (CreditCardTypes)~0)
 		{
 			this.types = types;
 

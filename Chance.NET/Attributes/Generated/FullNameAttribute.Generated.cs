@@ -10,14 +10,14 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class FullNameAttribute : ChanceAttribute
 	{
-		Gender gender = (Gender)0xFF;
+		Gender gender = (Gender)~0;
 		Boolean prefix = false;
 		Boolean middle = false;
 		Boolean middleInitial = false;
 		Boolean suffix = false;
 
 
-		public FullNameAttribute(Gender gender = (Gender)0xFF, Boolean prefix = false, Boolean middle = false, Boolean middleInitial = false, Boolean suffix = false)
+		public FullNameAttribute(Gender gender = (Gender)~0, Boolean prefix = false, Boolean middle = false, Boolean middleInitial = false, Boolean suffix = false)
 		{
 			this.gender = gender;
 			this.prefix = prefix;

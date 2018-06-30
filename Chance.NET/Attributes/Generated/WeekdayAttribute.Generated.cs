@@ -10,10 +10,10 @@ namespace ChanceNET.Attributes
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public class WeekdayAttribute : ChanceAttribute
 	{
-		WeekdayTypes type = (WeekdayTypes)0xFF;
+		WeekdayTypes type = (WeekdayTypes)~0;
 
 
-		public WeekdayAttribute(WeekdayTypes type = (WeekdayTypes)0xFF)
+		public WeekdayAttribute(WeekdayTypes type = (WeekdayTypes)~0)
 		{
 			this.type = type;
 
