@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ChanceNET;
 using ChanceNET.Attributes;
 
 namespace ChanceNET.Tests
@@ -18,5 +19,8 @@ namespace ChanceNET.Tests
 
 		[Date]
 		public DateTime Release;
+		
+		[Person]
+		public Person Author;
 	}
 }
