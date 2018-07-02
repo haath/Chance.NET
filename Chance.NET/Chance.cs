@@ -410,7 +410,7 @@ namespace ChanceNET
 		/// <summary>
 		/// Pick a random human age (0-100) in the given range.
 		/// </summary>
-		/// <param name="range"></param>
+		/// <param name="range">The range to limit the age to. Default is any.</param>
 		/// <returns></returns>
 		public int Age(AgeRanges range = AgeRanges.Any)
 		{
@@ -429,11 +429,13 @@ namespace ChanceNET
 			}
 			if (range.HasFlag(AgeRanges.Adult))
 			{
-				ranges.Add(Integer(18, 65), 47);
+				int min = range.HasFlag(AgeRanges.Teen) ? 20 : 18;
+				ranges.Add(Integer(min, 66), 47);
 			}
 			if (range.HasFlag(AgeRanges.Senior))
 			{
-				ranges.Add(Integer(60, 100), 40);
+				int min = range.HasFlag(AgeRanges.Adult) ? 66 : 65;
+				ranges.Add(Integer(min, 101), 40);
 			}
 
 			return Weighted(ranges);

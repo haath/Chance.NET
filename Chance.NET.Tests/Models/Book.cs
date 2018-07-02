@@ -22,5 +22,20 @@ namespace ChanceNET.Tests
 		
 		[Person]
 		public Person Author;
+
+		[Location]
+		public Location Location;
+
+		[Guid]
+		public string Guid;
+
+		[Double(0, 100)]
+		public double Price;
+
+		[Color]
+		public string CoverColor;
+
+		[Url]
+		public string Website;
 	}
 }
