@@ -17,7 +17,7 @@
 </a>
 </p>
 
-[Chance.js](http://chancejs.com) port into native C# targetting portable .NET Standard.
+[Chance.js](http://chancejs.com) port into native C# targetting .NET Standard.
 
 This project aims to mimic the original chance.js api as closely as possible while adapting 
 it to C# types and practices. For example using enums for options and returning regular objects 
