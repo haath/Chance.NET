@@ -62,7 +62,7 @@ namespace ChanceNET.Tests
 		[Test]
 		public void GenTests()
 		{
-			long prev;
+			long prev = 0;
 			for (int i = 0; i < 1000; i++)
 			{
 				long cur = chance.Long();
