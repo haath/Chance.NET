@@ -59,6 +59,20 @@ namespace ChanceNET.Tests
 			}
 		}
 
+		[Test]
+		public void GenTests()
+		{
+			long prev;
+			for (int i = 0; i < 1000; i++)
+			{
+				long cur = chance.Long();
+
+				Assert.IsFalse(prev == cur);
+
+				prev = cur;
+			}
+		}
+
 		[TearDown]
 		public void Reset()
 		{

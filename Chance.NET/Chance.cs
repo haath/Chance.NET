@@ -64,7 +64,7 @@ namespace ChanceNET
 		}
 
 		/// <summary>
-		/// Generate a random non-negative integer between min (inclusive) and max (exlusive)
+		/// Generate a random non-negative integer between min (inclusive) and max (exlusive).
 		/// </summary>
 		/// <param name="min">Inclusive lower bound</param>
 		/// <param name="max">Exclusive upper bound</param>
@@ -75,17 +75,35 @@ namespace ChanceNET
 		}
 
 		/// <summary>
-		/// Generate a random long number
+		/// Generate a random long number.
 		/// </summary>
 		/// <param name="min"></param>
 		/// <param name="max"></param>
 		/// <returns></returns>
 		public long Long(long min = long.MinValue, long max = long.MaxValue)
 		{
-			byte[] buf = new byte[8];
-			Rand.NextBytes(buf);
-			long longRand = BitConverter.ToInt64(buf, 0);
-			return (Math.Abs(longRand % (max - min)) + min);
+			ulong uRange = (ulong)(max - min);
+			ulong ulongRand;
+			do
+			{
+				byte[] buf = new byte[8];
+				Rand.NextBytes(buf);
+				ulongRand = (ulong)BitConverter.ToInt64(buf, 0);
+			} while (ulongRand > ulong.MaxValue - ((ulong.MaxValue % uRange) + 1) % uRange);
+
+			return (long)(ulongRand % uRange) + min;
+		}
+
+		/// <summary>
+		/// Generate a random float number.
+		/// </summary>
+		/// <returns></returns>
+		public float Float(float min = 0.0f, float max = 1.0f)
+		{
+			double mantissa = (Rand.NextDouble() * 2.0) - 1.0;
+			double exponent = Math.Pow(2.0, Rand.Next(-126, 128));
+			float num = (float)(mantissa * exponent);
+			return min + num * (max - min);
 		}
 
 		/// <summary>
