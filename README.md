@@ -140,7 +140,10 @@ public class Book
 Book book = chance.Object<Book>();
 ```
 
+## Credits
 
+- Original idea, concept and some of the original datasets are credited to [Victor Quinn](https://www.victorquinn.com/) and the rest of the contributors of [Chance.js](https://chancejs.com/).
+- Any math used came from [Markos Karameris](https://www.linkedin.com/in/markos-karameris-298029160/).
 
 
 
