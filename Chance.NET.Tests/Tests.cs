@@ -56,6 +56,14 @@ namespace ChanceNET.Tests
 				Assert.IsTrue(b.Location.Latitude != 0 && b.Location.Latitude >= -90 && b.Location.Latitude <= 90);
 				Assert.IsTrue(b.Location.Longitude != 0 && b.Location.Longitude >= -180 && b.Location.Longitude <= 180);
 				Assert.IsTrue(Uri.IsWellFormedUriString(b.Website, UriKind.Absolute));
+				Assert.Greater((int)b.Genre, 0);
+
+				Publisher pub = b.Publisher;
+
+				Assert.IsNotNull(pub);
+				Assert.IsTrue(pub.Age > 0);
+				Assert.IsFalse(string.IsNullOrWhiteSpace(pub.Name));
+				Assert.IsTrue(pub.Birthday != default(DateTime));
 			}
 		}
 

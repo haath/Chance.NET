@@ -61,6 +61,13 @@ for (...)
 }
 ```
 
+The default `Chance` instance relies on the underlying `System.Radom` which is not thread-safe by default.
+To share the same generator between multiple threads use the `ConcurrentChance` class instead.
+
+```csharp
+Chance chance = new ConcurrentChance(seed);
+```
+
 ## API
 
 Almost every function that is implemented in [Chance.js](http://chancejs.com).

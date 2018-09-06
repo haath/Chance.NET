@@ -1926,6 +1926,19 @@ namespace ChanceNET
 			return PickOne(vals);
 		}
 
+
+		internal int PickEnum(Type type)
+		{
+			if (!type.GetTypeInfo().IsEnum)
+			{
+				throw new ArgumentException("T must be an enumerated type");
+			}
+
+			IEnumerable<int> vals = Enum.GetValues(type).Cast<int>();
+
+			return PickOne(vals);
+		}
+
 		/// <summary>
 		/// Generate a flags Enum with an amount of random flags set.
 		/// </summary>

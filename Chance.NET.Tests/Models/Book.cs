@@ -37,5 +37,20 @@ namespace ChanceNET.Tests
 
 		[Url]
 		public string Website;
+
+		[Enum(typeof(Genre))]
+		public Genre Genre;
+
+		[Object(typeof(Publisher))]
+		public Publisher Publisher;
+	}
+
+	public enum Genre
+	{
+		Murder = 1,
+		Mystery = 2,
+		Comedy = 3,
+		Erotica = 4,
+		Biography = 5
 	}
 }
