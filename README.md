@@ -3,14 +3,14 @@
 </h1>
 
 <p align="center">
+<a href="https://ci.appveyor.com/project/gmantaos/chance-net">
+  <img src="https://ci.appveyor.com/api/projects/status/ahkrm585ivrcqqsv/branch/master?svg=true">
+</a>
 <a href="https://www.nuget.org/packages/Chance.NET">
   <img src="https://img.shields.io/nuget/v/Chance.NET.svg">
 </a>
 <a href="https://www.nuget.org/packages/Chance.NET">
   <img src="https://img.shields.io/nuget/dt/Chance.NET.svg">
-</a>
-<a href="https://ci.appveyor.com/project/gmantaos/chance-net">
-  <img src="https://ci.appveyor.com/api/projects/status/ahkrm585ivrcqqsv/branch/master?svg=true">
 </a>
 <a href="LICENSE">
   <img src="https://img.shields.io/badge/license-MIT-blue.svg">
@@ -150,9 +150,13 @@ Book book = chance.Object<Book>();
 ## Credits
 
 - Original idea, concept and some of the original datasets are credited to [Victor Quinn](https://www.victorquinn.com/) and the rest of the contributors of [Chance.js](https://chancejs.com/).
-- Any math used came from [Markos Karameris](https://www.linkedin.com/in/markos-karameris-298029160/).
+- Math contributions from [Markos Karameris](https://www.linkedin.com/in/markos-karameris-298029160/).
 
+---
 
+<p align="center">
+<a href='https://ko-fi.com/D1D7NYV3' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+</p>
 
 
 
