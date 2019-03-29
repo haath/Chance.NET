@@ -12,18 +12,20 @@ namespace ChanceNET.Attributes
 	{
 		AgeRanges ageRange = (AgeRanges)~0;
 		Gender gender = (Gender)~0;
+		String emailDomain = null;
 
 
-		public PersonAttribute(AgeRanges ageRange = (AgeRanges)~0, Gender gender = (Gender)~0)
+		public PersonAttribute(AgeRanges ageRange = (AgeRanges)~0, Gender gender = (Gender)~0, String emailDomain = null)
 		{
 			this.ageRange = ageRange;
 			this.gender = gender;
+			this.emailDomain = emailDomain;
 
 		}
 
 		internal override object GetValue(Chance chance)
 		{
-			return chance.Person(ageRange, gender);
+			return chance.Person(ageRange, gender, emailDomain);
 		}
 	}
 }

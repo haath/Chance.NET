@@ -38,7 +38,7 @@ namespace ChanceNET
 			}
 		}
 
-		internal Person(Chance chance, AgeRanges ageRange = AgeRanges.Any, Gender? gender = null)
+		internal Person(Chance chance, AgeRanges ageRange = AgeRanges.Any, Gender? gender = null, string emailDomain = null)
 		{
 			Gender = gender ?? chance.Gender();
 
@@ -50,7 +50,7 @@ namespace ChanceNET
 			SSN			= chance.SSN();
 			Birthday	= chance.Birthday(ageRange);
 			Phone		= chance.Phone();
-			Email       = chance.Email();
+			Email       = chance.Email(domain: emailDomain);
 		}
 
 		public string FullName(bool prefix = false, bool middle = false, bool middleInitial = false, bool suffix = false)
