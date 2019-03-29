@@ -15,7 +15,7 @@ namespace ChanceNET.Attributes
 		String tld = null;
 
 
-		public EmailAttribute(Int32 length = 0, String domain = "null", String tld = "null")
+		public EmailAttribute(Int32 length = 0, String domain = null, String tld = null)
 		{
 			this.length = length;
 			this.domain = domain;

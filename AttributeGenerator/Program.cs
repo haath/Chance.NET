@@ -138,7 +138,7 @@ namespace ChanceNET
 					{
 						defaultValue = paramType.Name + "." + defaultValue;
 					}
-					if (paramType == typeof(string))
+					if (paramType == typeof(string) && !defaultValue.ToString().Equals("null"))
 					{
 						defaultValue = "\"" + defaultValue + "\"";
 					}
