@@ -14,7 +14,7 @@ namespace ChanceNET.Attributes
 		UInt16 port = 0;
 
 
-		public EndPointAttribute(String subnet = "null", UInt16 port = 0)
+		public EndPointAttribute(String subnet = null, UInt16 port = 0)
 		{
 			this.subnet = subnet;
 			this.port = port;

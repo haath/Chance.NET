@@ -13,7 +13,7 @@ namespace ChanceNET.Attributes
 		String subnet = null;
 
 
-		public IPAttribute(String subnet = "null")
+		public IPAttribute(String subnet = null)
 		{
 			this.subnet = subnet;
 

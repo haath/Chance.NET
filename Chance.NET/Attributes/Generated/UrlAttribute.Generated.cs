@@ -16,7 +16,7 @@ namespace ChanceNET.Attributes
 		String extension = null;
 
 
-		public UrlAttribute(String scheme = "null", String domain = "null", String path = "null", String extension = "null")
+		public UrlAttribute(String scheme = null, String domain = null, String path = null, String extension = null)
 		{
 			this.scheme = scheme;
 			this.domain = domain;

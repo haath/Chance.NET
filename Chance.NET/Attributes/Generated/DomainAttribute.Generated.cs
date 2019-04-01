@@ -13,7 +13,7 @@ namespace ChanceNET.Attributes
 		String tld = null;
 
 
-		public DomainAttribute(String tld = "null")
+		public DomainAttribute(String tld = null)
 		{
 			this.tld = tld;
 

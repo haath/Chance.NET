@@ -585,10 +585,11 @@ namespace ChanceNET
 		/// </summary>
 		/// <param name="ageRange"></param>
 		/// <param name="gender">Pick for a specific gender. Default is any.</param>
+		/// <param name="emailDomain">Set for a specific email domain. Default is to generate a random domain.</param>
 		/// <returns></returns>
-		public Person Person(AgeRanges ageRange = AgeRanges.Any, Gender gender = (Gender)~0)
+		public Person Person(AgeRanges ageRange = AgeRanges.Any, Gender gender = (Gender)~0, string emailDomain = null)
 		{
-			return new Person(this, ageRange, gender);
+			return new Person(this, ageRange, gender, emailDomain);
 		}
 
 		/// <summary>

@@ -8,22 +8,22 @@ using System.Threading.Tasks;
 namespace ChanceNET.Attributes
 {
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-	public class PhoneAttribute : ChanceAttribute
+	public class FloatAttribute : ChanceAttribute
 	{
-		String areaCode = null;
-		Boolean formatted = true;
+		Single min = 0;
+		Single max = 1;
 
 
-		public PhoneAttribute(String areaCode = null, Boolean formatted = true)
+		public FloatAttribute(Single min = 0, Single max = 1)
 		{
-			this.areaCode = areaCode;
-			this.formatted = formatted;
+			this.min = min;
+			this.max = max;
 
 		}
 
 		internal override object GetValue(Chance chance)
 		{
-			return chance.Phone(areaCode, formatted);
+			return chance.Float(min, max);
 		}
 	}
 }
