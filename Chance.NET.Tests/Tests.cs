@@ -57,6 +57,7 @@ namespace ChanceNET.Tests
 				Assert.IsTrue(b.Location.Longitude != 0 && b.Location.Longitude >= -180 && b.Location.Longitude <= 180);
 				Assert.IsTrue(Uri.IsWellFormedUriString(b.Website, UriKind.Absolute));
 				Assert.Greater((int)b.Genre, 0);
+				Assert.IsTrue(b.Author.Email.EndsWith("@gmail.com"));
 
 				Publisher pub = b.Publisher;
 

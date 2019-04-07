@@ -20,7 +20,7 @@ namespace ChanceNET.Tests
 		[Date]
 		public DateTime Release;
 		
-		[Person]
+		[Person(emailDomain: "gmail.com")]
 		public Person Author;
 
 		[Location]
